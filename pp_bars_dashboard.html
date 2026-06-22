@@ -1317,9 +1317,18 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
 ══════════════════════════════════════════════════════════ -->
 <div id="page-valuechain" class="page">
   <div class="pg-header fade-in">
-    <h2>Value Chain Калькулятор</h2>
-    <p>Двигай ползунок РРЦ — маржа пересчитывается по каждому каналу</p>
+    <h2>Value Chain</h2>
+    <p>Калькулятор маржи и анализ КП поставщика</p>
   </div>
+
+  <!-- Inner tab switcher -->
+  <div style="display:flex;gap:6px;margin-bottom:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:4px;">
+    <button id="vctab-btn-calc" onclick="vcSwitchTab('calc')" style="flex:1;padding:9px 12px;border-radius:9px;border:none;cursor:pointer;font-size:13px;font-weight:700;transition:all .2s;background:var(--blue);color:#fff;">Калькулятор</button>
+    <button id="vctab-btn-yozavod" onclick="vcSwitchTab('yozavod')" style="flex:1;padding:9px 12px;border-radius:9px;border:none;cursor:pointer;font-size:13px;font-weight:700;transition:all .2s;background:transparent;color:var(--text3);">КП: Ё-Завод</button>
+  </div>
+
+  <!-- TAB 1: Calculator (existing content) -->
+  <div id="vctab-calc">
 
   <!-- VERDICT CARD — главный вывод по РРЦ -->
   <div id="vcVerdictCard" class="card fade-in" style="margin-bottom:14px;border:1px solid rgba(16,185,129,.25);background:rgba(16,185,129,.04);">
@@ -1866,6 +1875,203 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
     </div>
 
   </div>
+
+  </div><!-- /vctab-calc -->
+
+  <!-- TAB 2: КП Ё-Завод -->
+  <div id="vctab-yozavod" style="display:none;">
+
+    <!-- Supplier header -->
+    <div class="card fade-in" style="margin-bottom:14px;border:1px solid rgba(59,130,246,.25);background:rgba(59,130,246,.04);">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div class="card-label" style="color:var(--blue);margin-bottom:4px;">Поставщик: Ё-Завод</div>
+          <div style="font-size:12px;color:var(--text3);">www.yozavod.ru &nbsp;·&nbsp; СТМ / OEM производство протеиновых батончиков и печенья</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <div style="padding:6px 12px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);border-radius:8px;font-size:11px;font-weight:700;color:var(--green);">до 30% белка</div>
+          <div style="padding:6px 12px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);border-radius:8px;font-size:11px;font-weight:700;color:var(--blue);">СГР имеется</div>
+          <div style="padding:6px 12px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);border-radius:8px;font-size:11px;font-weight:700;color:var(--yellow);">Цены без упаковки</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- БАТОНЧИКИ -->
+    <div class="card fade-in" style="margin-bottom:14px;">
+      <div class="card-label" style="margin-bottom:14px;">Батончики — условия производства</div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+              <th style="text-align:left;padding:8px 10px;color:var(--text3);font-weight:600;">Продукт</th>
+              <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">Вес</th>
+              <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">Белок</th>
+              <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">Себес</th>
+              <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">MOQ (1 вкус)</th>
+              <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">Срок</th>
+              <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">CM при РРЦ 195₽</th>
+            </tr>
+          </thead>
+          <tbody id="yz-bars-body">
+            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <td style="padding:10px;font-weight:600;">В глазури (флагман)</td>
+              <td style="padding:10px;text-align:center;">40 г</td>
+              <td style="padding:10px;text-align:center;color:var(--green);font-weight:700;">30%</td>
+              <td style="padding:10px;text-align:center;font-weight:700;color:var(--blue);">45 ₽</td>
+              <td style="padding:10px;text-align:center;">7 500 шт</td>
+              <td style="padding:10px;text-align:center;color:var(--text3);">12 мес</td>
+              <td style="padding:10px;text-align:center;" id="yz-cm-1">—</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <td style="padding:10px;font-weight:600;">С лесными орехами</td>
+              <td style="padding:10px;text-align:center;">40 г</td>
+              <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
+              <td style="padding:10px;text-align:center;font-weight:700;color:var(--blue);">55 ₽</td>
+              <td style="padding:10px;text-align:center;">7 500 шт</td>
+              <td style="padding:10px;text-align:center;color:var(--text3);">12 мес</td>
+              <td style="padding:10px;text-align:center;" id="yz-cm-2">—</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <td style="padding:10px;font-weight:600;">С цельным арахисом</td>
+              <td style="padding:10px;text-align:center;">40 г</td>
+              <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
+              <td style="padding:10px;text-align:center;font-weight:700;color:var(--blue);">53 ₽</td>
+              <td style="padding:10px;text-align:center;">7 500 шт</td>
+              <td style="padding:10px;text-align:center;color:var(--text3);">12 мес</td>
+              <td style="padding:10px;text-align:center;" id="yz-cm-3">—</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;font-weight:600;">В глазури (стандарт)</td>
+              <td style="padding:10px;text-align:center;">50 г</td>
+              <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
+              <td style="padding:10px;text-align:center;font-weight:700;color:var(--blue);">56 ₽</td>
+              <td style="padding:10px;text-align:center;">6 000 шт</td>
+              <td style="padding:10px;text-align:center;color:var(--text3);">12 мес</td>
+              <td style="padding:10px;text-align:center;" id="yz-cm-4">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:10px;font-size:10px;color:var(--text3);">* Себес указан без стоимости упаковочного полотна (пленки). Добавьте +5–15₽ на упаковку при расчете.</div>
+    </div>
+
+    <!-- ПЕЧЕНЬЕ -->
+    <div class="card fade-in" style="margin-bottom:14px;">
+      <div class="card-label" style="margin-bottom:14px;">Печенье — условия производства</div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+              <th style="text-align:left;padding:8px 10px;color:var(--text3);font-weight:600;">Продукт</th>
+              <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">Вес</th>
+              <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">Белок</th>
+              <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">Себес</th>
+              <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">MOQ (1 вкус)</th>
+              <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">Срок</th>
+              <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">CM при РРЦ 195₽</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <td style="padding:10px;font-weight:600;">С ягодами и злаками</td>
+              <td style="padding:10px;text-align:center;">40 г</td>
+              <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
+              <td style="padding:10px;text-align:center;font-weight:700;color:var(--blue);">50 ₽</td>
+              <td style="padding:10px;text-align:center;">5 000 шт</td>
+              <td style="padding:10px;text-align:center;color:var(--text3);">9 мес</td>
+              <td style="padding:10px;text-align:center;" id="yz-cm-5">—</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <td style="padding:10px;font-weight:600;">Глазурь снизу</td>
+              <td style="padding:10px;text-align:center;">40 г</td>
+              <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
+              <td style="padding:10px;text-align:center;font-weight:700;color:var(--blue);">53 ₽</td>
+              <td style="padding:10px;text-align:center;">5 000 шт</td>
+              <td style="padding:10px;text-align:center;color:var(--text3);">9 мес</td>
+              <td style="padding:10px;text-align:center;" id="yz-cm-6">—</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <td style="padding:10px;font-weight:600;">Суфле в глазури</td>
+              <td style="padding:10px;text-align:center;">50 г</td>
+              <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
+              <td style="padding:10px;text-align:center;font-weight:700;color:var(--yellow);">78 ₽</td>
+              <td style="padding:10px;text-align:center;">5 000 шт</td>
+              <td style="padding:10px;text-align:center;color:var(--text3);">9 мес</td>
+              <td style="padding:10px;text-align:center;" id="yz-cm-7">—</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <td style="padding:10px;font-weight:600;">Суфле + джем в глазури</td>
+              <td style="padding:10px;text-align:center;">60 г</td>
+              <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
+              <td style="padding:10px;text-align:center;font-weight:700;color:var(--red);">89 ₽</td>
+              <td style="padding:10px;text-align:center;">5 000 шт</td>
+              <td style="padding:10px;text-align:center;color:var(--text3);">6 мес</td>
+              <td style="padding:10px;text-align:center;" id="yz-cm-8">—</td>
+            </tr>
+            <tr>
+              <td style="padding:10px;font-weight:600;">Протеиновое суфле</td>
+              <td style="padding:10px;text-align:center;">35 г</td>
+              <td style="padding:10px;text-align:center;color:var(--text3);">10%</td>
+              <td style="padding:10px;text-align:center;font-weight:700;color:var(--red);">78 ₽</td>
+              <td style="padding:10px;text-align:center;">7 500 шт</td>
+              <td style="padding:10px;text-align:center;color:var(--text3);">7 мес</td>
+              <td style="padding:10px;text-align:center;" id="yz-cm-9">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:10px;font-size:10px;color:var(--text3);">* Себес указан без стоимости упаковочного полотна (пленки). Добавьте +5–15₽ на упаковку при расчете.</div>
+    </div>
+
+    <!-- RRC selector for CM calc -->
+    <div class="card fade-in" style="margin-bottom:14px;">
+      <div class="card-label" style="margin-bottom:12px;">Расчёт CM по РРЦ (DTC-канал)</div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px;">
+        <div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">РРЦ для расчёта</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <input type="range" id="yz-rrc" min="100" max="299" value="195" step="1" oninput="yzCalc()" style="width:140px;">
+            <span id="yz-rrc-val" style="font-size:18px;font-weight:900;color:var(--blue);">195 ₽</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Доп. расходы (упак + логист)</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <input type="range" id="yz-extra" min="0" max="40" value="10" step="1" oninput="yzCalc()" style="width:120px;">
+            <span id="yz-extra-val" style="font-size:18px;font-weight:900;color:var(--text2);">10 ₽</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">Маркетинг %</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <input type="range" id="yz-mkt" min="0" max="30" value="15" step="1" oninput="yzCalc()" style="width:100px;">
+            <span id="yz-mkt-val" style="font-size:18px;font-weight:900;color:var(--text2);">15%</span>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--text3);">Формула DTC: РРЦ − COGS − упак/логист − (РРЦ × маркетинг%)</div>
+    </div>
+
+    <!-- Key insight card -->
+    <div class="card fade-in" style="border:1px solid rgba(16,185,129,.2);background:rgba(16,185,129,.04);">
+      <div class="card-label" style="color:var(--green);margin-bottom:12px;">Вывод по КП</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="padding:12px;background:rgba(16,185,129,.08);border-radius:10px;border:1px solid rgba(16,185,129,.2);">
+          <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Лучшая позиция</div>
+          <div style="font-size:14px;font-weight:800;">Батончик 40г, 30% белка</div>
+          <div style="font-size:12px;color:var(--green);margin-top:4px;">Себес 45₽ — максимальная маржа</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px;">11 вкусов · MOQ 7 500 шт/вкус · 12 мес</div>
+        </div>
+        <div style="padding:12px;background:rgba(245,158,11,.08);border-radius:10px;border:1px solid rgba(245,158,11,.2);">
+          <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Риски</div>
+          <div style="font-size:13px;font-weight:700;color:var(--yellow);">Цены без упаковки</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px;">Добавить стоимость полотна +5–15₽</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px;">Суфле-позиции (78–89₽) — не вписываются в модель при РРЦ 195₽</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /vctab-yozavod -->
 
 </div>
 
@@ -2696,6 +2902,45 @@ function showPage(id, btn) {
   if (id === 'kbzhu'      && !radarChartInited)    initRadarChart();
   if (id === 'valuechain' && !marginChartInited)   { initMarginChart(); updateCalc(); updateReverse(); updateMarketShare(); }
   if (id === 'strategy'   && !revenueChartInited)  initRevenueChart();
+}
+
+/* ── VC INNER TAB SWITCHER ──────────────────────── */
+function vcSwitchTab(tab) {
+  document.getElementById('vctab-calc').style.display    = tab === 'calc'    ? '' : 'none';
+  document.getElementById('vctab-yozavod').style.display = tab === 'yozavod' ? '' : 'none';
+  var btnCalc = document.getElementById('vctab-btn-calc');
+  var btnYoz  = document.getElementById('vctab-btn-yozavod');
+  if (tab === 'calc') {
+    btnCalc.style.background = 'var(--blue)'; btnCalc.style.color = '#fff';
+    btnYoz.style.background  = 'transparent'; btnYoz.style.color  = 'var(--text3)';
+  } else {
+    btnYoz.style.background  = 'var(--blue)'; btnYoz.style.color  = '#fff';
+    btnCalc.style.background = 'transparent'; btnCalc.style.color = 'var(--text3)';
+    yzCalc();
+  }
+}
+
+/* ── Ё-ЗАВОД CM CALC ────────────────────────────── */
+var YZ_COGS = [45, 55, 53, 56, 50, 53, 78, 89, 78];
+var YZ_IDS  = ['yz-cm-1','yz-cm-2','yz-cm-3','yz-cm-4','yz-cm-5','yz-cm-6','yz-cm-7','yz-cm-8','yz-cm-9'];
+function yzCalc() {
+  var rrc   = parseInt(document.getElementById('yz-rrc').value)   || 195;
+  var extra = parseInt(document.getElementById('yz-extra').value) || 10;
+  var mktPct= parseInt(document.getElementById('yz-mkt').value)   || 15;
+  document.getElementById('yz-rrc-val').textContent   = rrc   + ' ₽';
+  document.getElementById('yz-extra-val').textContent = extra + ' ₽';
+  document.getElementById('yz-mkt-val').textContent   = mktPct + '%';
+  var mktRub = rrc * mktPct / 100;
+  YZ_COGS.forEach(function(cogs, i) {
+    var cm = rrc - cogs - extra - mktRub;
+    var cmPct = (cm / rrc * 100).toFixed(1);
+    var el = document.getElementById(YZ_IDS[i]);
+    if (!el) return;
+    var color = cm >= rrc * 0.30 ? 'var(--green)' : cm >= 0 ? 'var(--yellow)' : 'var(--red)';
+    el.innerHTML = '<span style="font-weight:800;color:' + color + '">' +
+      (cm >= 0 ? '+' : '') + cm.toFixed(0) + ' ₽</span><br>' +
+      '<span style="font-size:10px;color:var(--text3);">' + cmPct + '% CM</span>';
+  });
 }
 
 /* ── VALUE CHAIN CALC ───────────────────────────── */
