@@ -10,30 +10,30 @@
 <style>
 /* ── TOKENS ──────────────────────────────────────────── */
 :root {
-  --bg:       #0A0B0F;
-  --surface:  #0F1117;
-  --text:     #F1F5F9;
-  --text2:    #94A3B8;
-  --text3:    #475569;
-  --blue:     #3B82F6;
-  --blue-dim: rgba(59,130,246,0.15);
-  --green:    #10B981;
-  --green-dim:rgba(16,185,129,0.15);
-  --yellow:   #F59E0B;
-  --yellow-dim:rgba(245,158,11,0.15);
-  --red:      #EF4444;
-  --red-dim:  rgba(239,68,68,0.15);
-  --purple:   #A855F7;
-  --orange:   #F97316;
+  --bg:       #F0F2F7;
+  --surface:  #FFFFFF;
+  --text:     #0F172A;
+  --text2:    #475569;
+  --text3:    #94A3B8;
+  --blue:     #2563EB;
+  --blue-dim: rgba(37,99,235,0.10);
+  --green:    #059669;
+  --green-dim:rgba(5,150,105,0.10);
+  --yellow:   #D97706;
+  --yellow-dim:rgba(217,119,6,0.10);
+  --red:      #DC2626;
+  --red-dim:  rgba(220,38,38,0.10);
+  --purple:   #7C3AED;
+  --orange:   #EA580C;
 
-  --border-subtle:   rgba(255,255,255,0.07);
-  --border-normal:   rgba(255,255,255,0.12);
-  --border-specular: rgba(255,255,255,0.22);
+  --border-subtle:   rgba(0,0,0,0.07);
+  --border-normal:   rgba(0,0,0,0.11);
+  --border-specular: rgba(0,0,0,0.16);
 
-  --glass-bg:     rgba(255,255,255,0.055);
-  --glass-shadow: 0 8px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.15);
-  --chip-bg:      rgba(255,255,255,0.04);
-  --chip-border:  rgba(255,255,255,0.09);
+  --glass-bg:     #FFFFFF;
+  --glass-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.05);
+  --chip-bg:      rgba(0,0,0,0.04);
+  --chip-border:  rgba(0,0,0,0.09);
 }
 
 /* ── RESET ───────────────────────────────────────────── */
@@ -67,11 +67,11 @@ body {
 /* ── NAVBAR ──────────────────────────────────────────── */
 .navbar {
   position: sticky; top: 0; z-index: 200;
-  background: rgba(10,11,15,0.6);
+  background: rgba(255,255,255,0.90);
   backdrop-filter: blur(48px) saturate(180%);
   -webkit-backdrop-filter: blur(48px) saturate(180%);
-  border-bottom: 1px solid rgba(255,255,255,0.18);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.18), 0 4px 32px rgba(0,0,0,0.35);
+  border-bottom: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.07);
   display: flex; align-items: center;
   padding: 0 20px; gap: 0;
   overflow-x: auto;
@@ -127,7 +127,7 @@ body {
   display: inline-flex; align-items: center; gap: 4px;
   background: var(--chip-bg);
   border: 1px solid var(--chip-border);
-  border-top-color: rgba(255,255,255,0.14);
+  
   border-radius: 10px; padding: 3px 9px;
   font-size: 11px; font-weight: 600; color: var(--text2);
 }
@@ -183,12 +183,12 @@ th {
 td { padding: 9px 10px; border-bottom: 1px solid var(--border-subtle); color: var(--text2); }
 td strong { color: var(--text); }
 tr:last-child td { border-bottom: none; }
-tr:hover td { background: rgba(255,255,255,0.02); transition: background 0.18s ease; }
+tr:hover td { background: rgba(0,0,0,0.025); transition: background 0.18s ease; }
 
 /* ── TOGGLE GROUP ────────────────────────────────────── */
 .toggle-group {
   display: flex;
-  background: rgba(255,255,255,0.04);
+  background: rgba(0,0,0,0.05);
   border: 1px solid var(--border-subtle);
   border-radius: 10px; padding: 3px; gap: 2px;
 }
@@ -200,15 +200,16 @@ tr:hover td { background: rgba(255,255,255,0.02); transition: background 0.18s e
 }
 .toggle-btn:hover { color: var(--text2); }
 .toggle-btn.active {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid var(--border-subtle);
+  background: #FFFFFF;
+  border: 1px solid var(--border-normal);
   color: var(--text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.10);
 }
 
 /* ── RANGE SLIDER ────────────────────────────────────── */
 input[type=range] {
   -webkit-appearance: none; width: 100%;
-  height: 5px; background: rgba(255,255,255,0.08);
+  height: 5px; background: rgba(0,0,0,0.10);
   border-radius: 3px; outline: none; cursor: pointer;
 }
 input[type=range]::-webkit-slider-thumb {
@@ -222,8 +223,8 @@ input[type=range]::-webkit-slider-thumb:hover {
   box-shadow: 0 0 0 5px rgba(59,130,246,0.3);
 }
 input[type=number] {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border-subtle);
+  background: #FFFFFF;
+  border: 1px solid var(--border-normal);
   color: var(--text); border-radius: 8px;
   padding: 6px 10px; font-size: 14px; font-family: 'Inter', sans-serif;
   width: 90px;
@@ -231,7 +232,7 @@ input[type=number] {
 
 /* ── MARGIN BAR ──────────────────────────────────────── */
 .mbar-track {
-  height: 8px; background: rgba(255,255,255,0.06);
+  height: 8px; background: rgba(0,0,0,0.08);
   border-radius: 4px; overflow: hidden;
 }
 .mbar-fill {
@@ -242,7 +243,7 @@ input[type=number] {
 /* ── MACRO BAR ───────────────────────────────────────── */
 .macro-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
 .macro-lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text3); width: 60px; flex-shrink: 0; }
-.macro-track { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+.macro-track { flex: 1; height: 6px; background: rgba(0,0,0,0.08); border-radius: 3px; overflow: hidden; }
 .macro-fill  { height: 100%; border-radius: 3px; transition: width 0.85s cubic-bezier(.4,0,.2,1); }
 .macro-val   { font-size: 11px; font-weight: 700; width: 28px; text-align: right; flex-shrink: 0; color: var(--text2); }
 
@@ -262,9 +263,9 @@ input[type=number] {
 
 /* ── INNER PILL ──────────────────────────────────────── */
 .inner-card {
-  background: rgba(255,255,255,0.04);
+  background: rgba(0,0,0,0.04);
   border: 1px solid var(--border-subtle);
-  border-top-color: rgba(255,255,255,0.14);
+  
   border-radius: 10px; padding: 13px 16px;
 }
 
@@ -291,11 +292,11 @@ input[type=number] {
 
 .sku-row { display: flex; flex-wrap: wrap; gap: 10px; }
 .sku-tile {
-  background: rgba(255,255,255,0.04);
+  background: #FFFFFF;
   border: 1px solid var(--border-subtle);
-  border-top-color: rgba(255,255,255,0.12);
   border-radius: 12px; padding: 13px 16px;
   min-width: 200px; flex: 1;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 .sku-name  { font-weight: 700; font-size: 13px; margin-bottom: 3px; }
 .sku-ref   { font-size: 11px; color: var(--text3); margin-bottom: 6px; }
@@ -304,10 +305,11 @@ input[type=number] {
 
 /* ── COMP CARD ───────────────────────────────────────── */
 .comp-card {
-  background: rgba(255,255,255,0.04);
+  background: #FFFFFF;
   border: 1px solid var(--border-subtle);
   border-radius: 12px; padding: 14px 16px;
   position: relative; overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 .comp-card.our { border-color: rgba(16,185,129,.3); }
 .comp-top-bar {
@@ -321,9 +323,8 @@ input[type=number] {
 /* ── STRAT CARD ──────────────────────────────────────── */
 .strat-block {
   border: 1px solid var(--border-subtle);
-  border-top-color: rgba(255,255,255,0.12);
   border-radius: 12px; padding: 14px 16px;
-  background: rgba(255,255,255,0.03);
+  background: rgba(0,0,0,0.02);
 }
 .strat-block h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
 .strat-block p  { font-size: 12.5px; color: var(--text2); line-height: 1.65; }
@@ -428,8 +429,8 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
   flex-direction: column;
 }
 #pw-box {
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.12);
+  background: #FFFFFF;
+  border: 1px solid rgba(0,0,0,.09);
   border-radius: 20px;
   padding: 36px 32px;
   width: 320px;
@@ -450,13 +451,13 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
   color: #fff; margin-bottom: 6px;
 }
 #pw-sub {
-  font-size: 12px; color: rgba(255,255,255,.4);
+  font-size: 12px; color: #94A3B8;
   margin-bottom: 22px; line-height: 1.5;
 }
 #pw-input {
   width: 100%; box-sizing: border-box;
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.15);
+  background: rgba(0,0,0,.06);
+  border: 1px solid rgba(0,0,0,.10);
   border-radius: 10px;
   color: #fff; font-size: 18px; font-weight: 700;
   padding: 12px 16px; text-align: center;
@@ -466,7 +467,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
   margin-bottom: 10px;
 }
 #pw-input:focus { border-color: #3B82F6; }
-#pw-input::placeholder { letter-spacing: .05em; font-size: 13px; font-weight: 400; color: rgba(255,255,255,.25); }
+#pw-input::placeholder { letter-spacing: .05em; font-size: 13px; font-weight: 400; color: #94A3B8; }
 #pw-btn {
   width: 100%; padding: 13px;
   background: #3B82F6; border: none; border-radius: 10px;
@@ -607,7 +608,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
         </tbody>
       </table>
       <div style="font-size:10px;color:var(--text3);margin-top:6px;font-style:italic;">МП = маркетплейсы WB+Ozon (МПстатс 2025) · Total = ГИР бух. отчётность · МП = 19% от total у Bombbar</div>
-      <div style="margin-top:12px;padding:12px 14px;background:var(--green-dim);border:1px solid rgba(16,185,129,.2);border-radius:10px;">
+      <div style="margin-top:12px;padding:12px 14px;background:var(--green-dim);border:1px solid rgba(5,150,105,.25);border-radius:10px;">
         <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:.05em;text-transform:uppercase;margin-bottom:3px;"> White Space: 160–200 ₽</div>
         <div style="font-size:12px;color:var(--text2);">Ни одного российского бренда в premium functional сегменте. Bombbar = 80–120 ₽. Импорт = 220–350 ₽.</div>
       </div>
@@ -753,7 +754,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
   <div class="card mt14 fade-in">
     <div class="card-label">Ценовая шкала — позиционирование брендов</div>
     <div style="position:relative;overflow-x:auto;padding:12px 0 6px;">
-      <div style="position:relative;height:76px;min-width:680px;background:rgba(255,255,255,.02);border:1px solid var(--border-subtle);border-radius:10px;overflow:hidden;">
+      <div style="position:relative;height:76px;min-width:680px;background:#FAFBFC;border:1px solid var(--border-subtle);border-radius:10px;overflow:hidden;">
         <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(16,185,129,.04),rgba(59,130,246,.06),rgba(239,68,68,.07));pointer-events:none;"></div>
         <!-- ticks -->
         <div style="position:absolute;bottom:4px;left:0;right:0;display:flex;justify-content:space-between;padding:0 14px;font-size:9px;color:var(--text3);font-weight:700;letter-spacing:.05em;text-transform:uppercase;">
@@ -816,8 +817,8 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
 
   <!-- Modal lightbox -->
   <div id="galleryModal" onclick="closeGalleryModal()" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);align-items:center;justify-content:center;cursor:pointer;">
-    <div onclick="event.stopPropagation()" style="background:#111318;border:1px solid rgba(255,255,255,.15);border-radius:16px;max-width:420px;width:90%;padding:24px;position:relative;">
-      <button onclick="closeGalleryModal()" style="position:absolute;top:12px;right:12px;background:rgba(255,255,255,.08);border:none;color:var(--text2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">✕</button>
+    <div onclick="event.stopPropagation()" style="background:#111318;border:1px solid rgba(0,0,0,.12);border-radius:16px;max-width:420px;width:90%;padding:24px;position:relative;">
+      <button onclick="closeGalleryModal()" style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,.05);border:none;color:var(--text2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;">✕</button>
       <div id="modalColorBar" style="width:100%;height:6px;border-radius:3px;margin-bottom:16px;"></div>
       <div id="modalName" style="font-size:18px;font-weight:900;letter-spacing:-.02em;margin-bottom:4px;"></div>
       <div id="modalBrand" style="font-size:11px;color:var(--text3);margin-bottom:14px;"></div>
@@ -843,7 +844,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <div class="comp-top-bar" style="background:var(--yellow);"></div>
       <div class="comp-name">Bombbar Original</div>
       <div class="comp-brand">Fitness Food Group · 60г · доминант рынка</div>
-      <div style="font-size:11px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
+      <div style="font-size:11px;background:rgba(217,119,6,.10);border:1px solid rgba(245,158,11,.15);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
         <strong style="color:var(--yellow);">20+ вкусов:</strong> Шоколад-фундук, Вишнёвый брауни, Кокос, Карамель-соль, Тирамису, Баунти, Крем-брюле и др. Глазурь молочная без сахара. Сывороточный + молочный белок. Изомальт + полидекстроза.
       </div>
       <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:42%;background:var(--green);"></div></div><span class="macro-val">42г</span></div>
@@ -948,7 +949,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <div class="comp-top-bar" style="background:var(--red);"></div>
       <div class="comp-name">Barebells Protein Bar</div>
       <div class="comp-brand">Barebells (SE) · 55г · параллельный импорт</div>
-      <div style="font-size:11px;background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.12);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
+      <div style="font-size:11px;background:rgba(220,38,38,.08);border:1px solid rgba(239,68,68,.12);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
         <strong style="color:var(--red);">8 вкусов:</strong> Salty Peanut, Cookies&Cream, Chocolate Dough, Hazelnut Nougat, Caramel Cashew, White Chocolate Almond. Сыворот. изолят + казеин. Сахарные спирты дают «низкий сахар» — фактические углеводы выше. Нет добавленного сахара.
       </div>
       <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:36%;background:var(--green);"></div></div><span class="macro-val">36г</span></div>
@@ -978,7 +979,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <div class="comp-top-bar" style="background:var(--red);"></div>
       <div class="comp-name">Grenade Carb Killa</div>
       <div class="comp-brand">Grenade (UK) · 60г · параллельный импорт</div>
-      <div style="font-size:11px;background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.12);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
+      <div style="font-size:11px;background:rgba(220,38,38,.08);border:1px solid rgba(239,68,68,.12);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
         <strong style="color:var(--red);">12 вкусов:</strong> Caramel Chaos, Peanut Nutter, Chocolate Chip Cookie Dough, White Choc Salted Peanut, Dark Choc Raspberry, Birthday Cake. Куплен Mars 2021 за £200M. Стратегия: полка РЯДОМ с обычными шоколадными батончиками. Самый высокий белок среди импорта.
       </div>
       <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:38%;background:var(--green);"></div></div><span class="macro-val">38г</span></div>
@@ -1098,7 +1099,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <div class="comp-top-bar" style="background:var(--green);"></div>
       <div class="comp-name">★ Наш Protein Bar 20%</div>
       <div class="comp-brand">Фаза 1 · 40г · Barebells-модель</div>
-      <div style="font-size:11px;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.15);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
+      <div style="font-size:11px;background:rgba(5,150,105,.08);border:1px solid rgba(16,185,129,.15);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
         <strong style="color:var(--green);">3 вкуса запуск:</strong> Chocolate Brownie, Peanut Caramel, Cookies&Cream. Pea isolate + овёс + MCT. Состав на лицевой этикетке (RXBAR-стиль). Без добавленного сахара. Custom premix DSM-Firmenich.
       </div>
       <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:20%;background:var(--green);"></div></div><span class="macro-val">20г</span></div>
@@ -1113,7 +1114,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <div class="comp-top-bar" style="background:var(--green);opacity:.6;"></div>
       <div class="comp-name">★ Наш Natural Raw Bar</div>
       <div class="comp-brand">Фаза 1 · 43г · Raw Life-модель</div>
-      <div style="font-size:11px;background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
+      <div style="font-size:11px;background:rgba(5,150,105,.07);border:1px solid rgba(16,185,129,.12);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
         <strong style="color:var(--green);">3 вкуса запуск:</strong> Coconut-Latte, Date-Almond, Berry-Chia. Только сухофрукты + орехи + семена. Состав на этикетке (RXBAR-стиль). Производитель: РостАгроКомплекс. Дистрибуция: табачные лавки + МП.
       </div>
       <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:8%;background:var(--green);"></div></div><span class="macro-val">8г</span></div>
@@ -1128,7 +1129,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <div class="comp-top-bar" style="background:var(--blue);"></div>
       <div class="comp-name">★ Complete Bar 30% белка</div>
       <div class="comp-brand">Фаза 2 · 50г · 27 нутриентов</div>
-      <div style="font-size:11px;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.15);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
+      <div style="font-size:11px;background:rgba(37,99,235,.08);border:1px solid rgba(59,130,246,.15);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
         <strong style="color:var(--blue);">4 вкуса:</strong> Chocolate Brownie, Peanut Caramel, Almond Sea Salt, Cookies&Cream. Pea isolate + овёс + льняное масло + 27 микронутриентов (DSM premix). «Заменяет приём пищи» — коммуникация. White space 199₽.
       </div>
       <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:30%;background:var(--green);"></div></div><span class="macro-val">30г</span></div>
@@ -1178,27 +1179,27 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
         <div style="display:flex;flex-direction:column;gap:6px;">
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;font-weight:700;color:var(--green);width:90px;flex-shrink:0;">★ Наш 20%</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:${20/45*100}%;background:var(--green);border-radius:3px;" style="width:44%"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:${20/45*100}%;background:var(--green);border-radius:3px;" style="width:44%"></div></div>
             <div style="font-size:11px;font-weight:800;color:var(--green);width:28px;text-align:right;">20г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">Bombbar</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:93%;background:var(--yellow);border-radius:3px;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:93%;background:var(--yellow);border-radius:3px;"></div></div>
             <div style="font-size:11px;font-weight:700;color:var(--yellow);width:28px;text-align:right;">42г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">Grenade</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:84%;background:var(--red);border-radius:3px;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:84%;background:var(--red);border-radius:3px;"></div></div>
             <div style="font-size:11px;font-weight:700;color:var(--red);width:28px;text-align:right;">38г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">Barebells</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:80%;background:var(--red);border-radius:3px;opacity:.7;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:80%;background:var(--red);border-radius:3px;opacity:.7;"></div></div>
             <div style="font-size:11px;font-weight:700;color:var(--text3);width:28px;text-align:right;">36г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">★ Наш 30%</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:67%;background:var(--blue);border-radius:3px;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:67%;background:var(--blue);border-radius:3px;"></div></div>
             <div style="font-size:11px;font-weight:700;color:var(--blue);width:28px;text-align:right;">30г</div>
           </div>
         </div>
@@ -1211,27 +1212,27 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
         <div style="display:flex;flex-direction:column;gap:6px;">
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">PrimeBar</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:85%;background:var(--red);border-radius:3px;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:85%;background:var(--red);border-radius:3px;"></div></div>
             <div style="font-size:11px;font-weight:700;color:var(--red);width:28px;text-align:right;">51г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">Bombbar</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:47%;background:var(--yellow);border-radius:3px;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:47%;background:var(--yellow);border-radius:3px;"></div></div>
             <div style="font-size:11px;font-weight:700;color:var(--yellow);width:28px;text-align:right;">28г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;font-weight:700;color:var(--green);width:90px;flex-shrink:0;">★ Наш 20%</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:38%;background:rgba(16,185,129,.6);border-radius:3px;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:38%;background:rgba(16,185,129,.6);border-radius:3px;"></div></div>
             <div style="font-size:11px;font-weight:800;color:var(--green);width:28px;text-align:right;">23г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">Grenade</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:38%;background:var(--red);border-radius:3px;opacity:.7;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:38%;background:var(--red);border-radius:3px;opacity:.7;"></div></div>
             <div style="font-size:11px;font-weight:700;color:var(--text3);width:28px;text-align:right;">23г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">Quest Bar</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:12%;background:var(--blue);border-radius:3px;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:12%;background:var(--blue);border-radius:3px;"></div></div>
             <div style="font-size:11px;font-weight:700;color:var(--blue);width:28px;text-align:right;">7г</div>
           </div>
         </div>
@@ -1244,27 +1245,27 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
         <div style="display:flex;flex-direction:column;gap:6px;">
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">Bombbar</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:20%;background:var(--yellow);border-radius:3px;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:20%;background:var(--yellow);border-radius:3px;"></div></div>
             <div style="font-size:11px;font-weight:700;color:var(--yellow);width:40px;text-align:right;">4.6₽/г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">Grenade</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:21%;background:var(--red);border-radius:3px;opacity:.8;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:21%;background:var(--red);border-radius:3px;opacity:.8;"></div></div>
             <div style="font-size:11px;font-weight:700;color:var(--text3);width:40px;text-align:right;">4.7₽/г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;font-weight:700;color:var(--green);width:90px;flex-shrink:0;">★ Наш 20%</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:44%;background:rgba(16,185,129,.7);border-radius:3px;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:44%;background:rgba(16,185,129,.7);border-radius:3px;"></div></div>
             <div style="font-size:11px;font-weight:800;color:var(--green);width:40px;text-align:right;">9.75₽/г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">Barebells</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:45%;background:var(--red);border-radius:3px;opacity:.6;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:45%;background:var(--red);border-radius:3px;opacity:.6;"></div></div>
             <div style="font-size:11px;font-weight:700;color:var(--text3);width:40px;text-align:right;">9.85₽/г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">Quest Bar</div>
-            <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;"><div style="height:100%;width:100%;background:var(--blue);border-radius:3px;opacity:.5;"></div></div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:100%;background:var(--blue);border-radius:3px;opacity:.5;"></div></div>
             <div style="font-size:11px;font-weight:700;color:var(--text3);width:40px;text-align:right;">14₽/г</div>
           </div>
         </div>
@@ -1275,7 +1276,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <div>
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--purple);margin-bottom:10px;">Итог позиционирования нашего продукта</div>
         <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="padding:8px 10px;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:8px;font-size:11px;line-height:1.6;">
+          <div style="padding:8px 10px;background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.25);border-radius:8px;font-size:11px;line-height:1.6;">
             <strong style="color:var(--green);">✅ Конкурентное преимущество:</strong><br>
             Чистый состав (pea isolate + овёс, без изомальта), низкие углеводы (23г/100г), MCT масло. Ниша functional food — не спортпит. «Еда, которую удобно есть» — аудитория 20–35 лет.
           </div>
@@ -1322,7 +1323,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
   </div>
 
   <!-- Inner tab switcher -->
-  <div style="display:flex;gap:6px;margin-bottom:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:4px;">
+  <div style="display:flex;gap:6px;margin-bottom:18px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:4px;">
     <button id="vctab-btn-calc" onclick="vcSwitchTab('calc')" style="flex:1;padding:9px 12px;border-radius:9px;border:none;cursor:pointer;font-size:13px;font-weight:700;transition:all .2s;background:var(--blue);color:#fff;">Калькулятор</button>
     <button id="vctab-btn-yozavod" onclick="vcSwitchTab('yozavod')" style="flex:1;padding:9px 12px;border-radius:9px;border:none;cursor:pointer;font-size:13px;font-weight:700;transition:all .2s;background:transparent;color:var(--text3);">КП: Ё-Завод</button>
   </div>
@@ -1331,7 +1332,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
   <div id="vctab-calc">
 
   <!-- VERDICT CARD — главный вывод по РРЦ -->
-  <div id="vcVerdictCard" class="card fade-in" style="margin-bottom:14px;border:1px solid rgba(16,185,129,.25);background:rgba(16,185,129,.04);">
+  <div id="vcVerdictCard" class="card fade-in" style="margin-bottom:14px;border:1px solid rgba(5,150,105,.30);background:rgba(5,150,105,.05);">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
       <div>
         <div class="card-label" style="margin-bottom:0;color:var(--green);">Вывод: зарабатываем ли мы при текущем РРЦ?</div>
@@ -1342,19 +1343,19 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
 
     <!-- Channel margins row -->
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
-      <div style="padding:10px 12px;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:10px;">
+      <div style="padding:10px 12px;background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.25);border-radius:10px;">
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--green);margin-bottom:5px;">DTC / Прямая</div>
         <div style="font-size:22px;font-weight:900;letter-spacing:-.02em;" id="vcDtcRub">—</div>
         <div style="font-size:11px;color:var(--text3);" id="vcDtcPct">—</div>
         <div style="font-size:9px;color:var(--text3);margin-top:5px;line-height:1.55;" id="vcDtcFormula">—</div>
       </div>
-      <div style="padding:10px 12px;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:10px;">
+      <div style="padding:10px 12px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.25);border-radius:10px;">
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--blue);margin-bottom:5px;">Маркетплейс WB/Ozon</div>
         <div style="font-size:22px;font-weight:900;letter-spacing:-.02em;" id="vcMpRub">—</div>
         <div style="font-size:11px;color:var(--text3);" id="vcMpPct">—</div>
         <div style="font-size:9px;color:var(--text3);margin-top:5px;line-height:1.55;" id="vcMpFormula">—</div>
       </div>
-      <div style="padding:10px 12px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:10px;">
+      <div style="padding:10px 12px;background:rgba(217,119,6,.08);border:1px solid rgba(217,119,6,.25);border-radius:10px;">
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--yellow);margin-bottom:2px;">Ритейл (наша маржа)</div>
         <div style="font-size:9px;color:var(--text3);margin-bottom:5px;">после sell-in, мотивации и логистики</div>
         <div style="font-size:22px;font-weight:900;letter-spacing:-.02em;" id="vcRetRub">—</div>
@@ -1364,7 +1365,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
     </div>
 
     <!-- CM Threshold section -->
-    <div style="padding:10px 12px;background:rgba(255,255,255,.025);border:1px solid var(--border-subtle);border-radius:10px;margin-bottom:10px;">
+    <div style="padding:10px 12px;background:rgba(0,0,0,.025);border:1px solid var(--border-subtle);border-radius:10px;margin-bottom:10px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:4px;">
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);">Contribution margin после маркетинга</div>
         <div style="font-size:10px;color:var(--text3);">порог рентабельности: <strong style="color:var(--yellow);">30%</strong></div>
@@ -1416,7 +1417,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <div style="margin-bottom:14px;">
         <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">Производитель / КП</div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <button id="supplierBtn_zp" onclick="setSupplier('zp',this)" style="display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:6px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);cursor:pointer;font-size:12px;font-weight:700;color:var(--green);letter-spacing:.01em;" class="active">
+          <button id="supplierBtn_zp" onclick="setSupplier('zp',this)" style="display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:6px;background:rgba(5,150,105,.12);border:1px solid rgba(16,185,129,.3);cursor:pointer;font-size:12px;font-weight:700;color:var(--green);letter-spacing:.01em;" class="active">
             <span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;display:inline-block;"></span>
             ООО «Здоровое Питание»
             <span style="font-size:10px;color:var(--text3);font-weight:500;">КП 03.06.2026</span>
@@ -1543,7 +1544,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <div class="card-label">Маржа по каналам</div>
 
       <!-- BUDGET BAR — сколько из РРЦ остаётся для канала -->
-      <div id="budgetBar" style="margin-bottom:18px;padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border-subtle);border-radius:10px;">
+      <div id="budgetBar" style="margin-bottom:18px;padding:12px 14px;background:rgba(0,0,0,.03);border:1px solid var(--border-subtle);border-radius:10px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);">Бюджет канала — из чего состоит РРЦ</div>
           <div style="font-size:12px;color:var(--text3);" id="budgetRrcLabel">при РРЦ 159 ₽</div>
@@ -1561,7 +1562,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       </div>
 
       <!-- DTC -->
-      <div style="background:var(--green-dim);border:1px solid rgba(16,185,129,.2);border-radius:10px;padding:14px;margin-bottom:10px;">
+      <div style="background:var(--green-dim);border:1px solid rgba(5,150,105,.25);border-radius:10px;padding:14px;margin-bottom:10px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <div>
             <div style="font-weight:700;font-size:13px;">DTC / Подписка</div>
@@ -1576,7 +1577,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       </div>
 
       <!-- Marketplace -->
-      <div style="background:var(--blue-dim);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:14px;margin-bottom:10px;">
+      <div style="background:var(--blue-dim);border:1px solid rgba(37,99,235,.25);border-radius:10px;padding:14px;margin-bottom:10px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <div>
             <div style="font-weight:700;font-size:13px;">Маркетплейс (WB/Ozon)</div>
@@ -1591,7 +1592,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       </div>
 
       <!-- Retail -->
-      <div style="background:var(--yellow-dim);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:14px;margin-bottom:14px;">
+      <div style="background:var(--yellow-dim);border:1px solid rgba(217,119,6,.25);border-radius:10px;padding:14px;margin-bottom:14px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <div>
             <div style="font-weight:700;font-size:13px;">Ритейл (ВкусВилл / Перекрёсток)</div>
@@ -1651,7 +1652,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
         <div style="font-size:11px;color:var(--text3);" id="revMPdiff">vs текущей</div>
       </div>
     </div>
-    <div style="margin-top:10px;padding:10px 14px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.15);border-radius:8px;">
+    <div style="margin-top:10px;padding:10px 14px;background:rgba(37,99,235,.10);border:1px solid rgba(59,130,246,.15);border-radius:8px;">
       <div style="font-size:12px;color:var(--blue);font-weight:600;" id="reverseInsight">Вывод появится при изменении параметров</div>
     </div>
   </div>
@@ -1678,7 +1679,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
             <input type="range" id="mixRet" min="0" max="100" value="10" oninput="updatePnL()" style="flex:1;">
             <span style="font-size:12px;font-weight:700;width:28px;text-align:right;" id="mixRetval">10%</span>
           </div>
-          <div style="font-size:10px;color:var(--text3);padding:4px 6px;background:rgba(255,255,255,.03);border-radius:5px;" id="mixWarning">Итого: 100%</div>
+          <div style="font-size:10px;color:var(--text3);padding:4px 6px;background:rgba(0,0,0,.03);border-radius:5px;" id="mixWarning">Итого: 100%</div>
         </div>
       </div>
       <div class="inner-card">
@@ -1792,9 +1793,9 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
 
     <!-- Market reference selector -->
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;" id="mktRefBtns">
-      <button onclick="setMktRef(20,this)"  style="padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border-subtle);background:rgba(16,185,129,.12);color:var(--green);"  class="mktref-btn active">20 млрд ₽ — протеин батончики</button>
-      <button onclick="setMktRef(40,this)"  style="padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border-subtle);background:rgba(255,255,255,.05);color:var(--text2);" class="mktref-btn">40 млрд ₽ — ПП снеки</button>
-      <button onclick="setMktRef(100,this)" style="padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border-subtle);background:rgba(255,255,255,.05);color:var(--text2);" class="mktref-btn">100 млрд ₽ — функц. снеки</button>
+      <button onclick="setMktRef(20,this)"  style="padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border-subtle);background:rgba(5,150,105,.12);color:var(--green);"  class="mktref-btn active">20 млрд ₽ — протеин батончики</button>
+      <button onclick="setMktRef(40,this)"  style="padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border-subtle);background:rgba(0,0,0,.04);color:var(--text2);" class="mktref-btn">40 млрд ₽ — ПП снеки</button>
+      <button onclick="setMktRef(100,this)" style="padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border-subtle);background:rgba(0,0,0,.04);color:var(--text2);" class="mktref-btn">100 млрд ₽ — функц. снеки</button>
     </div>
 
     <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
@@ -1809,7 +1810,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
 
       <!-- Stats column -->
       <div style="flex:1;display:flex;flex-direction:column;gap:10px;min-width:200px;">
-        <div class="inner-card" style="border-color:rgba(16,185,129,.2);background:rgba(16,185,129,.04);">
+        <div class="inner-card" style="border-color:rgba(16,185,129,.2);background:rgba(5,150,105,.05);">
           <div style="font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;">Наша годовая выручка (Year 1)</div>
           <div style="font-size:22px;font-weight:900;letter-spacing:-.02em;color:var(--green);" id="msOurRev">—</div>
         </div>
@@ -1827,15 +1828,15 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <div style="flex:1;min-width:200px;">
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:8px;">Контекст</div>
         <div style="display:flex;flex-direction:column;gap:6px;font-size:11px;">
-          <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(255,255,255,.03);border-radius:5px;border:1px solid var(--border-subtle);">
+          <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(0,0,0,.03);border-radius:5px;border:1px solid var(--border-subtle);">
             <span style="color:var(--text3);">Bombbar (2025)</span>
             <strong>41.9 млрд ₽</strong>
           </div>
-          <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(255,255,255,.03);border-radius:5px;border:1px solid var(--border-subtle);">
+          <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(0,0,0,.03);border-radius:5px;border:1px solid var(--border-subtle);">
             <span style="color:var(--text3);">Bombbar МП доля</span>
             <strong>8.0 млрд ₽</strong>
           </div>
-          <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(16,185,129,.04);border-radius:5px;border:1px solid rgba(16,185,129,.15);">
+          <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(5,150,105,.05);border-radius:5px;border:1px solid rgba(16,185,129,.15);">
             <span style="color:var(--text3);">Наша цель (1% рынка)</span>
             <strong id="msGoal1pct" style="color:var(--green);">—</strong>
           </div>
@@ -1882,16 +1883,16 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
   <div id="vctab-yozavod" style="display:none;">
 
     <!-- Supplier header -->
-    <div class="card fade-in" style="margin-bottom:14px;border:1px solid rgba(59,130,246,.25);background:rgba(59,130,246,.04);">
+    <div class="card fade-in" style="margin-bottom:14px;border:1px solid rgba(37,99,235,.30);background:rgba(37,99,235,.05);">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
         <div>
           <div class="card-label" style="color:var(--blue);margin-bottom:4px;">Поставщик: Ё-Завод</div>
           <div style="font-size:12px;color:var(--text3);">www.yozavod.ru &nbsp;·&nbsp; СТМ / OEM производство протеиновых батончиков и печенья</div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <div style="padding:6px 12px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);border-radius:8px;font-size:11px;font-weight:700;color:var(--green);">до 30% белка</div>
-          <div style="padding:6px 12px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);border-radius:8px;font-size:11px;font-weight:700;color:var(--blue);">СГР имеется</div>
-          <div style="padding:6px 12px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);border-radius:8px;font-size:11px;font-weight:700;color:var(--yellow);">Цены без упаковки</div>
+          <div style="padding:6px 12px;background:rgba(5,150,105,.12);border:1px solid rgba(5,150,105,.30);border-radius:8px;font-size:11px;font-weight:700;color:var(--green);">до 30% белка</div>
+          <div style="padding:6px 12px;background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.30);border-radius:8px;font-size:11px;font-weight:700;color:var(--blue);">СГР имеется</div>
+          <div style="padding:6px 12px;background:rgba(217,119,6,.12);border:1px solid rgba(217,119,6,.30);border-radius:8px;font-size:11px;font-weight:700;color:var(--yellow);">Цены без упаковки</div>
         </div>
       </div>
     </div>
@@ -1902,7 +1903,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;font-size:12px;">
           <thead>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+            <tr style="border-bottom:1px solid rgba(0,0,0,.08);">
               <th style="text-align:left;padding:8px 10px;color:var(--text3);font-weight:600;">Продукт</th>
               <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">Вес</th>
               <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">Белок</th>
@@ -1913,7 +1914,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
             </tr>
           </thead>
           <tbody id="yz-bars-body">
-            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+            <tr style="border-bottom:1px solid rgba(0,0,0,.06);">
               <td style="padding:10px;font-weight:600;">В глазури (флагман)</td>
               <td style="padding:10px;text-align:center;">40 г</td>
               <td style="padding:10px;text-align:center;color:var(--green);font-weight:700;">30%</td>
@@ -1922,7 +1923,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
               <td style="padding:10px;text-align:center;color:var(--text3);">12 мес</td>
               <td style="padding:10px;text-align:center;" id="yz-cm-1">—</td>
             </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+            <tr style="border-bottom:1px solid rgba(0,0,0,.06);">
               <td style="padding:10px;font-weight:600;">С лесными орехами</td>
               <td style="padding:10px;text-align:center;">40 г</td>
               <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
@@ -1931,7 +1932,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
               <td style="padding:10px;text-align:center;color:var(--text3);">12 мес</td>
               <td style="padding:10px;text-align:center;" id="yz-cm-2">—</td>
             </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+            <tr style="border-bottom:1px solid rgba(0,0,0,.06);">
               <td style="padding:10px;font-weight:600;">С цельным арахисом</td>
               <td style="padding:10px;text-align:center;">40 г</td>
               <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
@@ -1961,7 +1962,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;font-size:12px;">
           <thead>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+            <tr style="border-bottom:1px solid rgba(0,0,0,.08);">
               <th style="text-align:left;padding:8px 10px;color:var(--text3);font-weight:600;">Продукт</th>
               <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">Вес</th>
               <th style="text-align:center;padding:8px 10px;color:var(--text3);font-weight:600;">Белок</th>
@@ -1972,7 +1973,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
             </tr>
           </thead>
           <tbody>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+            <tr style="border-bottom:1px solid rgba(0,0,0,.06);">
               <td style="padding:10px;font-weight:600;">С ягодами и злаками</td>
               <td style="padding:10px;text-align:center;">40 г</td>
               <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
@@ -1981,7 +1982,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
               <td style="padding:10px;text-align:center;color:var(--text3);">9 мес</td>
               <td style="padding:10px;text-align:center;" id="yz-cm-5">—</td>
             </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+            <tr style="border-bottom:1px solid rgba(0,0,0,.06);">
               <td style="padding:10px;font-weight:600;">Глазурь снизу</td>
               <td style="padding:10px;text-align:center;">40 г</td>
               <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
@@ -1990,7 +1991,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
               <td style="padding:10px;text-align:center;color:var(--text3);">9 мес</td>
               <td style="padding:10px;text-align:center;" id="yz-cm-6">—</td>
             </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+            <tr style="border-bottom:1px solid rgba(0,0,0,.06);">
               <td style="padding:10px;font-weight:600;">Суфле в глазури</td>
               <td style="padding:10px;text-align:center;">50 г</td>
               <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
@@ -1999,7 +2000,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
               <td style="padding:10px;text-align:center;color:var(--text3);">9 мес</td>
               <td style="padding:10px;text-align:center;" id="yz-cm-7">—</td>
             </tr>
-            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+            <tr style="border-bottom:1px solid rgba(0,0,0,.06);">
               <td style="padding:10px;font-weight:600;">Суфле + джем в глазури</td>
               <td style="padding:10px;text-align:center;">60 г</td>
               <td style="padding:10px;text-align:center;color:var(--text2);">20%</td>
@@ -2053,16 +2054,16 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
     </div>
 
     <!-- Key insight card -->
-    <div class="card fade-in" style="border:1px solid rgba(16,185,129,.2);background:rgba(16,185,129,.04);">
+    <div class="card fade-in" style="border:1px solid rgba(5,150,105,.25);background:rgba(5,150,105,.05);">
       <div class="card-label" style="color:var(--green);margin-bottom:12px;">Вывод по КП</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-        <div style="padding:12px;background:rgba(16,185,129,.08);border-radius:10px;border:1px solid rgba(16,185,129,.2);">
+        <div style="padding:12px;background:rgba(5,150,105,.10);border-radius:10px;border:1px solid rgba(5,150,105,.25);">
           <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Лучшая позиция</div>
           <div style="font-size:14px;font-weight:800;">Батончик 40г, 30% белка</div>
           <div style="font-size:12px;color:var(--green);margin-top:4px;">Себес 45₽ — максимальная маржа</div>
           <div style="font-size:11px;color:var(--text3);margin-top:4px;">11 вкусов · MOQ 7 500 шт/вкус · 12 мес</div>
         </div>
-        <div style="padding:12px;background:rgba(245,158,11,.08);border-radius:10px;border:1px solid rgba(245,158,11,.2);">
+        <div style="padding:12px;background:rgba(217,119,6,.10);border-radius:10px;border:1px solid rgba(217,119,6,.25);">
           <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Риски</div>
           <div style="font-size:13px;font-weight:700;color:var(--yellow);">Цены без упаковки</div>
           <div style="font-size:11px;color:var(--text3);margin-top:4px;">Добавить стоимость полотна +5–15₽</div>
@@ -2248,7 +2249,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
             <td style="padding:7px 10px;font-weight:600;">Конкурентный шопинг</td>
             <td style="padding:7px 10px;color:var(--text3);">Таблица сравнения 15 продуктов (Bombbar, Snaq Fabriq, RXBAR, RAW LIFE, Slim Team)</td>
           </tr>
-          <tr style="border-bottom:1px solid var(--border-subtle);background:rgba(255,255,255,.02);">
+          <tr style="border-bottom:1px solid var(--border-subtle);background:rgba(0,0,0,.025);">
             <td style="padding:7px 10px;color:var(--text3);font-weight:700;">2</td>
             <td style="padding:7px 10px;font-weight:600;">Закупка образцов у 3–5 контрактников</td>
             <td style="padding:7px 10px;color:var(--text3);">15–20 батончиков на дегустацию</td>
@@ -2258,7 +2259,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
             <td style="padding:7px 10px;font-weight:600;">Дегустация — анкета 7 вопросов</td>
             <td style="padding:7px 10px;color:var(--text3);">Product Score — порог: <strong style="color:#A855F7;">3.5+</strong> и Intent <strong style="color:#A855F7;">60%+</strong></td>
           </tr>
-          <tr style="border-bottom:1px solid var(--border-subtle);background:rgba(255,255,255,.02);">
+          <tr style="border-bottom:1px solid var(--border-subtle);background:rgba(0,0,0,.025);">
             <td style="padding:7px 10px;color:var(--text3);font-weight:700;">4</td>
             <td style="padding:7px 10px;font-weight:600;">Запрос КП у контрактников</td>
             <td style="padding:7px 10px;color:var(--text3);">Цены, MOQ и сроки производства</td>
@@ -2268,7 +2269,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
             <td style="padding:7px 10px;font-weight:600;">Консультация юрист ЕАЭС</td>
             <td style="padding:7px 10px;color:var(--text3);">Список допустимых claims («высокий белок» — требует 20%+ ккал из белка по ТР ТС)</td>
           </tr>
-          <tr style="border-bottom:1px solid var(--border-subtle);background:rgba(255,255,255,.02);">
+          <tr style="border-bottom:1px solid var(--border-subtle);background:rgba(0,0,0,.025);">
             <td style="padding:7px 10px;color:var(--text3);font-weight:700;">6</td>
             <td style="padding:7px 10px;font-weight:600;">Поиск диетолога-технолога</td>
             <td style="padding:7px 10px;color:var(--text3);">Первый разговор (самое длинное плечо — начинать параллельно с остальным)</td>
@@ -2278,7 +2279,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
             <td style="padding:7px 10px;font-weight:600;">Нейминг + Роспатент + домен</td>
             <td style="padding:7px 10px;color:var(--text3);">3–5 вариантов имён, проверка занятости, домены куплены</td>
           </tr>
-          <tr style="border-bottom:1px solid var(--border-subtle);background:rgba(255,255,255,.02);">
+          <tr style="border-bottom:1px solid var(--border-subtle);background:rgba(0,0,0,.025);">
             <td style="padding:7px 10px;color:var(--text3);font-weight:700;">8</td>
             <td style="padding:7px 10px;font-weight:600;">Финансовый стоп-лист</td>
             <td style="padding:7px 10px;color:var(--text3);">COGS-потолок зафиксирован (<strong style="color:var(--red);">65–70 ₽ при РРЦ 195 ₽</strong> — выше не работает)</td>
@@ -2470,7 +2471,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
         <div class="sku-price" style="color:var(--red);">+20–30% к выручке</div>
       </div>
     </div>
-    <div style="margin-top:12px;padding:12px 14px;background:var(--red-dim);border:1px solid rgba(239,68,68,.2);border-radius:10px;">
+    <div style="margin-top:12px;padding:12px 14px;background:var(--red-dim);border:1px solid rgba(220,38,38,.25);border-radius:10px;">
       <div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px;">Exit Thesis</div>
       <div style="font-size:12px;color:var(--text2);">Huel: 9 лет → €1B (17–20× EBITDA). Grenade: 11 лет → £200M (40× EBITDA). Российский functional food актив с подпиской — реальная M&A цель через 5–7 лет.</div>
     </div>
@@ -2523,8 +2524,8 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       </div>
     </div>
 
-    <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border-subtle);border-radius:10px;">
-      <div style="flex-shrink:0;width:100px;height:100px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;padding:12px 14px;background:rgba(0,0,0,.03);border:1px solid var(--border-subtle);border-radius:10px;">
+      <div style="flex-shrink:0;width:100px;height:100px;border-radius:8px;overflow:hidden;background:rgba(0,0,0,.04);display:flex;align-items:center;justify-content:center;">
         <img src="https://www.barebells.com/media/catalog/product/b/a/barebells-protein-bar-protein-bar.jpg" alt="Barebells product photo"
           style="width:100%;height:100%;object-fit:contain;"
           onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#EC489922,#EC489908)';this.parentElement.innerHTML='<div style=\'text-align:center;padding:8px;\'><div style=\'font-size:22px;font-weight:900;color:#EC4899;\'>B</div><div style=\'font-size:9px;color:var(--text3);margin-top:4px;\'>фото недоступно</div></div>'">
@@ -2601,8 +2602,8 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       </div>
     </div>
 
-    <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border-subtle);border-radius:10px;">
-      <div style="flex-shrink:0;width:100px;height:100px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;padding:12px 14px;background:rgba(0,0,0,.03);border:1px solid var(--border-subtle);border-radius:10px;">
+      <div style="flex-shrink:0;width:100px;height:100px;border-radius:8px;overflow:hidden;background:rgba(0,0,0,.04);display:flex;align-items:center;justify-content:center;">
         <img src="https://www.grenade.com/cdn/shop/files/CC_Secondarys_2025_1.jpg?v=1751618228&width=400" alt="Grenade product photo"
           style="width:100%;height:100%;object-fit:contain;"
           onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#22C55E22,#22C55E08)';this.parentElement.innerHTML='<div style=\'text-align:center;padding:8px;\'><div style=\'font-size:22px;font-weight:900;color:#22C55E;\'>G</div><div style=\'font-size:9px;color:var(--text3);margin-top:4px;\'>фото недоступно</div></div>'">
@@ -2676,8 +2677,8 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       </div>
     </div>
 
-    <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border-subtle);border-radius:10px;">
-      <div style="flex-shrink:0;width:100px;height:100px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;padding:12px 14px;background:rgba(0,0,0,.03);border:1px solid var(--border-subtle);border-radius:10px;">
+      <div style="flex-shrink:0;width:100px;height:100px;border-radius:8px;overflow:hidden;background:rgba(0,0,0,.04);display:flex;align-items:center;justify-content:center;">
         <img src="https://www.rxbar.com/cdn/shop/products/RXBAR-ChocolateSeaSalt-Hero.jpg" alt="RXBAR product photo"
           style="width:100%;height:100%;object-fit:contain;"
           onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#F9731622,#F9731608)';this.parentElement.innerHTML='<div style=\'text-align:center;padding:8px;\'><div style=\'font-size:22px;font-weight:900;color:#F97316;\'>R</div><div style=\'font-size:9px;color:var(--text3);margin-top:4px;\'>фото недоступно</div></div>'">
@@ -2708,7 +2709,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
         <div style="font-size:12px;color:var(--text2);line-height:1.6;">
           <strong style="color:var(--text);">Это главный кейс по фронт-панели.</strong><br><br>
           Вместо картинки и слогана — <strong style="color:#F97316;">состав прямо на лицевой стороне</strong> крупным шрифтом:<br><br>
-          <div style="background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.2);border-radius:7px;padding:8px 10px;font-family:monospace;font-size:11px;line-height:1.8;color:var(--text);">
+          <div style="background:rgba(234,88,12,.10);border:1px solid rgba(249,115,22,.2);border-radius:7px;padding:8px 10px;font-family:monospace;font-size:11px;line-height:1.8;color:var(--text);">
             3 EGG WHITES<br>
             6 ALMONDS<br>
             4 CASHEWS<br>
@@ -2763,8 +2764,8 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       <span style="font-size:11px;color:var(--text3);">KUMO KUMO — не про белок. Интересен как пример: аутентичный азиатский бренд, эмоциональная история, необычный снек-формат (crispy/воздушный), расширение из food-service в packaged retail.</span>
     </div>
 
-    <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border-subtle);border-radius:10px;">
-      <div style="flex-shrink:0;width:100px;height:100px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;padding:12px 14px;background:rgba(0,0,0,.03);border:1px solid var(--border-subtle);border-radius:10px;">
+      <div style="flex-shrink:0;width:100px;height:100px;border-radius:8px;overflow:hidden;background:rgba(0,0,0,.04);display:flex;align-items:center;justify-content:center;">
         <img src="https://www.kumokumo.sg/cdn/shop/products/kumo-kumo-crispy-bar.jpg" alt="KUMO KUMO product photo"
           style="width:100%;height:100%;object-fit:contain;"
           onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#7DD3FC22,#7DD3FC08)';this.parentElement.innerHTML='<div style=\'text-align:center;padding:8px;\'><div style=\'font-size:22px;font-weight:900;color:#7DD3FC;\'>K</div><div style=\'font-size:9px;color:var(--text3);margin-top:4px;\'>фото недоступно</div></div>'">
@@ -2872,7 +2873,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
             <td style="color:var(--text3);">—</td>
             <td>Формат + бренд-история</td>
           </tr>
-          <tr style="background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.15);">
+          <tr style="background:rgba(5,150,105,.07);border:1px solid rgba(16,185,129,.15);">
             <td><strong style="color:var(--green);"> Наш батончик</strong></td>
             <td>20г (30г)</td>
             <td>40г / 50г</td>
@@ -3179,7 +3180,7 @@ function updateVerdictCard(rrc, cogs, mktPct, mpCommPct, retailerPct, distribPct
       const barW  = Math.min(100, Math.max(0, ch.cm / 70 * 100));
       return `<div style="display:grid;grid-template-columns:140px 1fr 48px;align-items:center;gap:6px;">
         <div style="font-size:10px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${label} ${ch.name}</div>
-        <div style="height:7px;background:rgba(255,255,255,.07);border-radius:4px;position:relative;">
+        <div style="height:7px;background:rgba(0,0,0,.05);border-radius:4px;position:relative;">
           <div style="position:absolute;left:0;top:0;height:100%;width:${barW}%;background:${color};border-radius:4px;transition:width .4s;"></div>
           <div style="position:absolute;left:calc(${THRESHOLD}/70*100%);top:-3px;bottom:-3px;width:1px;background:var(--yellow);opacity:.7;"></div>
         </div>
@@ -3305,7 +3306,7 @@ function updatePriceModel() {
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px;">
 
     <!-- 1. DTC -->
-    <div style="padding:14px 12px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:12px;display:flex;flex-direction:column;gap:2px;">
+    <div style="padding:14px 12px;background:rgba(5,150,105,.10);border:1px solid rgba(5,150,105,.30);border-radius:12px;display:flex;flex-direction:column;gap:2px;">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--green);">${dtcTag} DTC / Прямая</div>
       <div style="font-size:30px;font-weight:900;letter-spacing:-.03em;color:${dtcCmColor};line-height:1.1;">${dtcMargin>=0?'+':''}${dtcMargin.toFixed(0)}<span style="font-size:14px;font-weight:600;"> ₽</span></div>
       <div style="font-size:12px;font-weight:700;color:var(--text3);">${(dtcMargin/rrc*100).toFixed(1)}% CM</div>
@@ -3319,12 +3320,12 @@ function updatePriceModel() {
     </div>
 
     <!-- 2. Ретейл — прямой расчёт COGS → sell-in → РРЦ -->
-    <div style="padding:14px 12px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.25);border-radius:12px;display:flex;flex-direction:column;gap:2px;">
+    <div style="padding:14px 12px;background:rgba(217,119,6,.08);border:1px solid rgba(217,119,6,.30);border-radius:12px;display:flex;flex-direction:column;gap:2px;">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--yellow);">${retTag} Ретейл — прямой расчёт</div>
       <div style="height:1px;background:rgba(245,158,11,.2);margin:6px 0;"></div>
 
       <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:4px;">Если строим цену снизу вверх:</div>
-      <div style="font-size:9px;color:var(--text3);line-height:2.0;background:rgba(255,255,255,.03);border-radius:6px;padding:7px 8px;">
+      <div style="font-size:9px;color:var(--text3);line-height:2.0;background:rgba(0,0,0,.03);border-radius:6px;padding:7px 8px;">
         COGS: <strong style="color:var(--text);">${cogs.toFixed(0)} ₽</strong><br>
         + Наша маржа ${(targetCMpct*100).toFixed(0)}% → <strong style="color:var(--text);">sell-in ${(cogs/(1-targetCMpct)).toFixed(0)} ₽</strong><br>
         + Ритейл наценка ${(retailerPct*100).toFixed(0)}% → <strong style="color:var(--yellow);">цена полки ${(cogs/(1-targetCMpct)/(1-retailerPct)).toFixed(0)} ₽</strong>
@@ -3339,7 +3340,7 @@ function updatePriceModel() {
     </div>
 
     <!-- 3. МП -->
-    <div style="padding:14px 12px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.25);border-radius:12px;display:flex;flex-direction:column;gap:2px;">
+    <div style="padding:14px 12px;background:rgba(37,99,235,.10);border:1px solid rgba(37,99,235,.30);border-radius:12px;display:flex;flex-direction:column;gap:2px;">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--blue);">${mpTag} МП WB / Ozon</div>
       <div style="font-size:30px;font-weight:900;letter-spacing:-.03em;color:${mpCmColor};line-height:1.1;">${mpMargin>=0?'+':''}${mpMargin.toFixed(0)}<span style="font-size:14px;font-weight:600;"> ₽</span></div>
       <div style="font-size:12px;font-weight:700;color:var(--text3);">${(mpMargin/rrc*100).toFixed(1)}% CM</div>
@@ -3432,8 +3433,8 @@ function updatePriceModel() {
       const isLast = i === steps.length - 1;
       return `<div style="display:flex;align-items:center;gap:8px;${isLast ? 'margin-top:4px;padding-top:8px;border-top:1px solid var(--border-subtle);' : ''}">
         <div style="width:130px;font-size:10px;color:${s.color};font-weight:600;flex-shrink:0;">${s.label}</div>
-        <div style="flex:1;height:14px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;">
-          <div style="height:100%;width:${barW.toFixed(1)}%;background:${isLast ? (netRet >= 0 ? 'var(--green)' : 'var(--red)') : 'rgba(255,255,255,.15)'};border-radius:3px;transition:width .3s;"></div>
+        <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${barW.toFixed(1)}%;background:${isLast ? (netRet >= 0 ? 'var(--green)' : 'var(--red)') : 'rgba(0,0,0,.10)'};border-radius:3px;transition:width .3s;"></div>
         </div>
         <div style="font-size:11px;font-weight:800;min-width:80px;text-align:right;color:${isLast ? (netRet >= 0 ? 'var(--green)' : 'var(--red)') : 'var(--text)'};">${s.val.toFixed(1)}₽ <span style="font-size:9px;color:var(--text3);font-weight:600;">${s.note}</span></div>
       </div>`;
@@ -3646,7 +3647,7 @@ function updateAnnual(rrc, baseVol, cogs, avgVarU, fixedCost) {
   // Total row
   const totalNetColor = annNetT >= 0 ? 'var(--green)' : 'var(--red)';
   const annGmPct = ((annGPt/annRevT)*100).toFixed(1) + '%';
-  rows += `<tr style="background:rgba(255,255,255,.04);border-top:2px solid var(--border-specular);">
+  rows += `<tr style="background:rgba(0,0,0,.03);border-top:2px solid var(--border-specular);">
     <td style="padding:7px 8px;font-weight:800;">Итого Year 1</td>
     <td style="padding:7px 8px;text-align:right;font-weight:700;">—</td>
     <td style="padding:7px 8px;text-align:right;font-weight:800;">${fmtRev(annRevT)}</td>
@@ -3675,7 +3676,7 @@ let marketShareDonutRef = null;
 function setMktRef(bln, btn) {
   mktRefBln = bln;
   document.querySelectorAll('.mktref-btn').forEach(b => {
-    b.style.background = 'rgba(255,255,255,.05)';
+    b.style.background = 'rgba(0,0,0,.04)';
     b.style.color = 'var(--text2)';
   });
   if (btn) { btn.style.background = 'rgba(16,185,129,.12)'; btn.style.color = 'var(--green)'; }
@@ -3730,8 +3731,8 @@ function updateMarketShare() {
         labels: ['Наша доля', 'Остальной рынок'],
         datasets: [{
           data: [ourSlice * 100, restSlice * 100],
-          backgroundColor: ['rgba(16,185,129,.75)', 'rgba(255,255,255,.06)'],
-          borderColor: ['#10B981', 'rgba(255,255,255,.1)'],
+          backgroundColor: ['rgba(16,185,129,.75)', 'rgba(0,0,0,.06)'],
+          borderColor: ['#10B981', 'rgba(0,0,0,.08)'],
           borderWidth: [2, 1],
           hoverOffset: 4
         }]
@@ -3753,7 +3754,7 @@ function updateMarketShare() {
 }
 
 /* ── CHART DEFAULTS ──────────────────────────────── */
-Chart.defaults.color = '#475569';
+Chart.defaults.color = '#64748B';
 Chart.defaults.font.family = "'Inter', sans-serif";
 
 /* ── CLUSTER ─────────────────────────────────────── */
@@ -3784,8 +3785,8 @@ function initClusterChart() {
         tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.parsed.x}₽, белок ${c.parsed.y}%` } }
       },
       scales: {
-        x: { title:{ display:true, text:'РРЦ (₽)', color:'#475569', font:{size:11,weight:'700'} }, ticks:{ color:'#475569' }, grid:{ color:'rgba(255,255,255,.05)' }, min:20, max:380 },
-        y: { title:{ display:true, text:'Белок % от веса', color:'#475569', font:{size:11,weight:'700'} }, ticks:{ color:'#475569' }, grid:{ color:'rgba(255,255,255,.05)' }, min:0, max:52 }
+        x: { title:{ display:true, text:'РРЦ (₽)', color:'#475569', font:{size:11,weight:'700'} }, ticks:{ color:'#475569' }, grid:{ color:'rgba(0,0,0,.08)' }, min:20, max:380 },
+        y: { title:{ display:true, text:'Белок % от веса', color:'#475569', font:{size:11,weight:'700'} }, ticks:{ color:'#475569' }, grid:{ color:'rgba(0,0,0,.08)' }, min:0, max:52 }
       }
     }
   });
@@ -3869,7 +3870,7 @@ const RADAR_DATASETS = [
     const pct = Math.round(b.ppg / maxPpg * 100);
     const barColor = b.cat === 'ours' ? '#10B981' : b.cat === 'import' ? '#EF4444' : b.cat === 'natural' ? '#A855F7' : '#F59E0B';
     const isOurs   = b.cat === 'ours';
-    const highlight = isOurs ? 'background:rgba(16,185,129,.04);' : '';
+    const highlight = isOurs ? 'background:rgba(5,150,105,.05);' : '';
     tbody.insertAdjacentHTML('beforeend', `
       <tr style="${highlight}">
         <td style="color:var(--text3);font-weight:700;font-size:12px;">${i+1}</td>
@@ -3879,7 +3880,7 @@ const RADAR_DATASETS = [
         <td style="color:var(--text2);">${b.rrc}₽</td>
         <td style="font-weight:700;color:${barColor};font-size:13px;">${b.ppg}₽</td>
         <td>
-          <div style="height:6px;border-radius:3px;background:rgba(255,255,255,.06);overflow:hidden;">
+          <div style="height:6px;border-radius:3px;background:rgba(0,0,0,.04);overflow:hidden;">
             <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;transition:width .4s;"></div>
           </div>
         </td>
@@ -3924,8 +3925,8 @@ function initRadarChart() {
       scales: {
         r: {
           ticks: { color:'#475569', backdropColor:'transparent', font:{size:9}, stepSize:20 },
-          grid: { color:'rgba(255,255,255,.07)' },
-          angleLines: { color:'rgba(255,255,255,.07)' },
+          grid: { color:'rgba(0,0,0,.06)' },
+          angleLines: { color:'rgba(0,0,0,.06)' },
           pointLabels: { color:'#94A3B8', font:{size:13, weight:'700'} },
           min: 0, max: 100
         }
@@ -3952,7 +3953,7 @@ function buildRadarLegend() {
     const hdr = document.createElement('div');
     hdr.style.cssText = `font-size:10px;font-weight:800;color:${g.color};letter-spacing:.07em;
       text-transform:uppercase;padding:10px 4px 5px;margin-top:4px;
-      border-top:1px solid rgba(255,255,255,.07);`;
+      border-top:1px solid rgba(0,0,0,.06);`;
     hdr.textContent = g.label;
     container.appendChild(hdr);
 
@@ -3962,7 +3963,7 @@ function buildRadarLegend() {
       const label = document.createElement('label');
       label.style.cssText = `display:flex;align-items:center;gap:8px;padding:5px 6px;
         border-radius:7px;cursor:pointer;transition:background .15s;user-select:none;`;
-      label.onmouseenter = () => label.style.background = 'rgba(255,255,255,.05)';
+      label.onmouseenter = () => label.style.background = 'rgba(0,0,0,.04)';
       label.onmouseleave = () => label.style.background = 'transparent';
 
       const cb = document.createElement('input');
@@ -4016,7 +4017,7 @@ function initMarginChart() {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend:{ display:false } },
       scales: {
-        y: { ticks:{ color:'#475569', callback: v => v + '%' }, grid:{ color:'rgba(255,255,255,.05)' }, max:60 },
+        y: { ticks:{ color:'#475569', callback: v => v + '%' }, grid:{ color:'rgba(0,0,0,.08)' }, max:60 },
         x: { ticks:{ color:'#475569' }, grid:{ display:false } }
       }
     }
@@ -4044,7 +4045,7 @@ function initRevenueChart() {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend:{ labels:{ color:'#475569', font:{size:11,weight:'600'} } } },
       scales: {
-        y: { ticks:{ color:'#475569', callback: v => v + ' M' }, grid:{ color:'rgba(255,255,255,.05)' } },
+        y: { ticks:{ color:'#475569', callback: v => v + ' M' }, grid:{ color:'rgba(0,0,0,.08)' } },
         x: { ticks:{ color:'#475569' }, grid:{ display:false } }
       }
     }
@@ -4085,9 +4086,9 @@ function buildProductGallery() {
   grid.innerHTML = '';
   GALLERY_DATA.forEach((item, idx) => {
     const tile = document.createElement('div');
-    tile.style.cssText = `cursor:pointer;border-radius:10px;overflow:hidden;height:110px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 6px;text-align:center;transition:transform .15s,border-color .15s;position:relative;`;
+    tile.style.cssText = `cursor:pointer;border-radius:10px;overflow:hidden;height:110px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 6px;text-align:center;transition:transform .15s,border-color .15s;position:relative;`;
     tile.onmouseenter = () => { tile.style.transform='scale(1.04)'; tile.style.borderColor=item.color+'55'; };
-    tile.onmouseleave = () => { tile.style.transform='scale(1)'; tile.style.borderColor='rgba(255,255,255,.08)'; };
+    tile.onmouseleave = () => { tile.style.transform='scale(1)'; tile.style.borderColor='rgba(0,0,0,.06)'; };
     tile.onclick = () => openGalleryModal(item);
 
     const catLabel = {rf:'РФ',import:'Импорт',natural:'Натур.',ours:'★ НАШ'}[item.cat];
@@ -4121,12 +4122,12 @@ function openGalleryModal(item) {
     {label:'Углев.',  val:item.carb+'г', color:'var(--red)'},
   ];
   document.getElementById('modalMacros').innerHTML = macros.map(m =>
-    `<div style="padding:8px;background:rgba(255,255,255,.04);border-radius:8px;text-align:center;">
+    `<div style="padding:8px;background:rgba(0,0,0,.03);border-radius:8px;text-align:center;">
       <div style="font-size:10px;color:var(--text3);font-weight:600;margin-bottom:3px;">${m.label}</div>
       <div style="font-size:18px;font-weight:900;color:${m.color};">${m.val}</div>
       <div style="font-size:9px;color:var(--text3);">на 100г</div>
     </div>`
-  ).join('') + `<div style="padding:8px;background:rgba(255,255,255,.04);border-radius:8px;text-align:center;"><div style="font-size:10px;color:var(--text3);font-weight:600;margin-bottom:3px;">Ккал</div><div style="font-size:18px;font-weight:900;color:var(--text);">${item.kcal}</div><div style="font-size:9px;color:var(--text3);">/100г</div></div>`;
+  ).join('') + `<div style="padding:8px;background:rgba(0,0,0,.03);border-radius:8px;text-align:center;"><div style="font-size:10px;color:var(--text3);font-weight:600;margin-bottom:3px;">Ккал</div><div style="font-size:18px;font-weight:900;color:var(--text);">${item.kcal}</div><div style="font-size:9px;color:var(--text3);">/100г</div></div>`;
 
   document.getElementById('modalDesc').textContent = item.desc;
   modal.style.display = 'flex';
