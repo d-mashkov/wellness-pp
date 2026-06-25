@@ -1334,15 +1334,15 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
   <!-- ── MARKUP / MARGIN TOGGLE ───────────────────────────────── -->
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:14px 18px;background:#fff;border:1px solid rgba(0,0,0,.09);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.05);">
     <span style="font-size:12px;font-weight:700;color:#64748B;margin-right:4px;">Режим расчёта:</span>
-    <label style="display:flex;align-items:center;gap:7px;cursor:pointer;padding:7px 14px;border-radius:8px;border:1.5px solid rgba(0,0,0,.10);background:rgba(0,0,0,.03);transition:all .2s;" id="lbl-markup">
-      <input type="radio" name="vcMode" id="mode-markup" value="markup" checked onchange="vcCalc2()" style="accent-color:var(--blue);">
-      <span style="font-size:12px;font-weight:700;color:#0F172A;">Наценка (Markup)</span>
-      <span style="font-size:10px;color:#94A3B8;">продал за X×(1+%)</span>
-    </label>
     <label style="display:flex;align-items:center;gap:7px;cursor:pointer;padding:7px 14px;border-radius:8px;border:1.5px solid rgba(0,0,0,.10);background:rgba(0,0,0,.03);transition:all .2s;" id="lbl-margin">
-      <input type="radio" name="vcMode" id="mode-margin" value="margin" onchange="vcCalc2()" style="accent-color:var(--blue);">
+      <input type="radio" name="vcMode" id="mode-margin" value="margin" checked onchange="vcCalc2()" style="accent-color:var(--blue);">
       <span style="font-size:12px;font-weight:700;color:#0F172A;">Маржа (Margin)</span>
-      <span style="font-size:10px;color:#94A3B8;">зарабатываю X% от цены продажи</span>
+      <span style="font-size:10px;color:#94A3B8;">прибыль = цена × % (стандарт)</span>
+    </label>
+    <label style="display:flex;align-items:center;gap:7px;cursor:pointer;padding:7px 14px;border-radius:8px;border:1.5px solid rgba(0,0,0,.10);background:rgba(0,0,0,.03);transition:all .2s;" id="lbl-markup">
+      <input type="radio" name="vcMode" id="mode-markup" value="markup" onchange="vcCalc2()" style="accent-color:var(--blue);">
+      <span style="font-size:12px;font-weight:700;color:#0F172A;">Наценка (Markup)</span>
+      <span style="font-size:10px;color:#94A3B8;">цена = себес × (1 + %)</span>
     </label>
     <div style="margin-left:auto;padding:7px 14px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.20);border-radius:8px;font-size:11px;color:var(--blue);font-weight:700;" id="vcModeHint">
       Наценка: цена = себес × (1 + %)
@@ -2490,8 +2490,8 @@ function vcCalc2() {
 
   // Mode hint
   document.getElementById('vcModeHint').textContent = isMargin
-    ? 'Маржа: канал берёт % от конечной цены'
-    : 'Наценка: канал делает x(1+%) от своей закупки';
+    ? 'Маржа: канал зарабатывает % от своей продажной цены (CM = прибыль/выручка)'
+    : 'Наценка: канал добавляет % к своей закупочной цене (sell = buy × (1+%))';
 
   // Labels
   var modeName = isMargin ? 'Маржа' : 'Наценка';
@@ -2629,8 +2629,8 @@ function vcCalc2() {
   // ── BANNER: маржа с 1 батончика ──────────────────
   var banner = document.getElementById('rrcBanner');
   banner.innerHTML = channels.map(function(ch) {
-    var cmPct = (ch.margin / rrc * 100);
-    var col = ch.margin >= rrc * 0.20 ? '#059669' : ch.margin >= 0 ? '#D97706' : '#DC2626';
+    var cmPct = ch.ourSellIn > 0 ? (ch.margin / ch.ourSellIn * 100) : 0;
+    var col = cmPct >= 20 ? '#059669' : cmPct >= 0 ? '#D97706' : '#DC2626';
     return '<div style="padding:12px 16px;background:#fff;border:1px solid rgba(0,0,0,.09);border-top:3px solid ' + ch.color + ';border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.05);">' +
       '<div style="font-size:10px;font-weight:700;color:#64748B;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + ch.name + '</div>' +
       '<div style="font-size:22px;font-weight:900;color:' + col + ';">' + (ch.margin >= 0 ? '+' : '') + ch.margin.toFixed(0) + ' ₽</div>' +
@@ -2642,8 +2642,8 @@ function vcCalc2() {
   // ── CHANNEL CARDS ────────────────────────────────
   var grid = document.getElementById('vc2Grid');
   grid.innerHTML = channels.map(function(ch) {
-    var cmPct  = (ch.margin / rrc * 100).toFixed(1);
-    var mColor = ch.margin >= rrc * 0.20 ? '#059669' : ch.margin >= 0 ? '#D97706' : '#DC2626';
+    var cmPct  = ch.ourSellIn > 0 ? (ch.margin / ch.ourSellIn * 100).toFixed(1) : '0.0';
+    var mColor = parseFloat(cmPct) >= 20 ? '#059669' : parseFloat(cmPct) >= 0 ? '#D97706' : '#DC2626';
 
     var chainHtml = ch.chain.map(function(node, i) {
       var arrow = i < ch.chain.length - 1 ? '<div style="color:#94A3B8;font-size:18px;flex-shrink:0;">→</div>' : '';
@@ -2660,7 +2660,7 @@ function vcCalc2() {
     }).join('');
 
     var bdHtml = ch.breakdown.map(function(b) {
-      var pct = Math.abs(b.val / rrc * 100);
+      var pct = ch.ourSellIn > 0 ? Math.abs(b.val / ch.ourSellIn * 100) : 0;
       var bColor = b.name.includes('маржа') ? mColor
                  : b.name === 'COGS' ? '#64748B'
                  : b.name.includes('Маркетинг') || b.name.includes('Доставка') ? '#94A3B8' : '#CBD5E1';
@@ -2693,9 +2693,9 @@ function vcCalc2() {
   var barsEl = document.getElementById('vc2Bars');
   var maxM = Math.max.apply(null, channels.map(function(c) { return Math.abs(c.margin); }));
   barsEl.innerHTML = channels.map(function(ch) {
-    var cmPct  = (ch.margin / rrc * 100).toFixed(1);
+    var cmPct  = ch.ourSellIn > 0 ? (ch.margin / ch.ourSellIn * 100).toFixed(1) : '0.0';
     var barW   = maxM > 0 ? Math.max(0, ch.margin / maxM * 100) : 0;
-    var mColor = ch.margin >= rrc * 0.20 ? '#059669' : ch.margin >= 0 ? '#D97706' : '#DC2626';
+    var mColor = parseFloat(cmPct) >= 20 ? '#059669' : parseFloat(cmPct) >= 0 ? '#D97706' : '#DC2626';
     return '<div style="display:flex;align-items:center;gap:12px;">' +
       '<div style="width:190px;font-size:12px;font-weight:700;color:#0F172A;flex-shrink:0;">' + ch.name + '</div>' +
       '<div style="flex:1;height:28px;background:rgba(0,0,0,.06);border-radius:6px;overflow:hidden;">' +
