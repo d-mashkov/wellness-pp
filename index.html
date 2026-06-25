@@ -1331,49 +1331,85 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
   <!-- TAB 1: Calculator (existing content) -->
   <div id="vctab-calc">
 
+  <!-- ── MARKUP / MARGIN TOGGLE ───────────────────────────────── -->
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:14px 18px;background:#fff;border:1px solid rgba(0,0,0,.09);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+    <span style="font-size:12px;font-weight:700;color:#64748B;margin-right:4px;">Режим расчёта:</span>
+    <label style="display:flex;align-items:center;gap:7px;cursor:pointer;padding:7px 14px;border-radius:8px;border:1.5px solid rgba(0,0,0,.10);background:rgba(0,0,0,.03);transition:all .2s;" id="lbl-markup">
+      <input type="radio" name="vcMode" id="mode-markup" value="markup" checked onchange="vcCalc2()" style="accent-color:var(--blue);">
+      <span style="font-size:12px;font-weight:700;color:#0F172A;">Наценка (Markup)</span>
+      <span style="font-size:10px;color:#94A3B8;">продал за X×(1+%)</span>
+    </label>
+    <label style="display:flex;align-items:center;gap:7px;cursor:pointer;padding:7px 14px;border-radius:8px;border:1.5px solid rgba(0,0,0,.10);background:rgba(0,0,0,.03);transition:all .2s;" id="lbl-margin">
+      <input type="radio" name="vcMode" id="mode-margin" value="margin" onchange="vcCalc2()" style="accent-color:var(--blue);">
+      <span style="font-size:12px;font-weight:700;color:#0F172A;">Маржа (Margin)</span>
+      <span style="font-size:10px;color:#94A3B8;">зарабатываю X% от цены продажи</span>
+    </label>
+    <div style="margin-left:auto;padding:7px 14px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.20);border-radius:8px;font-size:11px;color:var(--blue);font-weight:700;" id="vcModeHint">
+      Наценка: цена = себес × (1 + %)
+    </div>
+  </div>
+
   <!-- ── SLIDERS ─────────────────────────────────────────────── -->
   <div class="card" style="margin-bottom:16px;">
-    <div class="card-label" style="margin-bottom:16px;">Параметры расчёта</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
-
-      <div>
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">РРЦ — цена на полке</div>
-        <input type="range" id="rrc2" min="99" max="350" value="195" step="1" oninput="vcCalc2()" style="width:100%;">
-        <div style="font-size:28px;font-weight:900;letter-spacing:-.02em;color:var(--blue);margin-top:4px;" id="rrc2Val">195 ₽</div>
-      </div>
+    <div class="card-label" style="margin-bottom:16px;">Параметры цепочки</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px;">
 
       <div>
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">COGS — себестоимость</div>
-        <input type="range" id="cogs2" min="20" max="150" value="60" step="1" oninput="vcCalc2()" style="width:100%;">
-        <div style="font-size:28px;font-weight:900;letter-spacing:-.02em;color:var(--text2);margin-top:4px;" id="cogs2Val">60 ₽</div>
+        <input type="range" id="cogs2" min="20" max="180" value="60" step="1" oninput="vcCalc2()" style="width:100%;">
+        <div style="font-size:26px;font-weight:900;letter-spacing:-.02em;color:#475569;margin-top:4px;" id="cogs2Val">60 ₽</div>
       </div>
 
       <div>
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">Наценка дистрибьютора</div>
-        <input type="range" id="distrib2" min="10" max="45" value="27" step="1" oninput="vcCalc2()" style="width:100%;">
-        <div style="font-size:28px;font-weight:900;letter-spacing:-.02em;color:var(--text2);margin-top:4px;" id="distrib2Val">27%</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;" id="ourCmLbl">Наша маржа (наша CM%)</div>
+        <input type="range" id="ourCm2" min="5" max="60" value="35" step="1" oninput="vcCalc2()" style="width:100%;">
+        <div style="font-size:26px;font-weight:900;letter-spacing:-.02em;color:var(--blue);margin-top:4px;" id="ourCm2Val">35%</div>
       </div>
 
       <div>
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">Маркетинг / реклама</div>
         <input type="range" id="mkt2" min="0" max="35" value="15" step="1" oninput="vcCalc2()" style="width:100%;">
-        <div style="font-size:28px;font-weight:900;letter-spacing:-.02em;color:var(--text2);margin-top:4px;" id="mkt2Val">15%</div>
+        <div style="font-size:26px;font-weight:900;letter-spacing:-.02em;color:#475569;margin-top:4px;" id="mkt2Val">15%</div>
+      </div>
+
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;" id="distribLbl">Наценка дистрибьютора</div>
+        <input type="range" id="distrib2" min="5" max="50" value="30" step="1" oninput="vcCalc2()" style="width:100%;">
+        <div style="font-size:26px;font-weight:900;letter-spacing:-.02em;color:#475569;margin-top:4px;" id="distrib2Val">30%</div>
+      </div>
+
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;" id="retailLbl">Наценка ритейла</div>
+        <input type="range" id="retail2" min="20" max="100" value="60" step="1" oninput="vcCalc2()" style="width:100%;">
+        <div style="font-size:26px;font-weight:900;letter-spacing:-.02em;color:#475569;margin-top:4px;" id="retail2Val">60%</div>
+      </div>
+
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;" id="tobaccoLbl">Наценка табачных лавок</div>
+        <input type="range" id="tobacco2" min="30" max="150" value="100" step="5" oninput="vcCalc2()" style="width:100%;">
+        <div style="font-size:26px;font-weight:900;letter-spacing:-.02em;color:#475569;margin-top:4px;" id="tobacco2Val">100%</div>
       </div>
 
     </div>
   </div>
 
+  <!-- ── REQUIRED RRC BANNER ──────────────────────────────────── -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;" id="rrcBanner">
+    <!-- filled by JS -->
+  </div>
+
   <!-- ── 4 CHANNEL CARDS ──────────────────────────────────────── -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;" id="vc2Grid">
-    <!-- filled by vcCalc2() -->
+    <!-- filled by JS -->
   </div>
 
   <!-- ── COMPARISON BAR ────────────────────────────────────────── -->
   <div class="card">
-    <div class="card-label" style="margin-bottom:14px;">Наша маржа с 1 батончика по каналам</div>
-    <div id="vc2Bars" style="display:flex;flex-direction:column;gap:10px;">
-      <!-- filled by vcCalc2() -->
-    </div>
+    <div class="card-label" style="margin-bottom:14px;">Наша маржа с 1 батончика — сравнение каналов</div>
+    <div id="vc2Bars" style="display:flex;flex-direction:column;gap:10px;"></div>
   </div>
 
   </div><!-- /vctab-calc -->
@@ -2423,200 +2459,230 @@ function vcSwitchTab(tab) {
 
 /* ── VALUE CHAIN — НОВЫЙ КАЛЬКУЛЯТОР ────────────── */
 function vcCalc2() {
-  var rrc      = parseFloat(document.getElementById('rrc2').value)     || 195;
-  var cogs     = parseFloat(document.getElementById('cogs2').value)    || 60;
-  var distribPct = parseFloat(document.getElementById('distrib2').value) || 27;
-  var mktPct   = parseFloat(document.getElementById('mkt2').value)     || 15;
+  var isMargin   = document.getElementById('mode-margin').checked;
+  var cogs       = parseFloat(document.getElementById('cogs2').value)    || 60;
+  var ourCmPct   = parseFloat(document.getElementById('ourCm2').value)   || 35;
+  var distribPct = parseFloat(document.getElementById('distrib2').value) || 30;
+  var retailPct  = parseFloat(document.getElementById('retail2').value)  || 60;
+  var tobaccoPct = parseFloat(document.getElementById('tobacco2').value) || 100;
+  var mktPct     = parseFloat(document.getElementById('mkt2').value)     || 15;
 
-  document.getElementById('rrc2Val').textContent    = rrc     + ' ₽';
-  document.getElementById('cogs2Val').textContent   = cogs    + ' ₽';
+  // Update labels based on mode
+  var modeName = isMargin ? 'Маржа' : 'Наценка';
+  document.getElementById('ourCmLbl').textContent   = 'Наша ' + modeName.toLowerCase() + ' (CM%)';
+  document.getElementById('distribLbl').textContent = modeName + ' дистрибьютора';
+  document.getElementById('retailLbl').textContent  = modeName + ' ритейла';
+  document.getElementById('tobaccoLbl').textContent = modeName + ' табачных лавок';
+  document.getElementById('vcModeHint').textContent = isMargin
+    ? 'Маржа: зарабатываю % от цены продажи'
+    : 'Наценка: цена = себес × (1 + %)';
+
+  document.getElementById('cogs2Val').textContent   = cogs      + ' ₽';
+  document.getElementById('ourCm2Val').textContent  = ourCmPct  + '%';
   document.getElementById('distrib2Val').textContent= distribPct + '%';
-  document.getElementById('mkt2Val').textContent    = mktPct  + '%';
+  document.getElementById('retail2Val').textContent = retailPct  + '%';
+  document.getElementById('tobacco2Val').textContent= tobaccoPct + '%';
+  document.getElementById('mkt2Val').textContent    = mktPct     + '%';
 
-  var mktRub = rrc * mktPct / 100;
+  // ── Универсальная функция расчёта цены ──────────
+  // Markup: price = cost × (1 + pct/100)
+  // Margin: price = cost / (1 - pct/100)
+  function addLayer(cost, pct) {
+    return isMargin ? cost / (1 - pct / 100) : cost * (1 + pct / 100);
+  }
 
-  // ── Канал 1: Ритейл + Дистрибьютор ──────────────
-  // Покупатель платит РРЦ → сеть наценила 60% → дистриб наценил distribPct%
-  var retailSellIn  = rrc / 1.60;                        // цена нашего товара в сети
-  var ourSellInRet  = retailSellIn / (1 + distribPct/100); // наш sell-in дистрибу
-  var marginRet     = ourSellInRet - cogs - mktRub;
-  var retailerEarn  = rrc - retailSellIn;
-  var distribEarn   = retailSellIn - ourSellInRet;
+  // ── Наш sell-in (bottom-up от COGS + наша CM) ───
+  var ourSellIn = addLayer(cogs, ourCmPct);
+  var mktRub    = ourSellIn * mktPct / 100;
+  var ourNetMargin = ourSellIn - cogs - mktRub; // после маркетинга
 
-  // ── Канал 2: Табачные лавки (прямой) ────────────
-  // Лавка наценила 100% → наш sell-in = РРЦ / 2
-  var ourSellInTob = rrc / 2;
-  var marginTob    = ourSellInTob - cogs - mktRub;
-  var tobEarn      = rrc - ourSellInTob;
+  // ── Канал 1: Ритейл + Дистрибьютор ─────────────
+  // COGS → [наша наценка] → наш sell-in → [дистриб] → [ритейл] → РРЦ
+  var distribSellIn = addLayer(ourSellIn, distribPct);
+  var rrcRetail     = addLayer(distribSellIn, retailPct);
+  var distribEarn   = distribSellIn - ourSellIn;
+  var retailEarn    = rrcRetail - distribSellIn;
 
-  // ── Канал 3: Маркетплейс (WB/Ozon) ─────────────
-  // Комиссия МП 18% + FBO логист ~3% = ~21% суммарно — используем ползунок distrib
-  // Но для МП отдельно: комиссия задана ползунком distrib2? Нет, сделаем отдельно 18%
-  var mpCommPct   = 18;
-  var mpNet       = rrc * (1 - mpCommPct / 100);
-  var marginMp    = mpNet - cogs - mktRub;
-  var mpEarn      = rrc * mpCommPct / 100;
+  // ── Канал 2: Табачные лавки ─────────────────────
+  // COGS → [наша наценка] → наш sell-in → [лавка] → РРЦ
+  var rrcTobacco  = addLayer(ourSellIn, tobaccoPct);
+  var tobaccoEarn = rrcTobacco - ourSellIn;
 
-  // ── Канал 4: DTC / Прямые продажи ───────────────
-  var fulfilPct   = 5; // доставка ~5%
-  var fulfilRub   = rrc * fulfilPct / 100;
-  var marginDtc   = rrc - cogs - mktRub - fulfilRub;
+  // ── Канал 3: Маркетплейс ────────────────────────
+  // Bottom-up: COGS → [наша CM] → [MP комиссия 18%] → РРЦ
+  var mpCommPct = 18;
+  var mpNet     = addLayer(ourSellIn, mpCommPct);  // RRC нужный для МП
+  var mpEarn    = mpNet - ourSellIn;
+  var mktRubMp  = mpNet * mktPct / 100;
+  var marginMp  = ourSellIn - cogs - mktRubMp; // наша маржа на МП
+
+  // ── Канал 4: DTC ────────────────────────────────
+  // Bottom-up: COGS → [наша CM] = наш sell-in = РРЦ (продаём сами)
+  // Но есть логистика ~5% + маркетинг
+  var fulfilPct  = 5;
+  var rrcDtc     = ourSellIn; // РРЦ = наш sell-in (мы сами продаём)
+  var fulfilRub  = rrcDtc * fulfilPct / 100;
+  var mktRubDtc  = rrcDtc * mktPct / 100;
+  var marginDtc  = rrcDtc - cogs - fulfilRub - mktRubDtc;
 
   var channels = [
     {
-      id: 'ret',
-      name: 'Ритейл + Дистрибьютор',
-      color: '#F59E0B',
+      name: 'Ритейл + Дистрибьютор', color: '#F59E0B',
+      rrc: rrcRetail,
+      ourSellIn: ourSellIn,
+      margin: ourNetMargin,
       chain: [
-        { label: 'Завод',      price: cogs,            sub: 'COGS' },
-        { label: 'Наш sell-in', price: ourSellInRet,   sub: 'наша цена дистрибу', ours: true },
-        { label: 'Дистрибьютор', price: retailSellIn,  sub: '+' + distribPct + '% наценка' },
-        { label: 'Сеть',       price: rrc,             sub: '+60% наценка' },
-        { label: 'Покупатель', price: rrc,             sub: 'платит РРЦ', end: true }
+        { label: 'Завод',         price: cogs,         sub: 'COGS' },
+        { label: 'Наш sell-in',   price: ourSellIn,    sub: 'наша CM ' + ourCmPct + '%', ours: true },
+        { label: 'Дистрибьютор',  price: distribSellIn, sub: '+' + distribPct + '% ' + (isMargin?'маржа':'наценка') },
+        { label: 'Сеть',          price: rrcRetail,    sub: '+' + retailPct + '% ' + (isMargin?'маржа':'наценка') },
+        { label: 'Покупатель',    price: rrcRetail,    sub: 'платит РРЦ', end: true }
       ],
-      ourSellIn: ourSellInRet,
-      margin: marginRet,
       breakdown: [
-        { name: 'Наша маржа', val: marginRet, pct: marginRet/rrc*100 },
-        { name: 'Маркетинг',  val: mktRub,    pct: mktPct },
-        { name: 'COGS',       val: cogs,      pct: cogs/rrc*100 },
-        { name: 'Дистрибьютор', val: distribEarn, pct: distribEarn/rrc*100 },
-        { name: 'Сеть',       val: retailerEarn, pct: retailerEarn/rrc*100 }
+        { name: 'Наша маржа (net)', val: ourNetMargin },
+        { name: 'Маркетинг ' + mktPct + '%', val: mktRub },
+        { name: 'COGS',              val: cogs },
+        { name: 'Дистрибьютор',      val: distribEarn },
+        { name: 'Сеть',              val: retailEarn }
       ]
     },
     {
-      id: 'tob',
-      name: 'Табачные лавки (прямые)',
-      color: '#8B5CF6',
+      name: 'Табачные лавки (прямые)', color: '#8B5CF6',
+      rrc: rrcTobacco,
+      ourSellIn: ourSellIn,
+      margin: ourNetMargin,
       chain: [
-        { label: 'Завод',      price: cogs,           sub: 'COGS' },
-        { label: 'Наш sell-in', price: ourSellInTob,  sub: 'прямая продажа', ours: true },
-        { label: 'Табачная лавка', price: rrc,        sub: '+100% наценка' },
-        { label: 'Покупатель', price: rrc,            sub: 'платит РРЦ', end: true }
+        { label: 'Завод',         price: cogs,         sub: 'COGS' },
+        { label: 'Наш sell-in',   price: ourSellIn,    sub: 'наша CM ' + ourCmPct + '%', ours: true },
+        { label: 'Табачная лавка', price: rrcTobacco,  sub: '+' + tobaccoPct + '% ' + (isMargin?'маржа':'наценка') },
+        { label: 'Покупатель',    price: rrcTobacco,   sub: 'платит РРЦ', end: true }
       ],
-      ourSellIn: ourSellInTob,
-      margin: marginTob,
       breakdown: [
-        { name: 'Наша маржа', val: marginTob,  pct: marginTob/rrc*100 },
-        { name: 'Маркетинг',  val: mktRub,     pct: mktPct },
-        { name: 'COGS',       val: cogs,       pct: cogs/rrc*100 },
-        { name: 'Лавка',      val: tobEarn,    pct: tobEarn/rrc*100 }
+        { name: 'Наша маржа (net)', val: ourNetMargin },
+        { name: 'Маркетинг ' + mktPct + '%', val: mktRub },
+        { name: 'COGS',              val: cogs },
+        { name: 'Лавка',             val: tobaccoEarn }
       ]
     },
     {
-      id: 'mp',
-      name: 'Маркетплейс WB / Ozon',
-      color: '#3B82F6',
-      chain: [
-        { label: 'Завод',      price: cogs,    sub: 'COGS' },
-        { label: 'Наш sell-in', price: mpNet,  sub: 'после комиссии МП', ours: true },
-        { label: 'МП комиссия', price: rrc,    sub: mpCommPct + '% от РРЦ' },
-        { label: 'Покупатель', price: rrc,     sub: 'платит РРЦ', end: true }
-      ],
-      ourSellIn: mpNet,
+      name: 'Маркетплейс WB / Ozon', color: '#2563EB',
+      rrc: mpNet,
+      ourSellIn: ourSellIn,
       margin: marginMp,
+      chain: [
+        { label: 'Завод',          price: cogs,      sub: 'COGS' },
+        { label: 'Наш net',        price: ourSellIn, sub: 'после комиссии МП', ours: true },
+        { label: 'МП комиссия',    price: mpNet,     sub: mpCommPct + '% от РРЦ' },
+        { label: 'Покупатель',     price: mpNet,     sub: 'платит РРЦ', end: true }
+      ],
       breakdown: [
-        { name: 'Наша маржа', val: marginMp,  pct: marginMp/rrc*100 },
-        { name: 'Маркетинг',  val: mktRub,    pct: mktPct },
-        { name: 'COGS',       val: cogs,      pct: cogs/rrc*100 },
-        { name: 'МП комиссия', val: mpEarn,   pct: mpCommPct }
+        { name: 'Наша маржа (net)', val: marginMp },
+        { name: 'Маркетинг ' + mktPct + '%', val: mktRubMp },
+        { name: 'COGS',              val: cogs },
+        { name: 'МП комиссия ' + mpCommPct + '%', val: mpEarn }
       ]
     },
     {
-      id: 'dtc',
-      name: 'DTC — прямые продажи',
-      color: '#10B981',
-      chain: [
-        { label: 'Завод',     price: cogs,        sub: 'COGS' },
-        { label: 'Наш сайт',  price: rrc,         sub: 'продаём напрямую', ours: true },
-        { label: 'Покупатель', price: rrc,        sub: 'платит РРЦ', end: true }
-      ],
-      ourSellIn: rrc,
+      name: 'DTC — прямые продажи', color: '#059669',
+      rrc: rrcDtc,
+      ourSellIn: rrcDtc,
       margin: marginDtc,
+      chain: [
+        { label: 'Завод',          price: cogs,    sub: 'COGS' },
+        { label: 'Наш сайт / DTC', price: rrcDtc, sub: 'мы = продавец', ours: true },
+        { label: 'Покупатель',     price: rrcDtc, sub: 'платит РРЦ', end: true }
+      ],
       breakdown: [
-        { name: 'Наша маржа',  val: marginDtc,  pct: marginDtc/rrc*100 },
-        { name: 'Маркетинг',   val: mktRub,     pct: mktPct },
-        { name: 'Доставка',    val: fulfilRub,  pct: fulfilPct },
-        { name: 'COGS',        val: cogs,       pct: cogs/rrc*100 }
+        { name: 'Наша маржа (net)', val: marginDtc },
+        { name: 'Маркетинг ' + mktPct + '%', val: mktRubDtc },
+        { name: 'Доставка ' + fulfilPct + '%', val: fulfilRub },
+        { name: 'COGS',              val: cogs }
       ]
     }
   ];
 
-  // ── Рендер карточек ──────────────────────────────
+  // ── RRC Banner ──────────────────────────────────
+  var banner = document.getElementById('rrcBanner');
+  banner.innerHTML = channels.map(function(ch) {
+    var cmNet = (ch.margin / ch.rrc * 100);
+    var col = ch.margin >= ch.rrc * 0.25 ? '#059669' : ch.margin >= 0 ? '#D97706' : '#DC2626';
+    return '<div style="padding:12px 16px;background:#fff;border:1px solid rgba(0,0,0,.09);border-top:3px solid ' + ch.color + ';border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.05);">' +
+      '<div style="font-size:10px;font-weight:700;color:#64748B;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + ch.name + '</div>' +
+      '<div style="font-size:20px;font-weight:900;color:' + ch.color + ';">' + ch.rrc.toFixed(0) + ' ₽</div>' +
+      '<div style="font-size:10px;color:#94A3B8;margin-top:2px;">нужный РРЦ</div>' +
+      '<div style="margin-top:6px;font-size:11px;font-weight:700;color:' + col + ';">Маржа ' + (ch.margin>=0?'+':'') + ch.margin.toFixed(0) + ' ₽ · ' + cmNet.toFixed(1) + '%</div>' +
+    '</div>';
+  }).join('');
+
+  // ── Channel Cards ───────────────────────────────
   var grid = document.getElementById('vc2Grid');
   grid.innerHTML = channels.map(function(ch) {
-    var isPos = ch.margin > 0;
-    var cmPct = (ch.margin / rrc * 100).toFixed(1);
-    var marginColor = ch.margin >= rrc * 0.25 ? '#059669' : ch.margin >= 0 ? '#D97706' : '#DC2626';
+    var cmPct = (ch.margin / ch.rrc * 100).toFixed(1);
+    var mColor = ch.margin >= ch.rrc*0.25 ? '#059669' : ch.margin >= 0 ? '#D97706' : '#DC2626';
 
-    // Chain nodes
     var chainHtml = ch.chain.map(function(node, i) {
-      var isFirst = i === 0;
-      var arrow = i < ch.chain.length - 1 ?
-        '<div style="color:#94A3B8;font-size:18px;flex-shrink:0;padding:0 2px;">→</div>' : '';
-      var bg = node.ours  ? 'background:' + ch.color + '20;border:1.5px solid ' + ch.color + '60;' :
-               node.end   ? 'background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.10);' :
-               isFirst    ? 'background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.10);' :
-                            'background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.10);';
-      var priceColor = node.ours ? ch.color : '#475569';
+      var arrow = i < ch.chain.length - 1 ? '<div style="color:#94A3B8;font-size:18px;flex-shrink:0;">→</div>' : '';
+      var bg = node.ours ? 'background:' + ch.color + '18;border:2px solid ' + ch.color + ';'
+             : node.end  ? 'background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.09);'
+             :              'background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.09);';
+      var pColor = node.ours ? ch.color : '#475569';
       return '<div style="display:flex;align-items:center;gap:4px;">' +
-        '<div style="' + bg + 'border-radius:9px;padding:8px 11px;text-align:center;min-width:72px;">' +
-          '<div style="font-size:10px;font-weight:700;color:#64748B;white-space:nowrap;">' + node.label + '</div>' +
-          '<div style="font-size:15px;font-weight:900;color:' + priceColor + ';margin:2px 0;">' + node.price.toFixed(0) + ' ₽</div>' +
-          '<div style="font-size:9px;color:#94A3B8;white-space:nowrap;">' + node.sub + '</div>' +
+        '<div style="' + bg + 'border-radius:9px;padding:8px 11px;text-align:center;min-width:75px;flex-shrink:0;">' +
+          '<div style="font-size:9px;font-weight:700;color:#64748B;">' + node.label + '</div>' +
+          '<div style="font-size:14px;font-weight:900;color:' + pColor + ';margin:2px 0;">' + node.price.toFixed(0) + '₽</div>' +
+          '<div style="font-size:9px;color:#94A3B8;line-height:1.3;">' + node.sub + '</div>' +
         '</div>' + arrow + '</div>';
     }).join('');
 
-    // Breakdown bars
     var bdHtml = ch.breakdown.map(function(b) {
-      var bColor = b.name.includes('маржа') ? marginColor :
-                   b.name === 'COGS' ? '#64748B' :
-                   b.name === 'Маркетинг' || b.name === 'Доставка' ? '#94A3B8' : '#CBD5E1';
-      var pct = Math.max(0, b.pct);
-      return '<div style="margin-bottom:6px;">' +
+      var pct = Math.abs(b.val / ch.rrc * 100);
+      var bColor = b.name.includes('маржа') ? mColor
+                 : b.name === 'COGS' ? '#64748B'
+                 : b.name.includes('Маркетинг') || b.name.includes('Доставка') ? '#94A3B8' : '#CBD5E1';
+      return '<div style="margin-bottom:5px;">' +
         '<div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px;">' +
           '<span style="color:#64748B;font-weight:600;">' + b.name + '</span>' +
-          '<span style="font-weight:700;color:' + (b.name.includes('маржа') ? marginColor : '#475569') + ';">' +
-          (b.val >= 0 ? '' : '') + b.val.toFixed(0) + ' ₽ · ' + pct.toFixed(1) + '%</span>' +
+          '<span style="font-weight:700;color:' + (b.name.includes('маржа') ? mColor : '#475569') + ';">' +
+            b.val.toFixed(0) + ' ₽ · ' + pct.toFixed(1) + '%</span>' +
         '</div>' +
-        '<div style="height:5px;background:rgba(0,0,0,.08);border-radius:3px;overflow:hidden;">' +
+        '<div style="height:5px;background:rgba(0,0,0,.07);border-radius:3px;overflow:hidden;">' +
           '<div style="height:100%;width:' + Math.min(100,pct) + '%;background:' + bColor + ';border-radius:3px;transition:width .5s;"></div>' +
         '</div></div>';
     }).join('');
 
     return '<div class="card" style="border-top:3px solid ' + ch.color + ';">' +
-      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">' +
         '<div style="font-size:13px;font-weight:800;color:#0F172A;">' + ch.name + '</div>' +
-        '<div style="text-align:right;">' +
-          '<div style="font-size:22px;font-weight:900;color:' + marginColor + ';letter-spacing:-.02em;">' +
-            (isPos ? '+' : '') + ch.margin.toFixed(0) + ' ₽' +
-          '</div>' +
-          '<div style="font-size:11px;color:#94A3B8;">CM ' + cmPct + '% от РРЦ</div>' +
+        '<div style="text-align:right;flex-shrink:0;margin-left:8px;">' +
+          '<div style="font-size:11px;color:#94A3B8;">РРЦ нужна</div>' +
+          '<div style="font-size:20px;font-weight:900;color:' + ch.color + ';letter-spacing:-.02em;">' + ch.rrc.toFixed(0) + ' ₽</div>' +
+          '<div style="font-size:11px;font-weight:700;color:' + mColor + ';">маржа ' + (ch.margin>=0?'+':'') + ch.margin.toFixed(0) + '₽ · ' + cmNet(ch) + '%</div>' +
         '</div>' +
       '</div>' +
-      '<div style="display:flex;align-items:center;gap:4px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;flex-wrap:nowrap;">' +
-        chainHtml +
-      '</div>' +
+      '<div style="display:flex;align-items:center;gap:3px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;">' + chainHtml + '</div>' +
       '<div>' + bdHtml + '</div>' +
     '</div>';
   }).join('');
 
-  // ── Сравнительные бары ───────────────────────────
+  function cmNet(ch) { return (ch.margin / ch.rrc * 100).toFixed(1); }
+
+  // ── Comparison bars ─────────────────────────────
   var barsEl = document.getElementById('vc2Bars');
-  var maxM = Math.max.apply(null, channels.map(function(c){ return c.margin; }));
+  var maxM = Math.max.apply(null, channels.map(function(c){ return Math.abs(c.margin); }));
   barsEl.innerHTML = channels.map(function(ch) {
-    var cmPct = (ch.margin / rrc * 100).toFixed(1);
-    var barW  = maxM > 0 ? Math.max(0, ch.margin / maxM * 100) : 0;
-    var mColor = ch.margin >= rrc*0.25 ? '#059669' : ch.margin >= 0 ? '#D97706' : '#DC2626';
+    var pct = (ch.margin / ch.rrc * 100).toFixed(1);
+    var barW = maxM > 0 ? Math.max(0, ch.margin / maxM * 100) : 0;
+    var mColor = ch.margin >= ch.rrc*0.25 ? '#059669' : ch.margin >= 0 ? '#D97706' : '#DC2626';
     return '<div style="display:flex;align-items:center;gap:12px;">' +
-      '<div style="width:180px;font-size:12px;font-weight:700;color:#0F172A;flex-shrink:0;">' + ch.name + '</div>' +
+      '<div style="width:190px;font-size:12px;font-weight:700;color:#0F172A;flex-shrink:0;">' + ch.name + '</div>' +
       '<div style="flex:1;height:28px;background:rgba(0,0,0,.06);border-radius:6px;overflow:hidden;">' +
         '<div style="height:100%;width:' + barW + '%;background:' + ch.color + ';border-radius:6px;transition:width .6s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;padding-left:10px;">' +
-          '<span style="font-size:12px;font-weight:800;color:#fff;white-space:nowrap;">' +
-            (ch.margin > 0 ? '+' : '') + ch.margin.toFixed(0) + ' ₽ · CM ' + cmPct + '%' +
+          '<span style="font-size:11px;font-weight:800;color:#fff;white-space:nowrap;">' +
+            (ch.margin>=0?'+':'') + ch.margin.toFixed(0) + ' ₽ · CM ' + pct + '%' +
           '</span>' +
         '</div>' +
       '</div>' +
+      '<div style="width:70px;text-align:right;font-size:12px;font-weight:700;color:' + mColor + ';">РРЦ ' + ch.rrc.toFixed(0) + '₽</div>' +
     '</div>';
   }).join('');
 }
