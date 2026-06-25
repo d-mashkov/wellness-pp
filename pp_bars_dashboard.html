@@ -2521,7 +2521,7 @@ function vcCalc2() {
   // Markup: РРЦ = закупка × (1+%) → закупка = РРЦ / (1+%)
   // Margin: РРЦ = закупка / (1-%) → закупка = РРЦ × (1-%)
   function removeLayer(price, pct) {
-    if (!isMargin && pct >= 100) return 0;
+    if (isMargin && pct >= 100) return 0;
     return isMargin ? price * (1 - pct / 100) : price / (1 + pct / 100);
   }
   function fmt(n) {
