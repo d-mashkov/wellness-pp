@@ -849,17 +849,23 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
 
   <!-- ── FILTER / SORT CONTROLS ─────────────────────────── -->
   <div class="fade-in" style="margin-bottom:14px;">
-    <!-- Sort pills -->
-    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
-      <span style="font-size:11px;font-weight:700;color:var(--text3);margin-right:2px;">Сортировка:</span>
-      <button class="kbzhu-sort active" data-sort="protein" onclick="kbzhuSort('protein',this)">Белок ↓</button>
-      <button class="kbzhu-sort" data-sort="fat" onclick="kbzhuSort('fat',this)">Жиры ↑</button>
-      <button class="kbzhu-sort" data-sort="carbs" onclick="kbzhuSort('carbs',this)">Углеводы ↓</button>
-      <button class="kbzhu-sort" data-sort="kcal" onclick="kbzhuSort('kcal',this)">Ккал ↓</button>
+    <!-- Sort dropdowns -->
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+      <span style="font-size:11px;font-weight:700;color:var(--text3);">Сортировка:</span>
+      <select id="kbzhuMetric" onchange="kbzhuApplySort()" style="padding:5px 10px;border-radius:8px;border:1px solid rgba(0,0,0,.1);background:rgba(0,0,0,.03);color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;outline:none;">
+        <option value="protein">Белок</option>
+        <option value="fat">Жиры</option>
+        <option value="carbs">Углеводы</option>
+        <option value="kcal">Ккал</option>
+      </select>
+      <select id="kbzhuDir" onchange="kbzhuApplySort()" style="padding:5px 10px;border-radius:8px;border:1px solid rgba(0,0,0,.1);background:rgba(0,0,0,.03);color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;outline:none;">
+        <option value="desc">По убыванию</option>
+        <option value="asc">По возрастанию</option>
+      </select>
     </div>
     <!-- Filter tabs -->
     <div style="display:flex;gap:6px;flex-wrap:wrap;">
-      <button class="kbzhu-filter active" data-filter="all" onclick="kbzhuFilter('all',this)">Все 20</button>
+      <button class="kbzhu-filter active" data-filter="all" onclick="kbzhuFilter('all',this)">Все 24</button>
       <button class="kbzhu-filter" data-filter="high-protein" onclick="kbzhuFilter('high-protein',this)">💪 Высокобелковый ≥30г</button>
       <button class="kbzhu-filter" data-filter="low-fat" onclick="kbzhuFilter('low-fat',this)">✅ Низкожировой ≤12г</button>
       <button class="kbzhu-filter" data-filter="high-carb" onclick="kbzhuFilter('high-carb',this)">🍞 Углеводистый ≥45г</button>
@@ -3502,6 +3508,38 @@ const KBZHU_BARS = [
     desc:'<strong style="color:#0EA5E9;">Глазированный батончик — Barebells-эстетика.</strong> 18% белка, без сахара, пребиотик. Наш прямой конкурент.'
   },
   {
+    id:'vkusvill-protein', name:'ВкусВилл Малина-протеин', brand:'ВкусВилл СТМ · ~40г',
+    weight:40, protein:26, fat:13, carbs:53, kcal:432,
+    price:'89–119 ₽', priceNote:'/ ~40г',
+    color:'var(--purple)', colorAlpha:'rgba(168,85,247,.08)', borderAlpha:'rgba(168,85,247,.18)',
+    segment:'natural', tags:['natural'],
+    desc:'<strong style="color:var(--purple);">СТМ ВкусВилл.</strong> Финиковая основа + изолят горохового/рисового белка + орехи. Вкус: Малина, Клубника. Без добавленного сахара — натуральный тип.'
+  },
+  {
+    id:'ebaton', name:'Ё|батон', brand:'Здоровое питание · 50г',
+    weight:50, protein:20, fat:12, carbs:44, kcal:364,
+    price:'120–150 ₽', priceNote:'/ 50г',
+    color:'var(--orange)', colorAlpha:'rgba(249,115,22,.07)', borderAlpha:'rgba(249,115,22,.15)',
+    segment:'rf', tags:['low-fat'],
+    desc:'<strong style="color:var(--orange);">Ё|батон</strong> — российский протеиновый батончик. Овёс + молочный белок + орехи. Продаётся в ВкусВилл и Ленте. Натуральный состав.'
+  },
+  {
+    id:'greengo', name:'GreenGo Protein Bar', brand:'РФ · 50г',
+    weight:50, protein:16, fat:14, carbs:47, kcal:380,
+    price:'100–130 ₽', priceNote:'/ 50г',
+    color:'#16A34A', colorAlpha:'rgba(22,163,74,.07)', borderAlpha:'rgba(22,163,74,.15)',
+    segment:'rf', tags:['high-carb'],
+    desc:'<strong style="color:#16A34A;">GreenGo</strong> — батончик на злаковой основе с добавлением растительного белка. Шоколадный брауни. Маркетплейсы WB/Ozon.'
+  },
+  {
+    id:'fitness-shock-hipro', name:'Fitness SHOCK HI PRO', brand:'ООО Фитнес Десерты · ~60г',
+    weight:60, protein:33, fat:8, carbs:7, kcal:293,
+    price:'120–160 ₽', priceNote:'/ ~60г',
+    color:'#E62854', colorAlpha:'rgba(230,40,84,.07)', borderAlpha:'rgba(230,40,84,.15)',
+    segment:'rf', tags:['high-protein','low-fat','keto'],
+    desc:'<strong style="color:#E62854;">HI PRO неглазированный</strong> — самая белковая линейка Fitness SHOCK. 5 вкусов: Голубика-маскарпоне, Фисташковый крем и др. 30%+ белка, без сахара.'
+  },
+  {
     id:'our20', name:'★ Protein Bar 20%', brand:'Наш · Фаза 1 · 40г',
     weight:40, protein:20, fat:12, carbs:45, kcal:365,
     price:'195 ₽', priceNote:'/ 40г',
@@ -3529,6 +3567,7 @@ const KBZHU_BARS = [
 
 let kbzhuCurrentFilter = 'all';
 let kbzhuCurrentSort   = 'protein';
+let kbzhuCurrentDir    = 'desc';
 
 function kbzhuGetCategories(bar) {
   const cats = [];
@@ -3560,8 +3599,8 @@ function renderKbzhuGrid() {
     });
   }
 
-  // Sort (descending by default; fat ascending)
-  const sortDir = kbzhuCurrentSort === 'fat' ? 1 : -1;
+  // Sort by selected metric and direction
+  const sortDir = kbzhuCurrentDir === 'desc' ? 1 : -1;
   bars.sort((a, b) => sortDir * (b[kbzhuCurrentSort] - a[kbzhuCurrentSort]));
 
   const MAX_MACRO = 60; // scale bar width to 60g max
@@ -3610,10 +3649,16 @@ function kbzhuFilter(filter, btn) {
   renderKbzhuGrid();
 }
 
+function kbzhuApplySort() {
+  const metricEl = document.getElementById('kbzhuMetric');
+  const dirEl    = document.getElementById('kbzhuDir');
+  if (metricEl) kbzhuCurrentSort = metricEl.value;
+  if (dirEl)    kbzhuCurrentDir  = dirEl.value;
+  renderKbzhuGrid();
+}
+
 function kbzhuSort(sort, btn) {
   kbzhuCurrentSort = sort;
-  document.querySelectorAll('.kbzhu-sort').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
   renderKbzhuGrid();
 }
 
