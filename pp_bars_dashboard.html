@@ -418,6 +418,16 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
   font-family: inherit;
   letter-spacing: 0.01em;
 }
+.kbzhu-sort,.kbzhu-filter {
+  padding:5px 10px;border-radius:8px;border:1px solid rgba(0,0,0,.1);
+  background:rgba(0,0,0,.03);color:var(--text2);font-size:11px;font-weight:600;
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.kbzhu-sort:hover,.kbzhu-filter:hover { background:rgba(0,0,0,.06); }
+.kbzhu-sort.active,.kbzhu-filter.active {
+  background:var(--blue);color:#fff;border-color:var(--blue);
+}
+
 .rfbtn:hover { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.25); color: #7DB3F8; }
 .rfbtn.active { background: rgba(59,130,246,0.14); border-color: rgba(59,130,246,0.4); color: #3B82F6; }
 
@@ -837,309 +847,29 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
     <div style="font-size:11px;color:var(--text3);margin-left:auto;">Все значения на 100 г готового продукта · макс. шкала 60г</div>
   </div>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;" class="fade-in">
-
-    <!-- ── BOMBBAR ─────────────────────────────── -->
-    <div class="comp-card" style="grid-column:span 1;">
-      <div class="comp-top-bar" style="background:var(--yellow);"></div>
-      <div class="comp-name">Bombbar Original</div>
-      <div class="comp-brand">Fitness Food Group · 60г · доминант рынка</div>
-      <div style="font-size:11px;background:rgba(217,119,6,.10);border:1px solid rgba(245,158,11,.15);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--yellow);">20+ вкусов:</strong> Шоколад-фундук, Вишнёвый брауни, Кокос, Карамель-соль, Тирамису, Баунти, Крем-брюле и др. Глазурь молочная без сахара. Сывороточный + молочный белок. Изомальт + полидекстроза.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:42%;background:var(--green);"></div></div><span class="macro-val">42г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:14%;background:var(--yellow);"></div></div><span class="macro-val">14г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:28%;background:var(--red);"></div></div><span class="macro-val">28г</span></div>
-      <div class="comp-price" style="color:var(--yellow);">115–140 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 60г</span></div>
-      <div class="comp-kcal">~400 ккал / 100г · <span class="chip chip-yellow">Масс-премиум · WB #1</span></div>
+  <!-- ── FILTER / SORT CONTROLS ─────────────────────────── -->
+  <div class="fade-in" style="margin-bottom:14px;">
+    <!-- Sort pills -->
+    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+      <span style="font-size:11px;font-weight:700;color:var(--text3);margin-right:2px;">Сортировка:</span>
+      <button class="kbzhu-sort active" data-sort="protein" onclick="kbzhuSort('protein',this)">Белок ↓</button>
+      <button class="kbzhu-sort" data-sort="fat" onclick="kbzhuSort('fat',this)">Жиры ↑</button>
+      <button class="kbzhu-sort" data-sort="carbs" onclick="kbzhuSort('carbs',this)">Углеводы ↓</button>
+      <button class="kbzhu-sort" data-sort="kcal" onclick="kbzhuSort('kcal',this)">Ккал ↓</button>
     </div>
-
-    <!-- Bombbar Crispy -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--yellow);opacity:.5;"></div>
-      <div class="comp-name">Bombbar Crispy Wafer</div>
-      <div class="comp-brand">Fitness Food Group · 40г · вафельный формат</div>
-      <div style="font-size:11px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.1);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--yellow);">8 вкусов:</strong> Шоколад, Карамель, Орехи, Ваниль и др. Хрустящая вафельная основа + шоколадное покрытие. Более высокий жир из-за вафли — менее «чистый».
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:35%;background:var(--green);"></div></div><span class="macro-val">35г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:22%;background:var(--yellow);"></div></div><span class="macro-val">22г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:38%;background:var(--red);"></div></div><span class="macro-val">38г</span></div>
-      <div class="comp-price" style="color:var(--yellow);">100–120 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 40г</span></div>
-      <div class="comp-kcal">~480 ккал / 100г · <span class="chip chip-yellow">Вафельный</span></div>
+    <!-- Filter tabs -->
+    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+      <button class="kbzhu-filter active" data-filter="all" onclick="kbzhuFilter('all',this)">Все 20</button>
+      <button class="kbzhu-filter" data-filter="high-protein" onclick="kbzhuFilter('high-protein',this)">💪 Высокобелковый ≥30г</button>
+      <button class="kbzhu-filter" data-filter="low-fat" onclick="kbzhuFilter('low-fat',this)">✅ Низкожировой ≤12г</button>
+      <button class="kbzhu-filter" data-filter="high-carb" onclick="kbzhuFilter('high-carb',this)">🍞 Углеводистый ≥45г</button>
+      <button class="kbzhu-filter" data-filter="natural" onclick="kbzhuFilter('natural',this)">🌿 Natural/Raw</button>
+      <button class="kbzhu-filter" data-filter="ours" onclick="kbzhuFilter('ours',this)">⭐ Наши</button>
     </div>
-
-    <!-- Snaq Fabriq -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--yellow);opacity:.6;"></div>
-      <div class="comp-name">Snaq Fabriq Choco Brownie</div>
-      <div class="comp-brand">Fitness Food Group · 40г</div>
-      <div style="font-size:11px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.1);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--yellow);">12+ вкусов:</strong> Шоколад-банан, Вишня, Малина, Кокос, Арахис-карамель. Мягкая нуга-основа. Ориентирован на женскую аудиторию и покупки у кассы.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:32%;background:var(--green);"></div></div><span class="macro-val">32г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:12%;background:var(--yellow);"></div></div><span class="macro-val">12г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:25%;background:var(--red);"></div></div><span class="macro-val">25г</span></div>
-      <div class="comp-price" style="color:var(--yellow);">100–130 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 40г</span></div>
-      <div class="comp-kcal">~340 ккал / 100г · <span class="chip chip-yellow">Женский / Масс</span></div>
-    </div>
-
-    <!-- Chikalab -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--purple);"></div>
-      <div class="comp-name">Chikalab Protein Bar</div>
-      <div class="comp-brand">Fitness Food Group · 60г · женский сегмент</div>
-      <div style="font-size:11px;background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.12);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--purple);">10+ вкусов:</strong> Клубника, Черника, Манго, Малина, Ваниль. Фокус на вкус и упаковку. Целевая аудитория — женщины 18–35 лет. Размер — флагман 60г + мини-версия 100 ккал.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:25%;background:var(--green);"></div></div><span class="macro-val">25г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:15%;background:var(--yellow);"></div></div><span class="macro-val">15г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:23%;background:var(--red);"></div></div><span class="macro-val">23г</span></div>
-      <div class="comp-price" style="color:var(--purple);">130–160 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 60г</span></div>
-      <div class="comp-kcal">~345 ккал / 100г · <span class="chip chip-purple">Женский</span></div>
-    </div>
-
-    <!-- FitKit -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--yellow);opacity:.4;"></div>
-      <div class="comp-name">FitKit Protein Bar</div>
-      <div class="comp-brand">FitKit · 60г · российский производитель</div>
-      <div style="font-size:11px;background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.09);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--text);">8 вкусов:</strong> Малиновый чизкейк, Тирамису, Карамель, Шоколад, Банан. Очень низкая калорийность (260 ккал/100г) за счёт высокой клетчатки (~14г/60г). Изомальт + сорбитол. Без сахара.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:25%;background:var(--green);"></div></div><span class="macro-val">25г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:8%;background:var(--yellow);"></div></div><span class="macro-val">8г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Клетчатка</span><div class="macro-track"><div class="macro-fill" style="width:23%;background:var(--blue);"></div></div><span class="macro-val">23г</span></div>
-      <div class="comp-price" style="color:var(--yellow);">110–130 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 60г</span></div>
-      <div class="comp-kcal">~260 ккал / 100г · <span class="chip chip-blue">Низкокалорийный</span></div>
-    </div>
-
-    <!-- ProteinRex -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--orange);"></div>
-      <div class="comp-name">ProteinRex Bar</div>
-      <div class="comp-brand">ProteinRex · 40г · спортивная линейка</div>
-      <div style="font-size:11px;background:rgba(249,115,22,.07);border:1px solid rgba(249,115,22,.12);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--orange);">12 вкусов:</strong> Арахисовое масло, Шоколад-кофе, Черника, Вишня. Сывороточный изолят + казеин. Позиционирование — для тренирующихся, выкладка в спортмаге. Хорошая нутритивка за деньги.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:45%;background:var(--green);"></div></div><span class="macro-val">45г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:12%;background:var(--yellow);"></div></div><span class="macro-val">12г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:20%;background:var(--red);"></div></div><span class="macro-val">20г</span></div>
-      <div class="comp-price" style="color:var(--orange);">100–120 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 40г</span></div>
-      <div class="comp-kcal">~360 ккал / 100г · <span class="chip chip-orange">Спортмаг</span></div>
-    </div>
-
-    <!-- Maxler -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--orange);opacity:.6;"></div>
-      <div class="comp-name">Maxler Protein Bar</div>
-      <div class="comp-brand">Maxler (DE) · 60г · широкая дистрибуция</div>
-      <div style="font-size:11px;background:rgba(249,115,22,.05);border:1px solid rgba(249,115,22,.09);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--text);">6 вкусов:</strong> Карамель, Кокос-шоколад, Ваниль, Арахис. Немецкий бренд с широкой РФ-дистрибуцией через ВкусВилл и спортмаги. Не такой сладкий как Bombbar.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:33%;background:var(--green);"></div></div><span class="macro-val">33г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:15%;background:var(--yellow);"></div></div><span class="macro-val">15г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:41%;background:var(--red);"></div></div><span class="macro-val">41г</span></div>
-      <div class="comp-price" style="color:var(--orange);">160–200 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 60г</span></div>
-      <div class="comp-kcal">~430 ккал / 100г · <span class="chip chip-orange">Мультиканал</span></div>
-    </div>
-
-    <!-- Barebells Original -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--red);"></div>
-      <div class="comp-name">Barebells Protein Bar</div>
-      <div class="comp-brand">Barebells (SE) · 55г · параллельный импорт</div>
-      <div style="font-size:11px;background:rgba(220,38,38,.08);border:1px solid rgba(239,68,68,.12);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--red);">8 вкусов:</strong> Salty Peanut, Cookies&Cream, Chocolate Dough, Hazelnut Nougat, Caramel Cashew, White Chocolate Almond. Сыворот. изолят + казеин. Сахарные спирты дают «низкий сахар» — фактические углеводы выше. Нет добавленного сахара.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:36%;background:var(--green);"></div></div><span class="macro-val">36г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:13%;background:var(--yellow);"></div></div><span class="macro-val">13г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:36%;background:var(--red);"></div></div><span class="macro-val">36г</span></div>
-      <div class="comp-price" style="color:var(--red);">195 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 55г · UK official (£2.00/шт)</span></div>
-      <div class="comp-kcal">~364 ккал / 100г · <span class="chip chip-red">Импорт · ~200 ккал/бар</span></div>
-    </div>
-
-    <!-- Barebells Soft -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--red);opacity:.5;"></div>
-      <div class="comp-name">Barebells Soft Bar</div>
-      <div class="comp-brand">Barebells (SE) · 55г · мягкая текстура</div>
-      <div style="font-size:11px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.1);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--text);">5 вкусов:</strong> Toffee & Biscuit, Salty Caramel, Banana Caramel. Мягкая нуга-основа без шоколадной глазури. Меньше белка чем в Protein Bar — ~16г на бар. Позиционируется как «снек», не как «протеин».
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:29%;background:var(--green);"></div></div><span class="macro-val">29г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:16%;background:var(--yellow);"></div></div><span class="macro-val">16г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:43%;background:var(--red);"></div></div><span class="macro-val">43г</span></div>
-      <div class="comp-price" style="color:var(--red);">195 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 55г · UK official (£2.00/шт)</span></div>
-      <div class="comp-kcal">~427 ккал / 100г · <span class="chip chip-red">Импорт · Soft Texture</span></div>
-    </div>
-
-    <!-- Grenade Carb Killa -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--red);"></div>
-      <div class="comp-name">Grenade Carb Killa</div>
-      <div class="comp-brand">Grenade (UK) · 60г · параллельный импорт</div>
-      <div style="font-size:11px;background:rgba(220,38,38,.08);border:1px solid rgba(239,68,68,.12);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--red);">12 вкусов:</strong> Caramel Chaos, Peanut Nutter, Chocolate Chip Cookie Dough, White Choc Salted Peanut, Dark Choc Raspberry, Birthday Cake. Куплен Mars 2021 за £200M. Стратегия: полка РЯДОМ с обычными шоколадными батончиками. Самый высокий белок среди импорта.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:38%;background:var(--green);"></div></div><span class="macro-val">38г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:13%;background:var(--yellow);"></div></div><span class="macro-val">13г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы нетто</span><div class="macro-track"><div class="macro-fill" style="width:23%;background:var(--red);"></div></div><span class="macro-val">23г</span></div>
-      <div class="comp-price" style="color:var(--red);">179 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 60г · UK official (£1.83/шт)</span></div>
-      <div class="comp-kcal">~357 ккал / 100г · <span class="chip chip-red">Импорт · Exit £200M</span></div>
-    </div>
-
-    <!-- Quest -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--red);opacity:.6;"></div>
-      <div class="comp-name">Quest Bar</div>
-      <div class="comp-brand">Quest Nutrition (USA) · 60г · кето-позиция</div>
-      <div style="font-size:11px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.1);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--text);">20+ вкусов:</strong> Cookie Dough, S'mores, Peanut Butter, Birthday Cake. Очень высокая клетчатка (~15г/бар) — нетто-углеводы минимальны. Кето-аудитория. В РФ только параллельный импорт, нестабильные поставки.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:35%;background:var(--green);"></div></div><span class="macro-val">35г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:12%;background:var(--yellow);"></div></div><span class="macro-val">12г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы нетто</span><div class="macro-track"><div class="macro-fill" style="width:7%;background:var(--red);"></div></div><span class="macro-val">7г</span></div>
-      <div class="comp-price" style="color:var(--red);">260–320 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 60г</span></div>
-      <div class="comp-kcal">~317 ккал / 100г · <span class="chip chip-red">Импорт / Кето</span></div>
-    </div>
-
-    <!-- Raw Life -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--purple);"></div>
-      <div class="comp-name">Raw Life</div>
-      <div class="comp-brand">РостАгроКомплекс · 43г · натуральный</div>
-      <div style="font-size:11px;background:rgba(168,85,247,.07);border:1px solid rgba(168,85,247,.12);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--purple);">15+ вкусов:</strong> Финик-кокос, Малина-свёкла, Манго-имбирь, Кешью-ваниль. Только сухофрукты + орехи + семена. Нет добавок, сахара, глютена. Производитель МО Пушкинский — контакт для нашего Natural Bar.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:8%;background:var(--green);"></div></div><span class="macro-val">8г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:14%;background:var(--yellow);"></div></div><span class="macro-val">14г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:60%;background:var(--red);"></div></div><span class="macro-val">60г</span></div>
-      <div class="comp-price" style="color:var(--purple);">130–160 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 43г</span></div>
-      <div class="comp-kcal">~390 ккал / 100г · <span class="chip chip-purple">Natural · наш производитель</span></div>
-    </div>
-
-    <!-- Bite -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--purple);opacity:.6;"></div>
-      <div class="comp-name">Bite Bar</div>
-      <div class="comp-brand">Vitaliy Health Foods · 45г · орехово-фруктовый</div>
-      <div style="font-size:11px;background:rgba(168,85,247,.05);border:1px solid rgba(168,85,247,.09);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--text);">10+ вкусов:</strong> Арахис-шоколад, Вишня, Клюква, Кешью, Тропик. Орехи + сухофрукты + семена. Немного выше белок за счёт орехов vs чистых фруктов. Дистрибуция ВкусВилл + маркетплейсы.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:12%;background:var(--green);"></div></div><span class="macro-val">12г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:25%;background:var(--yellow);"></div></div><span class="macro-val">25г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:50%;background:var(--red);"></div></div><span class="macro-val">50г</span></div>
-      <div class="comp-price" style="color:var(--purple);">110–150 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 45г</span></div>
-      <div class="comp-kcal">~465 ккал / 100г · <span class="chip chip-purple">Natural · ВкусВилл</span></div>
-    </div>
-
-    <!-- SHOCKS! -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--yellow);opacity:.55;"></div>
-      <div class="comp-name">SHOCKS! Brownie</div>
-      <div class="comp-brand">ООО Фитнес Десерты · 50г · протеиновое печенье</div>
-      <div style="font-size:11px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.1);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--yellow);">6 вкусов:</strong> Шоколад, Кофе, Персик, Клубника, Пломбир, Клубника-персик. Мягкое брауни в шоколадной глазури. Без ГМО и пальмового масла. Whey protein. ~10 834 шт/мес на WB. WB Топ-3.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:25%;background:var(--green);"></div></div><span class="macro-val">15г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:53%;background:var(--yellow);"></div></div><span class="macro-val">32г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:30%;background:var(--red);"></div></div><span class="macro-val">18г</span></div>
-      <div class="comp-price" style="color:var(--yellow);">~61 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 50г (9шт × 548₽)</span></div>
-      <div class="comp-kcal">440 ккал / 100г · <span class="chip chip-yellow">Печенье · Без сахара</span></div>
-    </div>
-
-    <!-- OnlyFit -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--yellow);opacity:.45;"></div>
-      <div class="comp-name">OnlyFit Protein Bar</div>
-      <div class="comp-brand">РФ · 40г · глазированный</div>
-      <div style="font-size:11px;background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.09);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--yellow);">12+ вкусов:</strong> Кокос, Арахис, Шоколад, Фисташка и др. Батончик в шоколадной глазури, 20% протеина. Бюджетный сегмент. Высокие углеводы — не diet. ~50 SKU в каталоге.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:33%;background:var(--green);"></div></div><span class="macro-val">20г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:25%;background:var(--yellow);"></div></div><span class="macro-val">15г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:78%;background:var(--red);"></div></div><span class="macro-val">47г</span></div>
-      <div class="comp-price" style="color:var(--yellow);">~30–65 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 40г</span></div>
-      <div class="comp-kcal">412 ккал / 100г · <span class="chip chip-yellow">Бюджет · Высокие У</span></div>
-    </div>
-
-    <!-- PrimeBar -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:var(--orange);opacity:.6;"></div>
-      <div class="comp-name">PrimeBar</div>
-      <div class="comp-brand">РФ · 40г · без глазури · соевый белок</div>
-      <div style="font-size:11px;background:rgba(249,115,22,.06);border:1px solid rgba(249,115,22,.1);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--orange);">10+ вкусов:</strong> Шоколад, Малина-Чизкейк, Фисташка-Крем, Карамель-Миндаль, Арахис-Карамель и др. 20% белка на соевом изоляте. Без сахара. ~71 264 руб/30д. Цена рекордно низкая.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:33%;background:var(--green);"></div></div><span class="macro-val">20г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:17%;background:var(--yellow);"></div></div><span class="macro-val">10г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:85%;background:var(--red);"></div></div><span class="macro-val">51г</span></div>
-      <div class="comp-price" style="color:var(--orange);">~27–35 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 40г</span></div>
-      <div class="comp-kcal">375 ккал / 100г · <span class="chip chip-orange">Бюджет · Соевый белок</span></div>
-    </div>
-
-    <!-- Fiziq Sneakiq -->
-    <div class="comp-card">
-      <div class="comp-top-bar" style="background:#0EA5E9;"></div>
-      <div class="comp-name">Fiziq Sneakiq</div>
-      <div class="comp-brand">Импорт · 50г · похож на нашу модель!</div>
-      <div style="font-size:11px;background:rgba(14,165,233,.07);border:1px solid rgba(14,165,233,.15);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:#0EA5E9;">Вкусы:</strong> Солёная карамель-арахис, Шоколад и др. Глазированный батончик — Barebells-эстетика. 18% белка, без сахара, пребиотик. Продаётся в Яндекс Лавке 97₽. Прямой конкурент нашей модели.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:30%;background:var(--green);"></div></div><span class="macro-val">18г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:23%;background:var(--yellow);"></div></div><span class="macro-val">14г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:20%;background:var(--red);"></div></div><span class="macro-val">12г</span></div>
-      <div class="comp-price" style="color:#0EA5E9;">97 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 50г · Яндекс Лавка</span></div>
-      <div class="comp-kcal">310 ккал / 100г · <span class="chip" style="background:rgba(14,165,233,.12);color:#0EA5E9;border-color:rgba(14,165,233,.2)">⚠️ Наш прямой конкурент</span></div>
-    </div>
-
-    <!-- Our 20% -->
-    <div class="comp-card our">
-      <div class="comp-top-bar" style="background:var(--green);"></div>
-      <div class="comp-name">★ Наш Protein Bar 20%</div>
-      <div class="comp-brand">Фаза 1 · 40г · Barebells-модель</div>
-      <div style="font-size:11px;background:rgba(5,150,105,.08);border:1px solid rgba(16,185,129,.15);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--green);">3 вкуса запуск:</strong> Chocolate Brownie, Peanut Caramel, Cookies&Cream. Pea isolate + овёс + MCT. Состав на лицевой этикетке (RXBAR-стиль). Без добавленного сахара. Custom premix DSM-Firmenich.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:20%;background:var(--green);"></div></div><span class="macro-val">20г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:12%;background:var(--yellow);"></div></div><span class="macro-val">12г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:45%;background:var(--red);"></div></div><span class="macro-val">45г</span></div>
-      <div class="comp-price" style="color:var(--green);">195 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 40г</span></div>
-      <div class="comp-kcal">~365 ккал / 100г · <span class="chip chip-green">Наш · Фаза 1</span></div>
-    </div>
-
-    <!-- Our Raw -->
-    <div class="comp-card our">
-      <div class="comp-top-bar" style="background:var(--green);opacity:.6;"></div>
-      <div class="comp-name">★ Наш Natural Raw Bar</div>
-      <div class="comp-brand">Фаза 1 · 43г · Raw Life-модель</div>
-      <div style="font-size:11px;background:rgba(5,150,105,.07);border:1px solid rgba(16,185,129,.12);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--green);">3 вкуса запуск:</strong> Coconut-Latte, Date-Almond, Berry-Chia. Только сухофрукты + орехи + семена. Состав на этикетке (RXBAR-стиль). Производитель: РостАгроКомплекс. Дистрибуция: табачные лавки + МП.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:8%;background:var(--green);"></div></div><span class="macro-val">8г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:14%;background:var(--yellow);"></div></div><span class="macro-val">14г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:55%;background:var(--red);"></div></div><span class="macro-val">55г</span></div>
-      <div class="comp-price" style="color:var(--green);">129–149 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 43г</span></div>
-      <div class="comp-kcal">~375 ккал / 100г · <span class="chip chip-green">Наш · Фаза 1 · Natural</span></div>
-    </div>
-
-    <!-- Our Complete Bar 30% -->
-    <div class="comp-card our">
-      <div class="comp-top-bar" style="background:var(--blue);"></div>
-      <div class="comp-name">★ Complete Bar 30% белка</div>
-      <div class="comp-brand">Фаза 2 · 50г · 27 нутриентов</div>
-      <div style="font-size:11px;background:rgba(37,99,235,.08);border:1px solid rgba(59,130,246,.15);border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">
-        <strong style="color:var(--blue);">4 вкуса:</strong> Chocolate Brownie, Peanut Caramel, Almond Sea Salt, Cookies&Cream. Pea isolate + овёс + льняное масло + 27 микронутриентов (DSM premix). «Заменяет приём пищи» — коммуникация. White space 199₽.
-      </div>
-      <div class="macro-row"><span class="macro-lbl">Белок</span><div class="macro-track"><div class="macro-fill" style="width:30%;background:var(--green);"></div></div><span class="macro-val">30г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Жиры</span><div class="macro-track"><div class="macro-fill" style="width:10%;background:var(--yellow);"></div></div><span class="macro-val">10г</span></div>
-      <div class="macro-row"><span class="macro-lbl">Углеводы</span><div class="macro-track"><div class="macro-fill" style="width:30%;background:var(--red);"></div></div><span class="macro-val">30г</span></div>
-      <div class="comp-price" style="color:var(--blue);">199 ₽ <span style="font-size:11px;font-weight:500;color:var(--text3);">/ 50г</span></div>
-      <div class="comp-kcal">~330 ккал / 100г · <span class="chip chip-blue">Наш · Фаза 2 · White space</span></div>
-    </div>
-
   </div>
+
+  <!-- Grid populated by JS -->
+  <div id="kbzhuGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;" class="fade-in"></div>
 
   <!-- ── ЦЕНА ЗА 1Г БЕЛКА ───────────────────────────────── -->
   <div class="card mt14 fade-in">
@@ -1184,8 +914,8 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">Bombbar</div>
-            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:93%;background:var(--yellow);border-radius:3px;"></div></div>
-            <div style="font-size:11px;font-weight:700;color:var(--yellow);width:28px;text-align:right;">42г</div>
+            <div style="flex:1;height:14px;background:rgba(0,0,0,.04);border-radius:3px;overflow:hidden;"><div style="height:100%;width:73%;background:var(--yellow);border-radius:3px;"></div></div>
+            <div style="font-size:11px;font-weight:700;color:var(--yellow);width:28px;text-align:right;">33г</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div style="font-size:10px;color:var(--text3);width:90px;flex-shrink:0;">Grenade</div>
@@ -1282,7 +1012,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
           </div>
           <div style="padding:8px 10px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);border-radius:8px;font-size:11px;line-height:1.6;">
             <strong style="color:var(--yellow);">⚠ Где мы уступаем:</strong><br>
-            По г белка/100г — ниже Bombbar (20г vs 42г). Это <em>осознанный выбор</em>: pea isolate дороже сыворотки, акцент на чистость состава, а не количество.
+            По г белка/100г — ниже Bombbar (20г vs 33г). Это <em>осознанный выбор</em>: pea isolate дороже сыворотки, акцент на чистость состава, а не количество.
           </div>
           <div style="padding:8px 10px;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:8px;font-size:11px;line-height:1.6;">
             <strong style="color:var(--blue);">🎯 Целевая аудитория:</strong><br>
@@ -2455,6 +2185,7 @@ function showPage(id, btn) {
   if (btn) btn.classList.add('active');
   if (id === 'clusters'   && !clusterChartInited)  initClusterChart();
   if (id === 'kbzhu'      && !radarChartInited)    initRadarChart();
+  if (id === 'kbzhu') renderKbzhuGrid();
   if (id === 'valuechain' && !marginChartInited)   { marginChartInited = true; vcCalc2(); }
   if (id === 'strategy'   && !revenueChartInited)  initRevenueChart();
 }
@@ -3629,6 +3360,263 @@ function initClusterChart() {
 }
 
 /* ── RADAR ───────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════
+   KBZHU GRID — DATA + RENDER
+═══════════════════════════════════════════════════════ */
+const KBZHU_BARS = [
+  {
+    id:'bombbar', name:'Bombbar Original', brand:'Fitness Food Group · 60г',
+    weight:60, protein:33, fat:14, carbs:28, kcal:375,
+    price:'115–140 ₽', priceNote:'/ 60г',
+    color:'var(--yellow)', colorAlpha:'rgba(245,158,11,.1)', borderAlpha:'rgba(245,158,11,.2)',
+    segment:'rf',
+    tags:['high-protein'],
+    desc:'<strong style="color:var(--yellow);">20+ вкусов:</strong> Шоколад-фундук, Вишнёвый брауни, Кокос, Карамель-соль. Сывороточный + молочный белок. Изомальт + полидекстроза. Доминант рынка.'
+  },
+  {
+    id:'bombbar-crispy', name:'Bombbar Crispy Wafer', brand:'Fitness Food Group · 40г',
+    weight:40, protein:25, fat:28, carbs:38, kcal:490,
+    price:'100–120 ₽', priceNote:'/ 40г',
+    color:'var(--yellow)', colorAlpha:'rgba(245,158,11,.07)', borderAlpha:'rgba(245,158,11,.15)',
+    segment:'rf', tags:[],
+    desc:'<strong style="color:var(--yellow);">8 вкусов.</strong> Хрустящая вафельная основа + шоколадное покрытие. Высокий жир из-за вафли/глазури.'
+  },
+  {
+    id:'snaq', name:'Snaq Fabriq Choco Brownie', brand:'Fitness Food Group · 40г',
+    weight:40, protein:28, fat:20, carbs:32, kcal:415,
+    price:'100–130 ₽', priceNote:'/ 40г',
+    color:'var(--yellow)', colorAlpha:'rgba(245,158,11,.06)', borderAlpha:'rgba(245,158,11,.12)',
+    segment:'rf', tags:[],
+    desc:'<strong style="color:var(--yellow);">12+ вкусов:</strong> Шоколад-банан, Вишня, Малина, Кокос. Мягкая нуга-основа. Ориентирован на женскую аудиторию.'
+  },
+  {
+    id:'chikalab', name:'Chikalab Protein Bar', brand:'Fitness Food Group · 60г',
+    weight:60, protein:25, fat:15, carbs:23, kcal:345,
+    price:'130–160 ₽', priceNote:'/ 60г',
+    color:'var(--purple)', colorAlpha:'rgba(168,85,247,.07)', borderAlpha:'rgba(168,85,247,.15)',
+    segment:'rf', tags:['low-fat'],
+    desc:'<strong style="color:var(--purple);">10+ вкусов:</strong> Клубника, Черника, Манго. Женский сегмент 18–35 лет. Акцент на вкус и упаковку.'
+  },
+  {
+    id:'fitkit', name:'FitKit Protein Bar', brand:'FitKit · 60г',
+    weight:60, protein:25, fat:8, carbs:23, kcal:260,
+    price:'110–130 ₽', priceNote:'/ 60г',
+    color:'var(--blue)', colorAlpha:'rgba(37,99,235,.06)', borderAlpha:'rgba(37,99,235,.15)',
+    segment:'rf', tags:['low-fat','low-kcal'],
+    desc:'<strong>8 вкусов.</strong> Очень низкая калорийность за счёт высокой клетчатки (~23г/100г). Изомальт + сорбитол. Без сахара.'
+  },
+  {
+    id:'proteinrex', name:'ProteinRex Strong 35%', brand:'ProteinRex · 100г',
+    weight:100, protein:35, fat:10, carbs:15, kcal:330,
+    price:'250–280 ₽', priceNote:'/ 100г',
+    color:'var(--orange)', colorAlpha:'rgba(249,115,22,.07)', borderAlpha:'rgba(249,115,22,.15)',
+    segment:'rf', tags:['high-protein','low-fat'],
+    desc:'<strong style="color:var(--orange);">12 вкусов:</strong> Арахисовое масло, Шоколад-кофе, Черника. 35г белка/100г + 20г клетчатки. Сыв. изолят + казеин.'
+  },
+  {
+    id:'maxler', name:'Maxler Protein Bar', brand:'Maxler (DE) · 60г',
+    weight:60, protein:33, fat:15, carbs:41, kcal:430,
+    price:'160–200 ₽', priceNote:'/ 60г',
+    color:'var(--orange)', colorAlpha:'rgba(249,115,22,.05)', borderAlpha:'rgba(249,115,22,.12)',
+    segment:'rf', tags:['high-protein'],
+    desc:'<strong>6 вкусов:</strong> Карамель, Кокос-шоколад, Ваниль. Немецкий бренд, широкая РФ-дистрибуция через ВкусВилл и спортмаги.'
+  },
+  {
+    id:'barebells', name:'Barebells Protein Bar', brand:'Barebells (SE) · 55г',
+    weight:55, protein:36, fat:15, carbs:33, kcal:364,
+    price:'195 ₽', priceNote:'/ 55г',
+    color:'var(--red)', colorAlpha:'rgba(220,38,38,.08)', borderAlpha:'rgba(220,38,38,.15)',
+    segment:'import', tags:['high-protein'],
+    desc:'<strong style="color:var(--red);">8 вкусов:</strong> Salty Peanut, Cookies&Cream, Hazelnut Nougat. Сывороточный изолят + казеин. Без добавленного сахара.'
+  },
+  {
+    id:'barebells-soft', name:'Barebells Soft Bar', brand:'Barebells (SE) · 55г',
+    weight:55, protein:29, fat:20, carbs:38, kcal:382,
+    price:'195 ₽', priceNote:'/ 55г',
+    color:'var(--red)', colorAlpha:'rgba(239,68,68,.05)', borderAlpha:'rgba(239,68,68,.12)',
+    segment:'import', tags:[],
+    desc:'<strong>5 вкусов:</strong> Toffee & Biscuit, Salty Caramel. Мягкая нуга без глазури. Позиционируется как «снек», не «протеин».'
+  },
+  {
+    id:'grenade', name:'Grenade Carb Killa', brand:'Grenade (UK) · 60г',
+    weight:60, protein:35, fat:12, carbs:38, kcal:367,
+    price:'179 ₽', priceNote:'/ 60г · ~£1.83',
+    color:'var(--red)', colorAlpha:'rgba(220,38,38,.08)', borderAlpha:'rgba(220,38,38,.15)',
+    segment:'import', tags:['high-protein','low-fat'],
+    desc:'<strong style="color:var(--red);">12 вкусов:</strong> Caramel Chaos, Peanut Nutter, Chocolate Chip Cookie Dough. Куплен Mars 2021 за £200M. Стратегия: рядом с шоколадными батончиками.'
+  },
+  {
+    id:'quest', name:'Quest Bar', brand:'Quest Nutrition (USA) · 60г',
+    weight:60, protein:35, fat:13, carbs:37, kcal:317,
+    price:'260–320 ₽', priceNote:'/ 60г',
+    color:'var(--red)', colorAlpha:'rgba(239,68,68,.05)', borderAlpha:'rgba(239,68,68,.1)',
+    segment:'import', tags:['high-protein','low-kcal','keto'],
+    desc:'<strong>20+ вкусов:</strong> Cookie Dough, S'mores, Peanut Butter. Высокая клетчатка (~22г/100г) — нетто-углеводы ≈12г. Кето-аудитория.'
+  },
+  {
+    id:'rawlife', name:'Raw Life', brand:'РостАгроКомплекс · 43г',
+    weight:43, protein:8, fat:14, carbs:60, kcal:390,
+    price:'130–160 ₽', priceNote:'/ 43г',
+    color:'var(--purple)', colorAlpha:'rgba(168,85,247,.07)', borderAlpha:'rgba(168,85,247,.15)',
+    segment:'natural', tags:['natural','high-carb'],
+    desc:'<strong style="color:var(--purple);">15+ вкусов:</strong> Финик-кокос, Малина-свёкла, Манго-имбирь. Только сухофрукты + орехи + семена. Без добавок и сахара.'
+  },
+  {
+    id:'bite', name:'Bite Bar', brand:'Vitaliy Health Foods · 45г',
+    weight:45, protein:12, fat:25, carbs:50, kcal:465,
+    price:'110–150 ₽', priceNote:'/ 45г',
+    color:'var(--purple)', colorAlpha:'rgba(168,85,247,.05)', borderAlpha:'rgba(168,85,247,.1)',
+    segment:'natural', tags:['natural','high-carb'],
+    desc:'<strong>10+ вкусов:</strong> Арахис-шоколад, Вишня, Клюква, Кешью. Орехи + сухофрукты. ВкусВилл + маркетплейсы.'
+  },
+  {
+    id:'shocks', name:'SHOCKS! Brownie', brand:'ООО Фитнес Десерты · 50г',
+    weight:50, protein:30, fat:22, carbs:30, kcal:440,
+    price:'~61 ₽', priceNote:'/ 50г (9шт×548₽)',
+    color:'var(--yellow)', colorAlpha:'rgba(245,158,11,.06)', borderAlpha:'rgba(245,158,11,.12)',
+    segment:'rf', tags:['high-protein'],
+    desc:'<strong style="color:var(--yellow);">6 вкусов:</strong> Шоколад, Кофе, Персик. Мягкое брауни в шоколадной глазури. Без ГМО и пальмового масла. WB Топ-3.'
+  },
+  {
+    id:'onlyfit', name:'OnlyFit Protein Bar', brand:'РФ · 40г',
+    weight:40, protein:20, fat:15, carbs:47, kcal:412,
+    price:'30–65 ₽', priceNote:'/ 40г',
+    color:'var(--yellow)', colorAlpha:'rgba(245,158,11,.05)', borderAlpha:'rgba(245,158,11,.1)',
+    segment:'rf', tags:['high-carb'],
+    desc:'<strong style="color:var(--yellow);">12+ вкусов:</strong> Кокос, Арахис, Фисташка. Бюджетный сегмент. Высокие углеводы — не diet.'
+  },
+  {
+    id:'primebar', name:'PrimeBar', brand:'РФ · 40г',
+    weight:40, protein:20, fat:10, carbs:51, kcal:375,
+    price:'27–35 ₽', priceNote:'/ 40г',
+    color:'var(--orange)', colorAlpha:'rgba(249,115,22,.06)', borderAlpha:'rgba(249,115,22,.12)',
+    segment:'rf', tags:['high-carb','low-fat'],
+    desc:'<strong style="color:var(--orange);">10+ вкусов.</strong> 20% белка на соевом изоляте. Без сахара. Рекордно низкая цена.'
+  },
+  {
+    id:'fiziq', name:'Fiziq Sneakiq', brand:'Импорт · 50г',
+    weight:50, protein:18, fat:14, carbs:12, kcal:310,
+    price:'97 ₽', priceNote:'/ 50г · Яндекс Лавка',
+    color:'#0EA5E9', colorAlpha:'rgba(14,165,233,.07)', borderAlpha:'rgba(14,165,233,.15)',
+    segment:'import', tags:['low-kcal','keto'],
+    desc:'<strong style="color:#0EA5E9;">Глазированный батончик — Barebells-эстетика.</strong> 18% белка, без сахара, пребиотик. Наш прямой конкурент.'
+  },
+  {
+    id:'our20', name:'★ Protein Bar 20%', brand:'Наш · Фаза 1 · 40г',
+    weight:40, protein:20, fat:12, carbs:45, kcal:365,
+    price:'195 ₽', priceNote:'/ 40г',
+    color:'var(--green)', colorAlpha:'rgba(5,150,105,.08)', borderAlpha:'rgba(16,185,129,.2)',
+    segment:'ours', tags:['low-fat','ours'],
+    desc:'<strong style="color:var(--green);">3 вкуса запуск:</strong> Chocolate Brownie, Peanut Caramel, Cookies&Cream. Pea isolate + овёс + MCT. Состав на этикетке (RXBAR-стиль).'
+  },
+  {
+    id:'our-raw', name:'★ Natural Raw Bar', brand:'Наш · Фаза 1 · 43г',
+    weight:43, protein:8, fat:14, carbs:55, kcal:375,
+    price:'129–149 ₽', priceNote:'/ 43г',
+    color:'var(--green)', colorAlpha:'rgba(5,150,105,.07)', borderAlpha:'rgba(16,185,129,.15)',
+    segment:'ours', tags:['natural','ours'],
+    desc:'<strong style="color:var(--green);">3 вкуса:</strong> Coconut-Latte, Date-Almond, Berry-Chia. Только сухофрукты + орехи + семена. Производитель: РостАгроКомплекс.'
+  },
+  {
+    id:'our-complete', name:'★ Complete Bar 30%', brand:'Наш · Фаза 2 · 50г',
+    weight:50, protein:30, fat:10, carbs:30, kcal:330,
+    price:'199 ₽', priceNote:'/ 50г',
+    color:'var(--blue)', colorAlpha:'rgba(37,99,235,.08)', borderAlpha:'rgba(59,130,246,.2)',
+    segment:'ours', tags:['high-protein','low-fat','ours'],
+    desc:'<strong style="color:var(--blue);">4 вкуса:</strong> Chocolate Brownie, Peanut Caramel. Pea isolate + овёс + 27 микронутриентов. «Заменяет приём пищи».'
+  },
+];
+
+let kbzhuCurrentFilter = 'all';
+let kbzhuCurrentSort   = 'protein';
+
+function kbzhuGetCategories(bar) {
+  const cats = [];
+  if (bar.protein >= 30) cats.push({ label:'Высокобелковый', color:'var(--green)', bg:'rgba(5,150,105,.1)' });
+  if (bar.fat <= 12)     cats.push({ label:'Низкожировой',   color:'var(--blue)',  bg:'rgba(37,99,235,.1)' });
+  if (bar.carbs >= 45)   cats.push({ label:'Углеводистый',   color:'var(--red)',   bg:'rgba(220,38,38,.1)' });
+  if (bar.tags.includes('natural')) cats.push({ label:'Natural/Raw', color:'var(--purple)', bg:'rgba(168,85,247,.1)' });
+  if (bar.tags.includes('keto'))    cats.push({ label:'Кето',        color:'#0EA5E9',        bg:'rgba(14,165,233,.1)' });
+  if (bar.tags.includes('low-kcal'))cats.push({ label:'Низкокалор.', color:'var(--text2)',   bg:'rgba(0,0,0,.06)' });
+  if (bar.segment === 'ours')       cats.push({ label:'Наш',         color:'var(--green)',   bg:'rgba(5,150,105,.15)' });
+  return cats;
+}
+
+function renderKbzhuGrid() {
+  const grid = document.getElementById('kbzhuGrid');
+  if (!grid) return;
+
+  let bars = [...KBZHU_BARS];
+
+  // Filter
+  if (kbzhuCurrentFilter !== 'all') {
+    bars = bars.filter(b => {
+      if (kbzhuCurrentFilter === 'high-protein') return b.protein >= 30;
+      if (kbzhuCurrentFilter === 'low-fat')      return b.fat <= 12;
+      if (kbzhuCurrentFilter === 'high-carb')    return b.carbs >= 45;
+      if (kbzhuCurrentFilter === 'natural')      return b.tags.includes('natural');
+      if (kbzhuCurrentFilter === 'ours')         return b.tags.includes('ours');
+      return true;
+    });
+  }
+
+  // Sort (descending by default; fat ascending)
+  const sortDir = kbzhuCurrentSort === 'fat' ? 1 : -1;
+  bars.sort((a, b) => sortDir * (b[kbzhuCurrentSort] - a[kbzhuCurrentSort]));
+
+  const MAX_MACRO = 60; // scale bar width to 60g max
+
+  grid.innerHTML = bars.map(bar => {
+    const cats = kbzhuGetCategories(bar);
+    const isOurs = bar.segment === 'ours';
+    const cardClass = isOurs ? 'comp-card our' : 'comp-card';
+
+    const chipsHtml = cats.map(c =>
+      `<span style="display:inline-block;padding:2px 7px;border-radius:5px;font-size:10px;font-weight:700;background:${c.bg};color:${c.color};margin-right:4px;margin-bottom:4px;border:1px solid ${c.bg.replace(',.1)','.25)').replace(',.15)','.35)')};">${c.label}</span>`
+    ).join('');
+
+    return `
+    <div class="${cardClass}">
+      <div class="comp-top-bar" style="background:${bar.color};"></div>
+      <div class="comp-name">${bar.name}</div>
+      <div class="comp-brand">${bar.brand}</div>
+      <div style="font-size:11px;background:${bar.colorAlpha};border:1px solid ${bar.borderAlpha};border-radius:7px;padding:6px 8px;margin-bottom:8px;color:var(--text2);line-height:1.55;">${bar.desc}</div>
+      <div class="macro-row">
+        <span class="macro-lbl">Белок</span>
+        <div class="macro-track"><div class="macro-fill" style="width:${Math.min(bar.protein/MAX_MACRO*100,100)}%;background:var(--green);"></div></div>
+        <span class="macro-val">${bar.protein}г</span>
+      </div>
+      <div class="macro-row">
+        <span class="macro-lbl">Жиры</span>
+        <div class="macro-track"><div class="macro-fill" style="width:${Math.min(bar.fat/MAX_MACRO*100,100)}%;background:var(--yellow);"></div></div>
+        <span class="macro-val">${bar.fat}г</span>
+      </div>
+      <div class="macro-row">
+        <span class="macro-lbl">Углеводы</span>
+        <div class="macro-track"><div class="macro-fill" style="width:${Math.min(bar.carbs/MAX_MACRO*100,100)}%;background:var(--red);"></div></div>
+        <span class="macro-val">${bar.carbs}г</span>
+      </div>
+      <div style="margin-top:8px;margin-bottom:6px;">${chipsHtml}</div>
+      <div class="comp-price" style="color:${bar.color};">${bar.price} <span style="font-size:11px;font-weight:500;color:var(--text3);">${bar.priceNote}</span></div>
+      <div class="comp-kcal"><strong style="font-size:14px;">${bar.kcal}</strong> <span style="font-size:11px;color:var(--text3);">ккал / 100г</span></div>
+    </div>`;
+  }).join('');
+}
+
+function kbzhuFilter(filter, btn) {
+  kbzhuCurrentFilter = filter;
+  document.querySelectorAll('.kbzhu-filter').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderKbzhuGrid();
+}
+
+function kbzhuSort(sort, btn) {
+  kbzhuCurrentSort = sort;
+  document.querySelectorAll('.kbzhu-sort').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderKbzhuGrid();
+}
+
 let radarChartInited = false;
 let radarChartRef = null;
 
@@ -3666,8 +3654,8 @@ const RADAR_DATASETS = [
     // { name, tag, weight(г), protein_pct, rrc, cat }
     // cat: 'rf' | 'import' | 'natural' | 'ours'
     { name:'PrimeBar',            tag:'РФ',      w:40,  p:20, rrc:35,  cat:'rf' },
-    { name:'Bombbar Original',    tag:'РФ',      w:60,  p:42, rrc:115, cat:'rf' },
-    { name:'ProteinRex',          tag:'РФ',      w:60,  p:27, rrc:80,  cat:'rf' },
+    { name:'Bombbar Original',    tag:'РФ',      w:60,  p:33, rrc:115, cat:'rf' },
+    { name:'ProteinRex Strong',   tag:'РФ',      w:100, p:35, rrc:260, cat:'rf' },
     { name:'Maxler',              tag:'РФ',      w:60,  p:28, rrc:100, cat:'rf' },
     { name:'Bombbar Crispy',      tag:'РФ',      w:40,  p:35, rrc:105, cat:'rf' },
     { name:'OnlyFit',             tag:'РФ',      w:40,  p:20, rrc:65,  cat:'rf' },
