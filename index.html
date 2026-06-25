@@ -1331,550 +1331,49 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
   <!-- TAB 1: Calculator (existing content) -->
   <div id="vctab-calc">
 
-  <!-- VERDICT CARD — главный вывод по РРЦ -->
-  <div id="vcVerdictCard" class="card fade-in" style="margin-bottom:14px;border:1px solid rgba(5,150,105,.30);background:rgba(5,150,105,.05);">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+  <!-- ── SLIDERS ─────────────────────────────────────────────── -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-label" style="margin-bottom:16px;">Параметры расчёта</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+
       <div>
-        <div class="card-label" style="margin-bottom:0;color:var(--green);">Вывод: зарабатываем ли мы при текущем РРЦ?</div>
-        <div style="font-size:11px;color:var(--text3);margin-top:2px;">Обновляется при движении любого ползунка</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">РРЦ — цена на полке</div>
+        <input type="range" id="rrc2" min="99" max="350" value="195" step="1" oninput="vcCalc2()" style="width:100%;">
+        <div style="font-size:28px;font-weight:900;letter-spacing:-.02em;color:var(--blue);margin-top:4px;" id="rrc2Val">195 ₽</div>
       </div>
-      <div style="font-size:20px;font-weight:900;letter-spacing:-.02em;" id="vcVerdictLabel">—</div>
-    </div>
 
-    <!-- Channel margins row -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;">
-      <div style="padding:10px 12px;background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.25);border-radius:10px;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--green);margin-bottom:5px;">DTC / Прямая</div>
-        <div style="font-size:22px;font-weight:900;letter-spacing:-.02em;" id="vcDtcRub">—</div>
-        <div style="font-size:11px;color:var(--text3);" id="vcDtcPct">—</div>
-        <div style="font-size:9px;color:var(--text3);margin-top:5px;line-height:1.55;" id="vcDtcFormula">—</div>
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">COGS — себестоимость</div>
+        <input type="range" id="cogs2" min="20" max="150" value="60" step="1" oninput="vcCalc2()" style="width:100%;">
+        <div style="font-size:28px;font-weight:900;letter-spacing:-.02em;color:var(--text2);margin-top:4px;" id="cogs2Val">60 ₽</div>
       </div>
-      <div style="padding:10px 12px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.25);border-radius:10px;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--blue);margin-bottom:5px;">Маркетплейс WB/Ozon</div>
-        <div style="font-size:22px;font-weight:900;letter-spacing:-.02em;" id="vcMpRub">—</div>
-        <div style="font-size:11px;color:var(--text3);" id="vcMpPct">—</div>
-        <div style="font-size:9px;color:var(--text3);margin-top:5px;line-height:1.55;" id="vcMpFormula">—</div>
-      </div>
-      <div style="padding:10px 12px;background:rgba(217,119,6,.08);border:1px solid rgba(217,119,6,.25);border-radius:10px;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--yellow);margin-bottom:2px;">Ритейл (наша маржа)</div>
-        <div style="font-size:9px;color:var(--text3);margin-bottom:5px;">после sell-in, мотивации и логистики</div>
-        <div style="font-size:22px;font-weight:900;letter-spacing:-.02em;" id="vcRetRub">—</div>
-        <div style="font-size:11px;color:var(--text3);" id="vcRetPct">—</div>
-        <div style="font-size:9px;color:var(--text3);margin-top:5px;line-height:1.6;" id="vcRetFormula">—</div>
-      </div>
-    </div>
 
-    <!-- CM Threshold section -->
-    <div style="padding:10px 12px;background:rgba(0,0,0,.025);border:1px solid var(--border-subtle);border-radius:10px;margin-bottom:10px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:4px;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);">Contribution margin после маркетинга</div>
-        <div style="font-size:10px;color:var(--text3);">порог рентабельности: <strong style="color:var(--yellow);">30%</strong></div>
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">Наценка дистрибьютора</div>
+        <input type="range" id="distrib2" min="10" max="45" value="27" step="1" oninput="vcCalc2()" style="width:100%;">
+        <div style="font-size:28px;font-weight:900;letter-spacing:-.02em;color:var(--text2);margin-top:4px;" id="distrib2Val">27%</div>
       </div>
-      <div id="cmThresholdBars" style="display:flex;flex-direction:column;gap:6px;"></div>
-      <div style="font-size:9px;color:var(--text3);margin-top:8px;padding-top:6px;border-top:1px solid var(--border-subtle);">30% — порог не для маржи канала, а для CM после маркетинга. Ниже порога = бизнес не может масштабироваться без доп. капитала.</div>
-    </div>
 
-    <!-- Bottom: market share + COGS reference -->
-    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding-top:10px;border-top:1px solid var(--border-subtle);">
-      <div style="font-size:11px;color:var(--text3);" id="vcCogsLine">COGS: —</div>
-      <div style="width:1px;height:14px;background:var(--border-subtle);"></div>
-      <div style="font-size:11px;color:var(--text3);" id="vcGmLine">GM: —</div>
-      <div style="width:1px;height:14px;background:var(--border-subtle);"></div>
-      <div style="font-size:11px;font-weight:700;" id="vcMarketShareLine">Доля рынка: —</div>
-      <div style="margin-left:auto;font-size:10px;color:var(--text3);" id="vcBestChannel">Лучший канал: —</div>
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">Маркетинг / реклама</div>
+        <input type="range" id="mkt2" min="0" max="35" value="15" step="1" oninput="vcCalc2()" style="width:100%;">
+        <div style="font-size:28px;font-weight:900;letter-spacing:-.02em;color:var(--text2);margin-top:4px;" id="mkt2Val">15%</div>
+      </div>
+
     </div>
   </div>
 
-  <!-- GM OVERVIEW ROW -->
-  <div class="grid4 fade-in" style="margin-bottom:14px;">
-    <div class="card" style="text-align:center;">
-      <div class="card-label">Gross Margin %</div>
-      <div style="font-size:36px;font-weight:900;letter-spacing:-.03em;" id="gmPctBig">—</div>
-      <div style="font-size:11px;color:var(--text3);margin-top:2px;">(RRC − COGS) / RRC</div>
-    </div>
-    <div class="card" style="text-align:center;">
-      <div class="card-label">GM на единицу</div>
-      <div style="font-size:36px;font-weight:900;letter-spacing:-.03em;color:var(--green);" id="gmRubBig">—</div>
-      <div style="font-size:11px;color:var(--text3);margin-top:2px;">до вычета кан. затрат</div>
-    </div>
-    <div class="card" style="text-align:center;">
-      <div class="card-label">GM в месяц</div>
-      <div style="font-size:26px;font-weight:900;letter-spacing:-.03em;color:var(--blue);" id="gmMonthBig">—</div>
-      <div style="font-size:11px;color:var(--text3);margin-top:2px;">при <span id="volLabel2">10K</span> шт/мес</div>
-    </div>
-    <div class="card" style="text-align:center;">
-      <div class="card-label">Выручка в месяц</div>
-      <div style="font-size:26px;font-weight:900;letter-spacing:-.03em;color:var(--text);" id="revMonthBig">—</div>
-      <div style="font-size:11px;color:var(--text3);margin-top:2px;">RRC × объём</div>
-    </div>
+  <!-- ── 4 CHANNEL CARDS ──────────────────────────────────────── -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;" id="vc2Grid">
+    <!-- filled by vcCalc2() -->
   </div>
 
-  <div class="grid2">
-    <!-- Controls -->
-    <div class="card fade-in">
-      <div class="card-label">Параметры продукта</div>
-
-      <div style="margin-bottom:14px;">
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">Производитель / КП</div>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <button id="supplierBtn_zp" onclick="setSupplier('zp',this)" style="display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:6px;background:rgba(5,150,105,.12);border:1px solid rgba(16,185,129,.3);cursor:pointer;font-size:12px;font-weight:700;color:var(--green);letter-spacing:.01em;" class="active">
-            <span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;display:inline-block;"></span>
-            ООО «Здоровое Питание»
-            <span style="font-size:10px;color:var(--text3);font-weight:500;">КП 03.06.2026</span>
-          </button>
-          <span style="font-size:10px;color:var(--text3);font-style:italic;">+ новые КП по мере поступления</span>
-        </div>
-      </div>
-
-      <div style="margin-bottom:16px;">
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:8px;">Продукт</div>
-        <div class="toggle-group">
-          <button class="toggle-btn active" onclick="setProduct('20pct')" id="btn20">20% белка · 40г</button>
-          <button class="toggle-btn" onclick="setProduct('30pct')" id="btn30">30% белка · 50г</button>
-        </div>
-      </div>
-
-      <div style="margin-bottom:16px;">
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:8px;">Объём партии</div>
-        <div class="toggle-group">
-          <button class="toggle-btn active" onclick="setVolume('4k')" id="btn4k">4 000 шт</button>
-          <button class="toggle-btn" onclick="setVolume('12k')" id="btn12k">12 000 шт</button>
-          <button class="toggle-btn" onclick="setVolume('20k')" id="btn20k">20 000 шт</button>
-        </div>
-      </div>
-
-      <div style="margin-bottom:16px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);">РРЦ — розничная цена</div>
-          <div style="font-size:26px;font-weight:900;letter-spacing:-.03em;color:var(--text);" id="rrcDisplay">159 ₽</div>
-        </div>
-        <input type="range" id="rrcSlider" min="99" max="399" value="195" oninput="updateCalc()" step="1">
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-weight:600;margin-top:4px;letter-spacing:.02em;">
-          <span>99₽ бюджет</span><span>159₽ Bombbar+</span><span>195₽ наш таргет</span><span>399₽</span>
-        </div>
-      </div>
-
-      <div style="margin-bottom:20px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);">Объём продаж / месяц</div>
-          <div style="font-size:20px;font-weight:900;letter-spacing:-.02em;color:var(--blue);" id="volDisplay">10 000 шт</div>
-        </div>
-        <input type="range" id="volSlider" min="1000" max="100000" value="10000" oninput="updateCalc()" step="500">
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-weight:600;margin-top:4px;letter-spacing:.02em;">
-          <span>1K (старт)</span><span>10K</span><span>30K (BE МП)</span><span>100K (ритейл)</span>
-        </div>
-      </div>
-
-      <div style="margin-bottom:14px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);">Маркетинг % (все каналы)</div>
-          <div style="font-size:20px;font-weight:900;letter-spacing:-.02em;color:#A855F7;" id="mktDisplay">15%</div>
-        </div>
-        <input type="range" id="mktSlider" min="0" max="40" value="15" oninput="updateCalc()" step="1">
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-weight:600;margin-top:4px;letter-spacing:.02em;">
-          <span>0%</span><span>10% минимум</span><span>20% агрессив</span><span>40%</span>
-        </div>
-      </div>
-
-      <div style="margin-bottom:12px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);">Доля ритейлера от РРЦ %</div>
-          <div style="font-size:20px;font-weight:900;letter-spacing:-.02em;color:var(--yellow);" id="retailerDisplay">35%</div>
-        </div>
-        <input type="range" id="retailerSlider" min="0" max="80" value="35" oninput="updateCalc()" step="1">
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-weight:600;margin-top:4px;letter-spacing:.02em;">
-          <span>0% прямая</span><span>35% ВкусВилл</span><span>50% X5</span><span>80%</span>
-        </div>
-      </div>
-
-      <!-- distribSlider убран — дистрибьютор и субдистрибьютор исключены -->
-
-      <!-- Bug 2 fix: комиссия МП — ползунок вместо хардкода 20% -->
-      <div style="margin-bottom:12px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);">Комиссия МП (WB/Ozon) %</div>
-          <div style="font-size:20px;font-weight:900;letter-spacing:-.02em;color:#60A5FA;" id="mpCommDisplay">15%</div>
-        </div>
-        <input type="range" id="mpCommSlider" min="8" max="20" value="15" oninput="updateCalc()" step="1">
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-weight:600;margin-top:4px;letter-spacing:.02em;">
-          <span>8% еда/снеки</span><span>15% база</span><span>20% одежда</span>
-        </div>
-      </div>
-
-      <div style="margin-bottom:12px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);">Логистика РФ % от РРЦ</div>
-          <div style="font-size:20px;font-weight:900;letter-spacing:-.02em;color:#94A3B8;" id="logRusDisplay">1%</div>
-        </div>
-        <input type="range" id="logRusSlider" min="0" max="5" value="1" oninput="updateCalc()" step="0.5">
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-weight:600;margin-top:4px;letter-spacing:.02em;">
-          <span>0%</span><span>0.8% PLONQ</span><span>2% база</span><span>5%</span>
-        </div>
-      </div>
-
-      <!-- motivationSlider убран — ретробонус исключён -->
-
-      <hr>
-
-      <div style="margin-top:14px;">
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:10px;">COGS (доставленная)</div>
-        <div style="display:flex;flex-direction:column;gap:5px;">
-          <div style="display:flex;justify-content:space-between;font-size:13px;">
-            <span style="color:var(--text2);">Производство (<span id="cogsVolLabel">4K</span> шт)</span>
-            <strong id="cogsProd">46.82 ₽</strong>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:13px;">
-            <span style="color:var(--text2);">Упаковка (флоу-пак + бокс)</span>
-            <strong id="cogsPack">10 ₽</strong>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:13px;">
-            <span style="color:var(--text2);">Логистика завод → склад</span>
-            <strong id="cogsLog">4 ₽</strong>
-          </div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:800;border-top:1px solid var(--border-subtle);padding-top:10px;margin-top:10px;letter-spacing:-.01em;">
-          <span>Итого COGS</span>
-          <span id="cogsTotal" style="color:var(--red);">60.82 ₽</span>
-        </div>
-      </div>
+  <!-- ── COMPARISON BAR ────────────────────────────────────────── -->
+  <div class="card">
+    <div class="card-label" style="margin-bottom:14px;">Наша маржа с 1 батончика по каналам</div>
+    <div id="vc2Bars" style="display:flex;flex-direction:column;gap:10px;">
+      <!-- filled by vcCalc2() -->
     </div>
-
-    <!-- Results -->
-    <div class="card fade-in fade-in-d1">
-      <div class="card-label">Маржа по каналам</div>
-
-      <!-- BUDGET BAR — сколько из РРЦ остаётся для канала -->
-      <div id="budgetBar" style="margin-bottom:18px;padding:12px 14px;background:rgba(0,0,0,.03);border:1px solid var(--border-subtle);border-radius:10px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);">Бюджет канала — из чего состоит РРЦ</div>
-          <div style="font-size:12px;color:var(--text3);" id="budgetRrcLabel">при РРЦ 159 ₽</div>
-        </div>
-        <!-- Stacked bar -->
-        <div style="display:flex;height:20px;border-radius:5px;overflow:hidden;gap:1px;margin-bottom:8px;" id="budgetStackBar"></div>
-        <!-- Labels -->
-        <div style="display:flex;gap:8px;flex-wrap:wrap;" id="budgetLabels"></div>
-        <!-- Key metric: available for channel -->
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-subtle);">
-          <div style="font-size:11px;color:var(--text2);">Свободный бюджет канала (при COGS + маркетинг)</div>
-          <div style="font-size:15px;font-weight:900;letter-spacing:-.02em;" id="budgetFreeLabel">—</div>
-        </div>
-        <div style="font-size:10px;color:var(--text3);margin-top:4px;" id="budgetHint">—</div>
-      </div>
-
-      <!-- DTC -->
-      <div style="background:var(--green-dim);border:1px solid rgba(5,150,105,.25);border-radius:10px;padding:14px;margin-bottom:10px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <div>
-            <div style="font-weight:700;font-size:13px;">DTC / Подписка</div>
-            <div style="font-size:11px;color:var(--text3);margin-top:1px;" id="dtcDesc">Эквайринг 2% + доставка 50₽ + маркетинг 20% + COGS</div>
-          </div>
-          <div style="text-align:right;flex-shrink:0;margin-left:12px;">
-            <div style="font-size:22px;font-weight:900;letter-spacing:-.03em;" id="dtcRub">+54 ₽</div>
-            <div style="font-size:12px;color:var(--text3);" id="dtcPct">34%</div>
-          </div>
-        </div>
-        <div class="mbar-track"><div class="mbar-fill" id="dtcBar" style="width:34%;background:var(--green);"></div></div>
-      </div>
-
-      <!-- Marketplace -->
-      <div style="background:var(--blue-dim);border:1px solid rgba(37,99,235,.25);border-radius:10px;padding:14px;margin-bottom:10px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <div>
-            <div style="font-weight:700;font-size:13px;">Маркетплейс (WB/Ozon)</div>
-            <div style="font-size:11px;color:var(--text3);margin-top:1px;" id="mpDesc">Комиссия 20% + фулфилмент 25₽ + реклама 20% + COGS</div>
-          </div>
-          <div style="text-align:right;flex-shrink:0;margin-left:12px;">
-            <div style="font-size:22px;font-weight:900;letter-spacing:-.03em;" id="mpRub">+25 ₽</div>
-            <div style="font-size:12px;color:var(--text3);" id="mpPct">16%</div>
-          </div>
-        </div>
-        <div class="mbar-track"><div class="mbar-fill" id="mpBar" style="width:16%;background:var(--blue);"></div></div>
-      </div>
-
-      <!-- Retail -->
-      <div style="background:var(--yellow-dim);border:1px solid rgba(217,119,6,.25);border-radius:10px;padding:14px;margin-bottom:14px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <div>
-            <div style="font-weight:700;font-size:13px;">Ритейл (ВкусВилл / Перекрёсток)</div>
-            <div style="font-size:11px;color:var(--text3);margin-top:1px;" id="retDesc">Ритейл+дистриб 40% + ретро 5% + логистика 6₽ + маркетинг 20% + COGS</div>
-          </div>
-          <div style="text-align:right;flex-shrink:0;margin-left:12px;">
-            <div style="font-size:22px;font-weight:900;letter-spacing:-.03em;" id="retRub">+10 ₽</div>
-            <div style="font-size:12px;color:var(--text3);" id="retPct">6%</div>
-          </div>
-        </div>
-        <div class="mbar-track"><div class="mbar-fill" id="retBar" style="width:6%;background:var(--yellow);"></div></div>
-      </div>
-
-      <!-- Breakeven -->
-      <div class="inner-card">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:10px;">Breakeven / мес (fixed 300K ₽)</div>
-        <div style="display:flex;gap:20px;flex-wrap:wrap;">
-          <div>
-            <div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;">DTC</div>
-            <div style="font-size:20px;font-weight:900;letter-spacing:-.02em;color:var(--green);" id="beDTC">—</div>
-            <div style="font-size:10px;color:var(--text3);">шт/мес</div>
-          </div>
-          <div>
-            <div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;">Маркетплейс</div>
-            <div style="font-size:20px;font-weight:900;letter-spacing:-.02em;color:var(--blue);" id="beMP">—</div>
-            <div style="font-size:10px;color:var(--text3);">шт/мес</div>
-          </div>
-          <div>
-            <div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;">Ритейл</div>
-            <div style="font-size:20px;font-weight:900;letter-spacing:-.02em;color:var(--yellow);" id="beRet">—</div>
-            <div style="font-size:10px;color:var(--text3);">шт/мес</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Reverse calc -->
-  <div class="card mt14 fade-in">
-    <div class="card-label">Обратный расчёт — нужная РРЦ для целевой маржи</div>
-    <div class="grid3">
-      <div class="inner-card">
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:8px;">Целевая маржа</div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <input type="range" id="targetMarginSlider" min="10" max="60" value="35" oninput="updateReverse()" style="flex:1;">
-          <span style="font-weight:900;font-size:22px;letter-spacing:-.02em;min-width:48px;color:var(--text);" id="targetMarginDisplay">35%</span>
-        </div>
-      </div>
-      <div class="inner-card">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">DTC нужна РРЦ</div>
-        <div style="font-size:24px;font-weight:900;letter-spacing:-.02em;color:var(--green);" id="revDTC">—</div>
-        <div style="font-size:11px;color:var(--text3);" id="revDTCdiff">vs текущей</div>
-      </div>
-      <div class="inner-card">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">Маркетплейс нужна РРЦ</div>
-        <div style="font-size:24px;font-weight:900;letter-spacing:-.02em;color:var(--blue);" id="revMP">—</div>
-        <div style="font-size:11px;color:var(--text3);" id="revMPdiff">vs текущей</div>
-      </div>
-    </div>
-    <div style="margin-top:10px;padding:10px 14px;background:rgba(37,99,235,.10);border:1px solid rgba(59,130,246,.15);border-radius:8px;">
-      <div style="font-size:12px;color:var(--blue);font-weight:600;" id="reverseInsight">Вывод появится при изменении параметров</div>
-    </div>
-  </div>
-
-  <!-- Monthly P&L model -->
-  <div class="card mt14 fade-in">
-    <div class="card-label">Месячная модель P&L — при заданном объёме и миксе каналов</div>
-    <div class="grid3" style="margin-bottom:14px;">
-      <div class="inner-card">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;">Микс каналов (%)</div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span style="font-size:11px;color:var(--green);font-weight:700;width:20px;">DTC</span>
-            <input type="range" id="mixDTC" min="0" max="100" value="30" oninput="updatePnL()" style="flex:1;">
-            <span style="font-size:12px;font-weight:700;width:28px;text-align:right;" id="mixDTCval">30%</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span style="font-size:11px;color:var(--blue);font-weight:700;width:20px;">МП</span>
-            <input type="range" id="mixMP" min="0" max="100" value="60" oninput="updatePnL()" style="flex:1;">
-            <span style="font-size:12px;font-weight:700;width:28px;text-align:right;" id="mixMPval">60%</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span style="font-size:11px;color:var(--yellow);font-weight:700;width:20px;">Рит</span>
-            <input type="range" id="mixRet" min="0" max="100" value="10" oninput="updatePnL()" style="flex:1;">
-            <span style="font-size:12px;font-weight:700;width:28px;text-align:right;" id="mixRetval">10%</span>
-          </div>
-          <div style="font-size:10px;color:var(--text3);padding:4px 6px;background:rgba(0,0,0,.03);border-radius:5px;" id="mixWarning">Итого: 100%</div>
-        </div>
-      </div>
-      <div class="inner-card">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:10px;">P&L месяц</div>
-        <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;">
-          <div style="display:flex;justify-content:space-between;">
-            <span style="color:var(--text2);">Выручка</span>
-            <strong id="pnlRev">—</strong>
-          </div>
-          <div style="display:flex;justify-content:space-between;">
-            <span style="color:var(--text2);">− COGS total</span>
-            <strong id="pnlCogs" style="color:var(--red);">—</strong>
-          </div>
-          <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border-subtle);padding-top:6px;">
-            <span style="color:var(--text);">Gross Profit</span>
-            <strong id="pnlGP" style="color:var(--green);">—</strong>
-          </div>
-          <div style="display:flex;justify-content:space-between;">
-            <span style="color:var(--text2);">− Канал. затраты</span>
-            <strong id="pnlChanCost" style="color:var(--red);">—</strong>
-          </div>
-          <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border-subtle);padding-top:6px;">
-            <span style="color:var(--text);">Contribution Margin</span>
-            <strong id="pnlCM" style="color:var(--blue);">—</strong>
-          </div>
-          <div style="display:flex;justify-content:space-between;">
-            <span style="color:var(--text2);">− Fixed costs</span>
-            <strong id="pnlFixed" style="color:var(--red);">—</strong>
-          </div>
-          <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border-specular);padding-top:6px;margin-top:2px;">
-            <span style="color:var(--text);font-weight:700;">Net / мес</span>
-            <strong id="pnlNet" style="font-size:16px;">—</strong>
-          </div>
-        </div>
-      </div>
-      <div class="inner-card">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:10px;">Fixed Costs / мес</div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-          <input type="range" id="fixedSlider" min="100000" max="2000000" value="300000" step="50000" oninput="updatePnL();updateCalc();" style="flex:1;">
-          <span style="font-size:13px;font-weight:700;width:64px;text-align:right;color:var(--red);" id="fixedDisplay">300K ₽</span>
-        </div>
-        <div style="font-size:11px;color:var(--text3);line-height:1.6;">Зарплата команды, аренда склада, маркетинг бренда, прочее.</div>
-        <div style="margin-top:10px;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:5px;">Годовой прогноз (×12)</div>
-          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px;">
-            <span style="color:var(--text2);">ARR Выручка</span>
-            <strong id="arr" style="color:var(--text);">—</strong>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:13px;">
-            <span style="color:var(--text2);">ARR Net Profit</span>
-            <strong id="arrNet">—</strong>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Annual Summary -->
-  <div class="card mt14 fade-in" id="annualSummaryCard">
-    <div class="card-label">Годовая статистика — Year 1 прогноз</div>
-    <div style="font-size:11px;color:var(--text3);margin-bottom:14px;">Исходя из текущего объёма и микса каналов. Двигай ползунки выше — обновится.</div>
-
-    <!-- 4 big annual KPI -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;" id="annualKpiRow">
-      <div class="inner-card" style="text-align:center;">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:4px;">ARR Выручка</div>
-        <div style="font-size:22px;font-weight:900;letter-spacing:-.03em;color:var(--text);" id="annRev">—</div>
-      </div>
-      <div class="inner-card" style="text-align:center;">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:4px;">ARR Gross Profit</div>
-        <div style="font-size:22px;font-weight:900;letter-spacing:-.03em;color:var(--green);" id="annGP">—</div>
-      </div>
-      <div class="inner-card" style="text-align:center;">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:4px;">ARR Contribution</div>
-        <div style="font-size:22px;font-weight:900;letter-spacing:-.03em;color:var(--blue);" id="annCM">—</div>
-      </div>
-      <div class="inner-card" style="text-align:center;">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:4px;">ARR Net Profit</div>
-        <div style="font-size:22px;font-weight:900;letter-spacing:-.03em;" id="annNet">—</div>
-      </div>
-    </div>
-
-    <!-- Q1-Q4 breakdown table -->
-    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:8px;">Квартальный прогноз (линейный рост от текущего объёма)</div>
-    <div style="overflow-x:auto;">
-      <table style="width:100%;border-collapse:collapse;font-size:12px;" id="annualTable">
-        <thead>
-          <tr style="border-bottom:1px solid var(--border-subtle);">
-            <th style="text-align:left;padding:5px 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);">Период</th>
-            <th style="text-align:right;padding:5px 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);">Объём шт</th>
-            <th style="text-align:right;padding:5px 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);">Выручка</th>
-            <th style="text-align:right;padding:5px 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);">Gross Profit</th>
-            <th style="text-align:right;padding:5px 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);">Net Profit</th>
-            <th style="text-align:right;padding:5px 8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);">GM %</th>
-          </tr>
-        </thead>
-        <tbody id="annualTableBody">
-          <tr><td colspan="6" style="padding:12px 8px;text-align:center;color:var(--text3);">Загрузка…</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- MARKET SHARE CARD -->
-  <div class="card mt14 fade-in" id="marketShareCard">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px;">
-      <div class="card-label" style="margin-bottom:0;">Доля рынка — что значит наш объём на фоне рынка</div>
-      <div style="font-size:10px;color:var(--text3);">пересчитывается от РРЦ и объёма выше</div>
-    </div>
-    <div style="font-size:11px;color:var(--text3);margin-bottom:16px;">Наша годовая выручка (РРЦ × объём × 12) vs выбранный эталонный рынок</div>
-
-    <!-- Market reference selector -->
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;" id="mktRefBtns">
-      <button onclick="setMktRef(20,this)"  style="padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border-subtle);background:rgba(5,150,105,.12);color:var(--green);"  class="mktref-btn active">20 млрд ₽ — протеин батончики</button>
-      <button onclick="setMktRef(40,this)"  style="padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border-subtle);background:rgba(0,0,0,.04);color:var(--text2);" class="mktref-btn">40 млрд ₽ — ПП снеки</button>
-      <button onclick="setMktRef(100,this)" style="padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border-subtle);background:rgba(0,0,0,.04);color:var(--text2);" class="mktref-btn">100 млрд ₽ — функц. снеки</button>
-    </div>
-
-    <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
-      <!-- Donut -->
-      <div style="position:relative;width:180px;height:180px;flex-shrink:0;">
-        <canvas id="marketShareDonut" width="180" height="180"></canvas>
-        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;">
-          <div style="font-size:26px;font-weight:900;letter-spacing:-.03em;color:var(--green);" id="msSharePct">—</div>
-          <div style="font-size:10px;color:var(--text3);font-weight:600;">нашей доли</div>
-        </div>
-      </div>
-
-      <!-- Stats column -->
-      <div style="flex:1;display:flex;flex-direction:column;gap:10px;min-width:200px;">
-        <div class="inner-card" style="border-color:rgba(16,185,129,.2);background:rgba(5,150,105,.05);">
-          <div style="font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;">Наша годовая выручка (Year 1)</div>
-          <div style="font-size:22px;font-weight:900;letter-spacing:-.02em;color:var(--green);" id="msOurRev">—</div>
-        </div>
-        <div class="inner-card">
-          <div style="font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;">Эталонный рынок</div>
-          <div style="font-size:22px;font-weight:900;letter-spacing:-.02em;color:var(--text);" id="msMktSize">20 млрд ₽</div>
-        </div>
-        <div class="inner-card">
-          <div style="font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;">Для 1% рынка нужно</div>
-          <div style="font-size:18px;font-weight:900;letter-spacing:-.02em;color:var(--yellow);" id="msOnePct">—</div>
-        </div>
-      </div>
-
-      <!-- Context column -->
-      <div style="flex:1;min-width:200px;">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:8px;">Контекст</div>
-        <div style="display:flex;flex-direction:column;gap:6px;font-size:11px;">
-          <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(0,0,0,.03);border-radius:5px;border:1px solid var(--border-subtle);">
-            <span style="color:var(--text3);">Bombbar (2025)</span>
-            <strong>41.9 млрд ₽</strong>
-          </div>
-          <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(0,0,0,.03);border-radius:5px;border:1px solid var(--border-subtle);">
-            <span style="color:var(--text3);">Bombbar МП доля</span>
-            <strong>8.0 млрд ₽</strong>
-          </div>
-          <div style="display:flex;justify-content:space-between;padding:5px 8px;background:rgba(5,150,105,.05);border-radius:5px;border:1px solid rgba(16,185,129,.15);">
-            <span style="color:var(--text3);">Наша цель (1% рынка)</span>
-            <strong id="msGoal1pct" style="color:var(--green);">—</strong>
-          </div>
-          <div style="font-size:10px;color:var(--text3);margin-top:4px;line-height:1.5;" id="msInsight">—</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card mt14 fade-in">
-    <div class="card-label">Сравнение маржи по каналам</div>
-    <div style="height:200px;max-width:500px;">
-      <canvas id="marginChart"></canvas>
-    </div>
-  </div>
-
-  <!-- ── ЦЕНОВАЯ МОДЕЛЬ ──────────────────────────────────── -->
-  <div class="card mt14 fade-in">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-      <div class="card-label" style="margin-bottom:0;">Ценовая модель — разбивка 1 батончика</div>
-      <div style="font-size:11px;color:var(--text3);" id="pmRrcLabel">при РРЦ 159 ₽</div>
-    </div>
-    <div style="font-size:11px;color:var(--text3);margin-bottom:16px;">Как каждый рубль с полки делится между COGS, каналом, маркетингом и твоей маржой. Двигай ползунки выше — модель обновляется.</div>
-
-    <!-- Legend -->
-    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;font-size:11px;font-weight:600;">
-      <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:var(--red);display:inline-block;"></span>COGS</span>
-      <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#0EA5E9;display:inline-block;"></span>Канал / логистика</span>
-      <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#A855F7;display:inline-block;"></span>Маркетинг</span>
-      <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:var(--green);display:inline-block;"></span>Маржа (+)</span>
-      <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:var(--red);border:2px solid #fff;display:inline-block;opacity:.5;"></span>Маржа (−)</span>
-    </div>
-
-    <!-- Channels -->
-    <div style="display:flex;flex-direction:column;gap:18px;" id="priceModelBlocks">
-      <!-- filled by JS -->
-    </div>
-
   </div>
 
   </div><!-- /vctab-calc -->
@@ -2901,7 +2400,7 @@ function showPage(id, btn) {
   if (btn) btn.classList.add('active');
   if (id === 'clusters'   && !clusterChartInited)  initClusterChart();
   if (id === 'kbzhu'      && !radarChartInited)    initRadarChart();
-  if (id === 'valuechain' && !marginChartInited)   { initMarginChart(); updateCalc(); updateReverse(); updateMarketShare(); }
+  if (id === 'valuechain' && !marginChartInited)   { marginChartInited = true; vcCalc2(); }
   if (id === 'strategy'   && !revenueChartInited)  initRevenueChart();
 }
 
@@ -2914,11 +2413,212 @@ function vcSwitchTab(tab) {
   if (tab === 'calc') {
     btnCalc.style.background = 'var(--blue)'; btnCalc.style.color = '#fff';
     btnYoz.style.background  = 'transparent'; btnYoz.style.color  = 'var(--text3)';
+    vcCalc2();
   } else {
     btnYoz.style.background  = 'var(--blue)'; btnYoz.style.color  = '#fff';
     btnCalc.style.background = 'transparent'; btnCalc.style.color = 'var(--text3)';
     yzCalc();
   }
+}
+
+/* ── VALUE CHAIN — НОВЫЙ КАЛЬКУЛЯТОР ────────────── */
+function vcCalc2() {
+  var rrc      = parseFloat(document.getElementById('rrc2').value)     || 195;
+  var cogs     = parseFloat(document.getElementById('cogs2').value)    || 60;
+  var distribPct = parseFloat(document.getElementById('distrib2').value) || 27;
+  var mktPct   = parseFloat(document.getElementById('mkt2').value)     || 15;
+
+  document.getElementById('rrc2Val').textContent    = rrc     + ' ₽';
+  document.getElementById('cogs2Val').textContent   = cogs    + ' ₽';
+  document.getElementById('distrib2Val').textContent= distribPct + '%';
+  document.getElementById('mkt2Val').textContent    = mktPct  + '%';
+
+  var mktRub = rrc * mktPct / 100;
+
+  // ── Канал 1: Ритейл + Дистрибьютор ──────────────
+  // Покупатель платит РРЦ → сеть наценила 60% → дистриб наценил distribPct%
+  var retailSellIn  = rrc / 1.60;                        // цена нашего товара в сети
+  var ourSellInRet  = retailSellIn / (1 + distribPct/100); // наш sell-in дистрибу
+  var marginRet     = ourSellInRet - cogs - mktRub;
+  var retailerEarn  = rrc - retailSellIn;
+  var distribEarn   = retailSellIn - ourSellInRet;
+
+  // ── Канал 2: Табачные лавки (прямой) ────────────
+  // Лавка наценила 100% → наш sell-in = РРЦ / 2
+  var ourSellInTob = rrc / 2;
+  var marginTob    = ourSellInTob - cogs - mktRub;
+  var tobEarn      = rrc - ourSellInTob;
+
+  // ── Канал 3: Маркетплейс (WB/Ozon) ─────────────
+  // Комиссия МП 18% + FBO логист ~3% = ~21% суммарно — используем ползунок distrib
+  // Но для МП отдельно: комиссия задана ползунком distrib2? Нет, сделаем отдельно 18%
+  var mpCommPct   = 18;
+  var mpNet       = rrc * (1 - mpCommPct / 100);
+  var marginMp    = mpNet - cogs - mktRub;
+  var mpEarn      = rrc * mpCommPct / 100;
+
+  // ── Канал 4: DTC / Прямые продажи ───────────────
+  var fulfilPct   = 5; // доставка ~5%
+  var fulfilRub   = rrc * fulfilPct / 100;
+  var marginDtc   = rrc - cogs - mktRub - fulfilRub;
+
+  var channels = [
+    {
+      id: 'ret',
+      name: 'Ритейл + Дистрибьютор',
+      color: '#F59E0B',
+      chain: [
+        { label: 'Завод',      price: cogs,            sub: 'COGS' },
+        { label: 'Наш sell-in', price: ourSellInRet,   sub: 'наша цена дистрибу', ours: true },
+        { label: 'Дистрибьютор', price: retailSellIn,  sub: '+' + distribPct + '% наценка' },
+        { label: 'Сеть',       price: rrc,             sub: '+60% наценка' },
+        { label: 'Покупатель', price: rrc,             sub: 'платит РРЦ', end: true }
+      ],
+      ourSellIn: ourSellInRet,
+      margin: marginRet,
+      breakdown: [
+        { name: 'Наша маржа', val: marginRet, pct: marginRet/rrc*100 },
+        { name: 'Маркетинг',  val: mktRub,    pct: mktPct },
+        { name: 'COGS',       val: cogs,      pct: cogs/rrc*100 },
+        { name: 'Дистрибьютор', val: distribEarn, pct: distribEarn/rrc*100 },
+        { name: 'Сеть',       val: retailerEarn, pct: retailerEarn/rrc*100 }
+      ]
+    },
+    {
+      id: 'tob',
+      name: 'Табачные лавки (прямые)',
+      color: '#8B5CF6',
+      chain: [
+        { label: 'Завод',      price: cogs,           sub: 'COGS' },
+        { label: 'Наш sell-in', price: ourSellInTob,  sub: 'прямая продажа', ours: true },
+        { label: 'Табачная лавка', price: rrc,        sub: '+100% наценка' },
+        { label: 'Покупатель', price: rrc,            sub: 'платит РРЦ', end: true }
+      ],
+      ourSellIn: ourSellInTob,
+      margin: marginTob,
+      breakdown: [
+        { name: 'Наша маржа', val: marginTob,  pct: marginTob/rrc*100 },
+        { name: 'Маркетинг',  val: mktRub,     pct: mktPct },
+        { name: 'COGS',       val: cogs,       pct: cogs/rrc*100 },
+        { name: 'Лавка',      val: tobEarn,    pct: tobEarn/rrc*100 }
+      ]
+    },
+    {
+      id: 'mp',
+      name: 'Маркетплейс WB / Ozon',
+      color: '#3B82F6',
+      chain: [
+        { label: 'Завод',      price: cogs,    sub: 'COGS' },
+        { label: 'Наш sell-in', price: mpNet,  sub: 'после комиссии МП', ours: true },
+        { label: 'МП комиссия', price: rrc,    sub: mpCommPct + '% от РРЦ' },
+        { label: 'Покупатель', price: rrc,     sub: 'платит РРЦ', end: true }
+      ],
+      ourSellIn: mpNet,
+      margin: marginMp,
+      breakdown: [
+        { name: 'Наша маржа', val: marginMp,  pct: marginMp/rrc*100 },
+        { name: 'Маркетинг',  val: mktRub,    pct: mktPct },
+        { name: 'COGS',       val: cogs,      pct: cogs/rrc*100 },
+        { name: 'МП комиссия', val: mpEarn,   pct: mpCommPct }
+      ]
+    },
+    {
+      id: 'dtc',
+      name: 'DTC — прямые продажи',
+      color: '#10B981',
+      chain: [
+        { label: 'Завод',     price: cogs,        sub: 'COGS' },
+        { label: 'Наш сайт',  price: rrc,         sub: 'продаём напрямую', ours: true },
+        { label: 'Покупатель', price: rrc,        sub: 'платит РРЦ', end: true }
+      ],
+      ourSellIn: rrc,
+      margin: marginDtc,
+      breakdown: [
+        { name: 'Наша маржа',  val: marginDtc,  pct: marginDtc/rrc*100 },
+        { name: 'Маркетинг',   val: mktRub,     pct: mktPct },
+        { name: 'Доставка',    val: fulfilRub,  pct: fulfilPct },
+        { name: 'COGS',        val: cogs,       pct: cogs/rrc*100 }
+      ]
+    }
+  ];
+
+  // ── Рендер карточек ──────────────────────────────
+  var grid = document.getElementById('vc2Grid');
+  grid.innerHTML = channels.map(function(ch) {
+    var isPos = ch.margin > 0;
+    var cmPct = (ch.margin / rrc * 100).toFixed(1);
+    var marginColor = ch.margin >= rrc * 0.25 ? '#059669' : ch.margin >= 0 ? '#D97706' : '#DC2626';
+
+    // Chain nodes
+    var chainHtml = ch.chain.map(function(node, i) {
+      var isFirst = i === 0;
+      var arrow = i < ch.chain.length - 1 ?
+        '<div style="color:#94A3B8;font-size:18px;flex-shrink:0;padding:0 2px;">→</div>' : '';
+      var bg = node.ours  ? 'background:' + ch.color + '20;border:1.5px solid ' + ch.color + '60;' :
+               node.end   ? 'background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.10);' :
+               isFirst    ? 'background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.10);' :
+                            'background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.10);';
+      var priceColor = node.ours ? ch.color : '#475569';
+      return '<div style="display:flex;align-items:center;gap:4px;">' +
+        '<div style="' + bg + 'border-radius:9px;padding:8px 11px;text-align:center;min-width:72px;">' +
+          '<div style="font-size:10px;font-weight:700;color:#64748B;white-space:nowrap;">' + node.label + '</div>' +
+          '<div style="font-size:15px;font-weight:900;color:' + priceColor + ';margin:2px 0;">' + node.price.toFixed(0) + ' ₽</div>' +
+          '<div style="font-size:9px;color:#94A3B8;white-space:nowrap;">' + node.sub + '</div>' +
+        '</div>' + arrow + '</div>';
+    }).join('');
+
+    // Breakdown bars
+    var bdHtml = ch.breakdown.map(function(b) {
+      var bColor = b.name.includes('маржа') ? marginColor :
+                   b.name === 'COGS' ? '#64748B' :
+                   b.name === 'Маркетинг' || b.name === 'Доставка' ? '#94A3B8' : '#CBD5E1';
+      var pct = Math.max(0, b.pct);
+      return '<div style="margin-bottom:6px;">' +
+        '<div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px;">' +
+          '<span style="color:#64748B;font-weight:600;">' + b.name + '</span>' +
+          '<span style="font-weight:700;color:' + (b.name.includes('маржа') ? marginColor : '#475569') + ';">' +
+          (b.val >= 0 ? '' : '') + b.val.toFixed(0) + ' ₽ · ' + pct.toFixed(1) + '%</span>' +
+        '</div>' +
+        '<div style="height:5px;background:rgba(0,0,0,.08);border-radius:3px;overflow:hidden;">' +
+          '<div style="height:100%;width:' + Math.min(100,pct) + '%;background:' + bColor + ';border-radius:3px;transition:width .5s;"></div>' +
+        '</div></div>';
+    }).join('');
+
+    return '<div class="card" style="border-top:3px solid ' + ch.color + ';">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">' +
+        '<div style="font-size:13px;font-weight:800;color:#0F172A;">' + ch.name + '</div>' +
+        '<div style="text-align:right;">' +
+          '<div style="font-size:22px;font-weight:900;color:' + marginColor + ';letter-spacing:-.02em;">' +
+            (isPos ? '+' : '') + ch.margin.toFixed(0) + ' ₽' +
+          '</div>' +
+          '<div style="font-size:11px;color:#94A3B8;">CM ' + cmPct + '% от РРЦ</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="display:flex;align-items:center;gap:4px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;flex-wrap:nowrap;">' +
+        chainHtml +
+      '</div>' +
+      '<div>' + bdHtml + '</div>' +
+    '</div>';
+  }).join('');
+
+  // ── Сравнительные бары ───────────────────────────
+  var barsEl = document.getElementById('vc2Bars');
+  var maxM = Math.max.apply(null, channels.map(function(c){ return c.margin; }));
+  barsEl.innerHTML = channels.map(function(ch) {
+    var cmPct = (ch.margin / rrc * 100).toFixed(1);
+    var barW  = maxM > 0 ? Math.max(0, ch.margin / maxM * 100) : 0;
+    var mColor = ch.margin >= rrc*0.25 ? '#059669' : ch.margin >= 0 ? '#D97706' : '#DC2626';
+    return '<div style="display:flex;align-items:center;gap:12px;">' +
+      '<div style="width:180px;font-size:12px;font-weight:700;color:#0F172A;flex-shrink:0;">' + ch.name + '</div>' +
+      '<div style="flex:1;height:28px;background:rgba(0,0,0,.06);border-radius:6px;overflow:hidden;">' +
+        '<div style="height:100%;width:' + barW + '%;background:' + ch.color + ';border-radius:6px;transition:width .6s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;padding-left:10px;">' +
+          '<span style="font-size:12px;font-weight:800;color:#fff;white-space:nowrap;">' +
+            (ch.margin > 0 ? '+' : '') + ch.margin.toFixed(0) + ' ₽ · CM ' + cmPct + '%' +
+          '</span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
 }
 
 /* ── Ё-ЗАВОД CM CALC ────────────────────────────── */
