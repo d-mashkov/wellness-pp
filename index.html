@@ -2513,8 +2513,7 @@ function vcCalc2() {
 
   // Наш sell-in (одинаковый для всех каналов)
   var ourSellIn  = addLayer(cogs, ourCmPct);
-  var mktRub     = ourSellIn * mktPct / 100;
-  var ourMargin  = ourSellIn - cogs - mktRub;  // базовая прибыль с 1шт (каналы 1-3)
+  var ourMargin  = ourSellIn - cogs;  // GROSS profit с 1шт (маркетинг — бюджет периода, не юнит-кост)
 
   // Канал 1: Ритейл + Дистрибьютор
   var distribPrice = addLayer(ourSellIn, distribPct);
@@ -2535,8 +2534,7 @@ function vcCalc2() {
   // Мы забираем маржу дистрибьютора + ритейла, платим только доставку и маркетинг
   var fulfilPct  = 5;
   var fulfilRub4 = rrc1 * fulfilPct / 100;
-  var mktRub4    = rrc1 * mktPct / 100;
-  var marginDtc  = rrc1 - cogs - fulfilRub4 - mktRub4;
+  var marginDtc  = rrc1 - cogs - fulfilRub4;  // DTC gross profit (доставка — юнит-кост, маркетинг — нет)
 
   // Отображение значений слайдеров
   document.getElementById('cogs2Val').textContent    = cogs + ' ₽';
@@ -2567,8 +2565,7 @@ function vcCalc2() {
         { label: 'Покупатель',   price: rrc1,         sub: 'РРЦ', end: true }
       ],
       breakdown: [
-        { name: 'Наша прибыль',          val: ourMargin },
-        { name: 'Маркетинг ' + mktPct + '%', val: mktRub },
+        { name: 'Gross profit',           val: ourMargin },
         { name: 'COGS',                  val: cogs },
         { name: 'Дистрибьютор',          val: distribEarn },
         { name: 'Ритейл',                val: retailEarn }
@@ -2584,8 +2581,7 @@ function vcCalc2() {
         { label: 'Покупатель',  price: rrc2,      sub: 'РРЦ', end: true }
       ],
       breakdown: [
-        { name: 'Наша прибыль',          val: ourMargin },
-        { name: 'Маркетинг ' + mktPct + '%', val: mktRub },
+        { name: 'Gross profit',           val: ourMargin },
         { name: 'COGS',                  val: cogs },
         { name: 'Лавка',                 val: tobaccoEarn }
       ]
@@ -2600,8 +2596,7 @@ function vcCalc2() {
         { label: 'Покупатель', price: rrc3,      sub: 'РРЦ', end: true }
       ],
       breakdown: [
-        { name: 'Наша прибыль',          val: ourMargin },
-        { name: 'Маркетинг ' + mktPct + '%', val: mktRub },
+        { name: 'Gross profit',           val: ourMargin },
         { name: 'COGS',                  val: cogs },
         { name: 'МП комиссия ' + mpCommPct + '%', val: mpEarn }
       ]
@@ -2615,8 +2610,7 @@ function vcCalc2() {
         { label: 'Покупатель', price: rrc1, sub: 'РРЦ', end: true }
       ],
       breakdown: [
-        { name: 'Наша прибыль',          val: marginDtc },
-        { name: 'Маркетинг ' + mktPct + '%', val: mktRub4 },
+        { name: 'Gross profit',           val: marginDtc },
         { name: 'Доставка ' + fulfilPct + '%', val: fulfilRub4 },
         { name: 'COGS',                  val: cogs }
       ]
@@ -2632,7 +2626,7 @@ function vcCalc2() {
       '<div style="font-size:10px;font-weight:700;color:#64748B;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + ch.name + '</div>' +
       '<div style="font-size:10px;color:#94A3B8;margin-bottom:4px;">sell-in ' + ch.ourSellIn.toFixed(0) + ' ₽  ·  РРЦ ' + ch.rrc.toFixed(0) + ' ₽</div>' +
       '<div style="font-size:24px;font-weight:900;color:' + col + ';">' + (ch.margin >= 0 ? '+' : '') + ch.margin.toFixed(0) + ' ₽</div>' +
-      '<div style="font-size:10px;color:#94A3B8;margin-top:2px;">прибыль с 1 шт</div>' +
+      '<div style="font-size:10px;color:#94A3B8;margin-top:2px;">gross profit с 1 шт (до маркетинга)</div>' +
       '<div style="margin-top:6px;font-size:12px;font-weight:800;color:' + col + ';">CM ' + cmPct.toFixed(1) + '%</div>' +
     '</div>';
   }).join('');
@@ -2713,37 +2707,48 @@ function vcCalc2() {
   var volEl = document.getElementById('vc2Volume');
   var unitsForTarget = Math.ceil(targetRev / rrc1 / 12);  // used retail RRC as reference revenue
 
+  // Marketing as period budget (% of our sell-in revenue)
+  var mktBudgetMonth  = ourSellIn * volUnits * mktPct / 100;
+  var mktBudgetYear   = mktBudgetMonth * 12;
+
   var volHtml = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">';
   channels.forEach(function(ch) {
-    var monthMargin  = ch.margin * volUnits;
-    var annualMargin = monthMargin * 12;
-    var monthRevenue = ch.rrc * volUnits;  // gross revenue at consumer price
-    var col = monthMargin >= 0 ? '#059669' : '#DC2626';
+    var grossMonthly = ch.margin * volUnits;
+    var netMonthly   = grossMonthly - mktBudgetMonth;
+    var netAnnual    = netMonthly * 12;
+    var colGross = grossMonthly >= 0 ? '#059669' : '#DC2626';
+    var colNet   = netMonthly   >= 0 ? '#059669' : '#DC2626';
     volHtml += '<div style="padding:12px 14px;background:#fff;border:1px solid rgba(0,0,0,.09);border-top:3px solid ' + ch.color + ';border-radius:10px;">' +
       '<div style="font-size:10px;font-weight:700;color:#64748B;margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + ch.name + '</div>' +
-      '<div style="font-size:9px;color:#94A3B8;margin-bottom:1px;">наш оборот/мес (' + volUnits.toLocaleString('ru') + ' шт)</div>' +
-      '<div style="font-size:14px;font-weight:900;color:#475569;">' + fmt(ch.ourSellIn * volUnits) + ' ₽</div>' +
-      '<div style="font-size:9px;color:#94A3B8;margin-top:6px;margin-bottom:1px;">наша прибыль/мес</div>' +
-      '<div style="font-size:18px;font-weight:900;color:' + col + ';">' + (monthMargin >= 0 ? '+' : '') + fmt(monthMargin) + ' ₽</div>' +
-      '<div style="font-size:9px;color:#94A3B8;margin-top:4px;margin-bottom:1px;">прибыль/год</div>' +
-      '<div style="font-size:13px;font-weight:800;color:' + col + ';">' + (annualMargin >= 0 ? '+' : '') + fmt(annualMargin) + ' ₽</div>' +
+      '<div style="font-size:9px;color:#94A3B8;margin-bottom:1px;">наш оборот/мес</div>' +
+      '<div style="font-size:13px;font-weight:900;color:#475569;">' + fmt(ch.ourSellIn * volUnits) + ' ₽</div>' +
+      '<div style="font-size:9px;color:#94A3B8;margin-top:5px;margin-bottom:1px;">gross profit/мес</div>' +
+      '<div style="font-size:15px;font-weight:900;color:' + colGross + ';">' + (grossMonthly >= 0 ? '+' : '') + fmt(grossMonthly) + ' ₽</div>' +
+      '<div style="font-size:9px;color:#D97706;margin-top:4px;margin-bottom:1px;">− маркетинг ' + mktPct + '% (' + fmt(mktBudgetMonth) + ' ₽/мес)</div>' +
+      '<div style="font-size:15px;font-weight:900;color:' + colNet + ';margin-top:2px;">' + (netMonthly >= 0 ? '+' : '') + fmt(netMonthly) + ' ₽ net</div>' +
+      '<div style="font-size:9px;color:#94A3B8;margin-top:4px;margin-bottom:1px;">net profit/год</div>' +
+      '<div style="font-size:13px;font-weight:800;color:' + colNet + ';">' + (netAnnual >= 0 ? '+' : '') + fmt(netAnnual) + ' ₽</div>' +
     '</div>';
   });
   volHtml += '</div>';
 
   // Target revenue row (based on sell-in to us, retail channel as reference)
   var unitsForSellIn = Math.ceil(targetRev / ourSellIn / 12);
+  var mktAtTarget     = ourSellIn * unitsForSellIn * mktPct / 100;
   volHtml += '<div style="background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.15);border-radius:10px;padding:14px 18px;">';
-  volHtml += '<div style="font-size:11px;font-weight:700;color:#2563EB;margin-bottom:12px;">Чтобы наш оборот (sell-in) был <strong>' + revDisp + '</strong>  →  нужно продавать <strong>' + unitsForSellIn.toLocaleString('ru') + ' шт/мес</strong> (sell-in ' + ourSellIn.toFixed(0) + ' ₽)</div>';
+  volHtml += '<div style="font-size:11px;font-weight:700;color:#2563EB;margin-bottom:4px;">Чтобы наш оборот (sell-in) был <strong>' + revDisp + '</strong>  →  нужно продавать <strong>' + unitsForSellIn.toLocaleString('ru') + ' шт/мес</strong></div>';
+  volHtml += '<div style="font-size:10px;color:#D97706;margin-bottom:12px;">Маркетинговый бюджет при этом: ' + fmt(mktAtTarget) + ' ₽/мес  (' + fmt(mktAtTarget * 12) + ' ₽/год)</div>';
   volHtml += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">';
   channels.forEach(function(ch) {
-    var annualMargin = ch.margin * unitsForSellIn * 12;
-    var col = annualMargin >= 0 ? '#059669' : '#DC2626';
+    var grossAnnual = ch.margin * unitsForSellIn * 12;
+    var netAnnual   = grossAnnual - mktAtTarget * 12;
+    var col = netAnnual >= 0 ? '#059669' : '#DC2626';
     volHtml += '<div style="text-align:center;background:#fff;border-radius:8px;padding:10px 8px;">' +
       '<div style="font-size:9px;color:#64748B;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + ch.name + '</div>' +
-      '<div style="font-size:9px;color:#94A3B8;margin-bottom:2px;">прибыль/год</div>' +
-      '<div style="font-size:15px;font-weight:900;color:' + col + ';">' + (annualMargin >= 0 ? '+' : '') + fmt(annualMargin) + ' ₽</div>' +
-      '<div style="font-size:9px;color:#94A3B8;margin-top:2px;">РРЦ: ' + ch.rrc.toFixed(0) + ' ₽</div>' +
+      '<div style="font-size:9px;color:#94A3B8;margin-bottom:2px;">gross/год</div>' +
+      '<div style="font-size:13px;font-weight:800;color:#059669;">' + (grossAnnual >= 0 ? '+' : '') + fmt(grossAnnual) + ' ₽</div>' +
+      '<div style="font-size:9px;color:#94A3B8;margin-top:2px;margin-bottom:1px;">net (после мкт)/год</div>' +
+      '<div style="font-size:14px;font-weight:900;color:' + col + ';">' + (netAnnual >= 0 ? '+' : '') + fmt(netAnnual) + ' ₽</div>' +
     '</div>';
   });
   volHtml += '</div></div>';
