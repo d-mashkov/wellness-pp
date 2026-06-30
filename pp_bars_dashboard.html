@@ -1133,7 +1133,7 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       </div>
 
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
 
       <div>
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;" id="distribLbl">Наценка дистрибьютора</div>
@@ -1142,9 +1142,17 @@ hr { border: none; border-top: 1px solid var(--border-subtle); margin: 16px 0; }
       </div>
 
       <div>
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;" id="retailLbl">Наценка ритейла</div>
-        <input type="range" id="retail2" min="20" max="100" value="60" step="1" oninput="vcCalc2()" style="width:100%;">
-        <div style="font-size:26px;font-weight:900;letter-spacing:-.02em;color:#475569;margin-top:4px;" id="retail2Val">60%</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;" title="Полочная маржа: (РРЦ − закупочная) / РРЦ. Доход сети с продаж на полке.">Front маржа ритейла ℹ</div>
+        <input type="range" id="retailFront2" min="15" max="70" value="40" step="1" oninput="vcCalc2()" style="width:100%;">
+        <div style="font-size:26px;font-weight:900;letter-spacing:-.02em;color:#475569;margin-top:4px;" id="retailFront2Val">40%</div>
+        <div style="font-size:9px;color:#94A3B8;margin-top:3px;">% от РРЦ · shelf price</div>
+      </div>
+
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:6px;" title="Договорная маржа: ретробонус + услуги сети (мерч, логистика, маркетинг). Наш расход из P&amp;L.">Back маржа ритейла ℹ</div>
+        <input type="range" id="retailBack2" min="0" max="40" value="30" step="1" oninput="vcCalc2()" style="width:100%;">
+        <div style="font-size:26px;font-weight:900;letter-spacing:-.02em;color:#D97706;margin-top:4px;" id="retailBack2Val">30%</div>
+        <div style="font-size:9px;color:#94A3B8;margin-top:3px;">% от закупочной · trade cost</div>
       </div>
 
       <div>
@@ -2243,7 +2251,8 @@ function vcCalc2() {
   var isBackward = !!(document.getElementById('dir-backward') && document.getElementById('dir-backward').checked);
   var cogs       = parseFloat(document.getElementById('cogs2').value)      || 60;
   var distribPct = parseFloat(document.getElementById('distrib2').value)   || 30;
-  var retailPct  = parseFloat(document.getElementById('retail2').value)    || 60;
+  var retailFrontPct = parseFloat(document.getElementById('retailFront2').value) || 40;  // полочная маржа (% от РРЦ)
+  var retailBackPct  = parseFloat(document.getElementById('retailBack2').value)  || 30;  // договорная маржа (% от закупочной)
   var tobaccoPct = parseFloat(document.getElementById('tobacco2').value)   || 100;
   var mktPct     = parseFloat(document.getElementById('mkt2').value)       || 15;
   var volUnits   = parseFloat(document.getElementById('vol2').value)       || 10000;
@@ -2287,7 +2296,8 @@ function vcCalc2() {
   // Common slider displays
   document.getElementById('cogs2Val').textContent    = cogs + ' ₽';
   document.getElementById('distrib2Val').textContent = distribPct + '%';
-  document.getElementById('retail2Val').textContent  = retailPct + '%';
+  document.getElementById('retailFront2Val').textContent = retailFrontPct + '%';
+  document.getElementById('retailBack2Val').textContent  = retailBackPct  + '%';
   document.getElementById('tobacco2Val').textContent = tobaccoPct + '%';
   document.getElementById('mkt2Val').textContent     = mktPct + '%';
 
@@ -2308,13 +2318,17 @@ function vcCalc2() {
     var rrcTarget = parseFloat(document.getElementById('rrcTarget2').value) || 195;
     document.getElementById('rrcTarget2Val').textContent = rrcTarget + ' ₽';
 
-    var distribPriceBack = removeLayer(rrcTarget, retailPct);
+    var distribPriceBack = removeLayer(rrcTarget, retailFrontPct);
     var siRet  = removeLayer(distribPriceBack, distribPct);
+    // Back маржа: ретробонус + услуги сети — % от закупочной (distribPriceBack)
+    var backCostBwd = distribPriceBack * (retailBackPct / 100);
+    var siRetNet = siRet - backCostBwd;  // наш net после выплаты бэка
+
     var siTob  = removeLayer(rrcTarget, tobaccoPct);
     var siMp   = rrcTarget * (1 - mpCommPct / 100);
     var siDtc  = rrcTarget;
 
-    var mgRet = siRet - cogs;
+    var mgRet = siRetNet - cogs;  // маржа после бэка
     var mgTob = siTob - cogs;
     var mgMp  = siMp  - cogs;
     var fulfilBwd = rrcTarget * 0.05;
@@ -2325,25 +2339,26 @@ function vcCalc2() {
       return isMargin ? mg / si * 100 : mg / cogs * 100;
     }
 
-    ourSellIn = siRet;  // ритейл как референс для блока объёмов
+    ourSellIn = siRetNet;  // ритейл net как референс для блока объёмов
     rrc1 = rrcTarget;
 
     channels = [
       {
         name: 'Ритейл + Дистрибьютор', color: '#F59E0B',
-        rrc: rrcTarget, ourSellIn: siRet, margin: mgRet,
+        rrc: rrcTarget, ourSellIn: siRetNet, margin: mgRet,
         chain: [
           { label: 'Завод',        price: cogs,             sub: 'COGS' },
-          { label: 'Наш sell-in',  price: siRet,            sub: implCm(siRet, mgRet).toFixed(1) + '% ' + modeName, ours: true },
+          { label: 'Наш sell-in',  price: siRet,            sub: implCm(siRetNet, mgRet).toFixed(1) + '% ' + modeName, ours: true },
           { label: 'Дистрибьютор', price: distribPriceBack, sub: '+' + distribPct + '%' },
-          { label: 'Ритейл',       price: rrcTarget,        sub: '+' + retailPct + '%' },
+          { label: 'Ритейл front', price: rrcTarget,        sub: 'Front +' + retailFrontPct + '%' },
           { label: 'Покупатель',   price: rrcTarget,        sub: 'РРЦ', end: true }
         ],
         breakdown: [
-          { name: 'Gross profit', val: mgRet },
+          { name: 'Net profit (после бэка)', val: mgRet },
+          { name: 'Back маржа ' + retailBackPct + '%', val: backCostBwd },
           { name: 'COGS',         val: cogs },
           { name: 'Дистрибьютор', val: distribPriceBack - siRet },
-          { name: 'Ритейл',       val: rrcTarget - distribPriceBack }
+          { name: 'Ритейл front', val: rrcTarget - distribPriceBack }
         ]
       },
       {
@@ -2398,10 +2413,13 @@ function vcCalc2() {
     ourSellIn    = addLayer(cogs, ourCmPct);
     var ourMargin = ourSellIn - cogs;
 
-    var distribPrice = addLayer(ourSellIn, distribPct);
-    rrc1             = addLayer(distribPrice, retailPct);
-    var distribEarn  = distribPrice - ourSellIn;
-    var retailEarn   = rrc1 - distribPrice;
+    var distribPrice    = addLayer(ourSellIn, distribPct);
+    rrc1                = addLayer(distribPrice, retailFrontPct);
+    var distribEarn     = distribPrice - ourSellIn;
+    var retailFrontEarn = rrc1 - distribPrice;
+    // Back маржа: ретробонус + услуги сети (% от закупочной distribPrice)
+    var backCost        = distribPrice * (retailBackPct / 100);
+    var ourNetMarginRet = ourSellIn - backCost - cogs;  // наш net после бэка
 
     var rrc2        = addLayer(ourSellIn, tobaccoPct);
     var tobaccoEarn = rrc2 - ourSellIn;
@@ -2418,19 +2436,20 @@ function vcCalc2() {
     channels = [
       {
         name: 'Ритейл + Дистрибьютор', color: '#F59E0B',
-        rrc: rrc1, ourSellIn: ourSellIn, margin: ourMargin,
+        rrc: rrc1, ourSellIn: ourSellIn, margin: ourNetMarginRet,
         chain: [
           { label: 'Завод',        price: cogs,         sub: 'COGS' },
           { label: 'Наш sell-in',  price: ourSellIn,    sub: '+' + ourCmPct + '% ' + modeName, ours: true },
           { label: 'Дистрибьютор', price: distribPrice, sub: '+' + distribPct + '%' },
-          { label: 'Ритейл',       price: rrc1,         sub: '+' + retailPct + '%' },
+          { label: 'Ритейл front', price: rrc1,         sub: 'Front +' + retailFrontPct + '%' },
           { label: 'Покупатель',   price: rrc1,         sub: 'РРЦ', end: true }
         ],
         breakdown: [
-          { name: 'Gross profit', val: ourMargin },
-          { name: 'COGS',         val: cogs },
-          { name: 'Дистрибьютор', val: distribEarn },
-          { name: 'Ритейл',       val: retailEarn }
+          { name: 'Net profit (после бэка)', val: ourNetMarginRet },
+          { name: 'Back маржа ' + retailBackPct + '%', val: backCost },
+          { name: 'COGS',          val: cogs },
+          { name: 'Дистрибьютор',  val: distribEarn },
+          { name: 'Ритейл front',  val: retailFrontEarn }
         ]
       },
       {
@@ -2515,14 +2534,18 @@ function vcCalc2() {
     }).join('');
 
     var bdHtml = ch.breakdown.map(function(b) {
-      var pct    = ch.ourSellIn > 0 ? Math.abs(b.val / ch.ourSellIn * 100) : 0;
-      var bColor = b.name.includes('прибыль') ? mColor
-                 : b.name === 'COGS'  ? '#64748B'
-                 : b.name.includes('Маркетинг') || b.name.includes('Доставка') ? '#94A3B8' : '#CBD5E1';
+      var pct      = ch.ourSellIn > 0 ? Math.abs(b.val / ch.ourSellIn * 100) : 0;
+      var isProfit = b.name.includes('прибыль') || b.name.toLowerCase().includes('profit');
+      var isBack   = b.name.toLowerCase().includes('back');
+      var bColor   = isProfit ? mColor
+                   : isBack   ? '#D97706'
+                   : b.name === 'COGS' ? '#64748B'
+                   : b.name.includes('Маркетинг') || b.name.includes('Доставка') ? '#94A3B8' : '#CBD5E1';
+      var valColor = isProfit ? mColor : isBack ? '#D97706' : '#475569';
       return '<div style="margin-bottom:5px;">' +
         '<div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px;">' +
           '<span style="color:#64748B;font-weight:600;">' + b.name + '</span>' +
-          '<span style="font-weight:700;color:' + (b.name.includes('прибыль') ? mColor : '#475569') + ';">' +
+          '<span style="font-weight:700;color:' + valColor + ';">' +
             b.val.toFixed(0) + ' ₽ · ' + pct.toFixed(1) + '%</span>' +
         '</div>' +
         '<div style="height:5px;background:rgba(0,0,0,.07);border-radius:3px;overflow:hidden;">' +
