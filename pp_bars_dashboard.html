@@ -2262,8 +2262,8 @@ function vcCalc2() {
   var modeName = isMargin ? 'Маржа' : 'Наценка';
   document.getElementById('ourCmLbl').textContent   = 'Наша ' + modeName.toLowerCase() + ' на себестоимость';
   document.getElementById('distribLbl').textContent = modeName + ' дистрибьютора';
-  document.getElementById('retailLbl').textContent  = modeName + ' ритейла';
   document.getElementById('tobaccoLbl').textContent = modeName + ' табачных лавок';
+  // Front/Back маржа ритейла — статичные метки, не зависят от mode toggle
   document.getElementById('vcModeHint').textContent = isMargin
     ? 'Маржа: sell = COGS / (1−%)  →  прибыль = sell × %  ·  Все % каналов — маржа'
     : 'Наценка: sell = COGS × (1+%)  →  прибыль = COGS × %  ·  Все % каналов — наценка';
